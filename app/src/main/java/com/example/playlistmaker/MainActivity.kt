@@ -7,6 +7,10 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.security.AccessController.getContext
+//привет, ревьюер Анастасия Надельштехель
+//спасибо,что подсказала,что мой проект может быть приватным и поэтому ты его не видишь
+//так и оказалось
+//не знаю как по другому тебе это сообщить, кроме как оставить комментарий
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
