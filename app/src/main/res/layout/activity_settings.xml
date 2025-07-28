@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <include layout="@layout/toolbar"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_dark_mode"
+        style="@style/settings_button"
+        android:layout_height="wrap_content"
+        android:checked="false"
+        android:gravity="center_vertical"
+        android:text="@string/settings_theme"/>
+
+    <Button
+        app:icon="@drawable/ic_settings_share"
+        android:text="@string/settings_share"
+        style="@style/settings_button" />
+
+    <Button
+        app:icon="@drawable/ic_settings_support"
+        android:text="@string/settings_support"
+        style="@style/settings_button" />
+
+    <Button
+        app:icon="@drawable/ic_arrow_right"
+        android:text="@string/settings_agreement"
+        style="@style/settings_button" />
+
+</LinearLayout>
