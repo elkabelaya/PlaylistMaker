@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Был указан как критерий сдачи на одной из итераций
+    //TODO удалить после ревью
     fun showAnyToast() {
         Toast.makeText(this@MainActivity, R.string.any_button_toast, Toast.LENGTH_SHORT).show()
     }

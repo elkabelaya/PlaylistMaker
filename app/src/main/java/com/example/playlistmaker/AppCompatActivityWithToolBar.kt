@@ -11,21 +11,20 @@ open class AppCompatActivityWithToolBar: AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = title
 
-        //Для кнопки «Назад» экрана «Настройки» добавить обработчик нажатий.
-        //Добавить код перехода на главный экран в обработчик.
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                // Handle the Up button click here
-                onBackPressed() // This will simulate a back press
+                //Для кнопки «Назад» экрана «Настройки» добавить обработчик нажатий.
+                //Добавить код перехода на главный экран в обработчик.
+
+                onBackPressed()
                 return true
             }
 
-            else -> return false
-            // else -> return super.onOptionsItemSelected(item)
+            else -> return super.onOptionsItemSelected(item)
         }
     }
 }
