@@ -3,16 +3,9 @@
     <string name="main_search">Поиск</string>
     <string name="main_media">Медиатека</string>
     <string name="main_settings">Настройки</string>
-
     <string name="settings_theme">Темная тема</string>
     <string name="settings_share">Поделиться приложением</string>
-    <string name="settings_share_url">https://practicum.yandex.ru/android-developer/</string>
     <string name="settings_support">Написать в поддержку</string>
-    <string name="settings_support_email">vega-l@yandex.ru</string>
-    <string name="settings_support_subject">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
-    <string name="settings_support_body">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="settings_agreement">Пользовательское соглашение</string>
-    <string name="settings_agreement_url">https://yandex.ru/legal/practicum_offer/ru/</string>
-
     <string name="any_button_toast">Нажали на кнопку</string>
 </resources>
