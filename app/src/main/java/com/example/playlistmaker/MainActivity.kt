@@ -4,13 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import java.security.AccessController.getContext
-//привет, ревьюер Анастасия Надельштехель
-//спасибо,что подсказала,что мой проект может быть приватным и поэтому ты его не видишь
-//так и оказалось
-//не знаю как по другому тебе это сообщить, кроме как оставить комментарий
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,11 +34,5 @@ class MainActivity : AppCompatActivity() {
             val displayIntent = Intent(this, SettingsActivity::class.java)
             startActivity(displayIntent)
         }
-    }
-
-    //Был указан как критерий сдачи на одной из итераций
-    //TODO удалить после ревью
-    fun showAnyToast() {
-        Toast.makeText(this@MainActivity, R.string.any_button_toast, Toast.LENGTH_SHORT).show()
     }
 }

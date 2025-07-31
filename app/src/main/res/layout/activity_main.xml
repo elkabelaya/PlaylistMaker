@@ -5,8 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/yp_blue"
     android:orientation="vertical"
-    android:paddingBottom="28dp"
-    android:paddingHorizontal="@dimen/padding_horizontal">
+    android:paddingBottom="@dimen/padding_xxl"
+    android:paddingHorizontal="@dimen/padding_m">
 
     <TextView
         android:layout_width="wrap_content"
@@ -14,9 +14,9 @@
         android:layout_gravity="start"
         android:text="@string/app_name"
         android:textColor="@color/yp_white"
-        android:textSize="20sp"
-        android:paddingVertical="16dp"
-        android:paddingBottom="24dp"/>
+        android:textSize="@dimen/text_l"
+        android:paddingVertical="@dimen/padding_m"
+        android:paddingBottom="@dimen/padding_xl"/>
 
     <Button
         android:id="@+id/search"
