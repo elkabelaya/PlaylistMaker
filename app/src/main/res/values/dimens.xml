@@ -1,0 +1,14 @@
+<resources>
+    <dimen name="padding_xxs">4dp</dimen>
+    <dimen name="padding_xs">8dp</dimen>
+    <dimen name="padding_s">12dp</dimen>
+    <dimen name="padding_m">16dp</dimen>
+    <dimen name="padding_l">20dp</dimen>
+    <dimen name="padding_xl">24dp</dimen>
+    <dimen name="padding_xxl">28dp</dimen>
+
+    <dimen name="radius_m">16dp</dimen>
+
+    <dimen name="text_m">16sp</dimen>
+    <dimen name="text_l">22sp</dimen>
+</resources>
