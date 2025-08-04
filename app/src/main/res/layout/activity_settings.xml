@@ -4,8 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".SettingsActivity"
+    android:orientation="vertical"
+    android:background="@color/background">
+    
     <include layout="@layout/toolbar"/>
 
     <Switch
@@ -19,16 +22,19 @@
         android:paddingEnd="@dimen/padding_s"/>
 
     <Button
+        android:id="@+id/share"
         app:icon="@drawable/ic_settings_share"
         android:text="@string/settings_share"
         style="@style/settings_button" />
 
     <Button
+        android:id="@+id/support"
         app:icon="@drawable/ic_settings_support"
         android:text="@string/settings_support"
         style="@style/settings_button" />
 
     <Button
+        android:id="@+id/agreement"
         app:icon="@drawable/ic_arrow_right"
         android:text="@string/settings_agreement"
         style="@style/settings_button" />
