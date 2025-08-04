@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="main_button">
+    <style name="main_button" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="iconGravity">textStart</item>
         <item name="iconPadding">@dimen/padding_xs</item>
         <item name="iconTint">@color/yp_black</item>
@@ -11,9 +11,8 @@
         <item name="android:backgroundTint">@color/yp_white</item>
         <item name="android:textColor">@color/yp_black</item>
         <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
         <item name="android:textSize">@dimen/text_l</item>
-<!--        <item name="android:fontFamily">@font/ys_display_medium"</item>-->
-        <item name="android:stateListAnimator">@null</item>
     </style>
 
     <style name="settings_button" parent="@style/Widget.AppCompat.Button.Borderless" >
@@ -25,8 +24,26 @@
         <item name="android:textColor">@color/text</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textAlignment">textStart</item>
-        <!--        <item name="android:fontFamily">@font/ys_display_regular"</item>-->
+        <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textSize">@dimen/text_m</item>
         <item name="android:paddingHorizontal">@dimen/padding_m</item>
+    </style>
+
+    <style name="app_toolbar">
+        <item name="android:textColorPrimary">@color/toolbar_text</item>
+    </style>
+
+    <style name="app_toolbar_title" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textSize">@dimen/text_l</item>
+    </style>
+
+    <style name="app_switch" parent="settings_button">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginTop">@dimen/padding_xl</item>
+        <item name="android:paddingEnd">@dimen/padding_s</item>
+        <item name="android:thumbTint">@color/switch_thumb_colors</item>
+        <item name="android:trackTint">@color/switch_track_colors</item>
+        <item name="android:switchMinWidth">@dimen/switch_size</item>
     </style>
 </resources>
