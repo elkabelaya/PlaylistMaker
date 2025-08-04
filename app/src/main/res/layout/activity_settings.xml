@@ -11,14 +11,11 @@
     <include layout="@layout/toolbar"/>
 
     <Switch
-        android:id="@+id/switch_dark_mode"
-        style="@style/settings_button"
-        android:checked="false"
-        android:gravity="center_vertical"
+        android:id="@+id/switch_night_mode"
+        style="@style/app_switch"
         android:text="@string/settings_theme"
-        android:layout_marginTop="@dimen/padding_xl"
         tools:ignore="RtlSymmetry,UseSwitchCompatOrMaterialXml"
-        android:paddingEnd="@dimen/padding_s"/>
+        tools:checked="true"/>
 
     <Button
         android:id="@+id/share"

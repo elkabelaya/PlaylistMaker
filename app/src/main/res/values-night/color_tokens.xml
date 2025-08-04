@@ -7,4 +7,7 @@
     <color name="icon_tint">@color/yp_white</color>
     <color name="background_search">@color/yp_white</color>
     <color name="text_search">@color/yp_black</color>
+    <color name="toolbar_text">@color/yp_white</color>
+    <color name="switch_thumb">@color/yp_blue</color>
+    <color name="switch_track">@color/yp_blue_light</color>
 </resources>

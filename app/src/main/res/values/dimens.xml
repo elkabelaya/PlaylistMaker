@@ -11,4 +11,6 @@
 
     <dimen name="text_m">16sp</dimen>
     <dimen name="text_l">22sp</dimen>
+
+    <dimen name="switch_size">32dp</dimen>
 </resources>
