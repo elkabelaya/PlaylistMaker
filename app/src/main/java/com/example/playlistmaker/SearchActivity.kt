@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.core.view.isVisible
 
 
 class SearchActivity : AppCompatActivityWithToolBar() {
@@ -13,6 +14,7 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
         setupToolBar(getResources().getString(R.string.main_search))
         setupSearchBar()
 
@@ -45,7 +47,7 @@ class SearchActivity : AppCompatActivityWithToolBar() {
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 val currentText = s.toString()
-                resetButton.visibility = if (currentText.count() > 0) View.VISIBLE else View.INVISIBLE
+                resetButton.isVisible = s.isNotEmpty()
                 searchText = currentText
             }
 

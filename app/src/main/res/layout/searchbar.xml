@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/search_box"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -18,49 +18,44 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/search_logo"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_search"
-            app:tint="@color/text_search"
-            tools:ignore="ContentDescription" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="end">
 
         <EditText
             android:id="@+id/search_text"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1"
+            android:paddingVertical="@dimen/padding_xs"
+            android:paddingStart="@dimen/padding_s"
+            android:paddingEnd="@dimen/icon_width"
             android:background="@null"
             android:fontFamily="@font/ys_display_regular"
             android:importantForAutofill="no"
             android:inputType="text"
             android:textColor="@color/text_search"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_m"
             android:hint="@string/main_search"
-            android:textColorHint="@color/text_search"
+            android:textColorHint="@color/hint_search"
             android:maxLines="1"
-            tools:ignore="LabelFor" />
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="@dimen/padding_xxs"
+            android:drawableTint="@color/hint_search"
+            tools:ignore="LabelFor"/>
 
         <ImageButton
             android:id="@+id/reset_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="8dp"
+            android:layout_width="@dimen/icon_width"
+            android:layout_height="@dimen/icon_height"
+            android:layout_gravity="end|center_vertical"
             android:background="@null"
             android:foreground="?selectableItemBackground"
             android:src="@drawable/ic_close"
             android:visibility="gone"
-            app:tint="@color/text_search"
-            tools:ignore="ContentDescription"
+            app:tint="@color/hint_search"
+            tools:ignore="ContentDescription,ObsoleteLayoutParam"
             tools:visibility="visible" />
 
-    </LinearLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

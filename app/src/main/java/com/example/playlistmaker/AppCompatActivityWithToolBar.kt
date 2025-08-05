@@ -4,13 +4,13 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.appbar.MaterialToolbar
 
-
 open class AppCompatActivityWithToolBar: AppCompatActivity() {
     fun setupToolBar(title: String) {
+        setupTopInset(this, R.id.main)
+
         val toolbar = findViewById<MaterialToolbar>(R.id.tool_bar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = title
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

@@ -15,4 +15,6 @@
     <dimen name="text_l">22sp</dimen>
 
     <dimen name="switch_size">32dp</dimen>
+    <dimen name="icon_width">40dp</dimen>
+    <dimen name="icon_height">36dp</dimen>
 </resources>

@@ -10,6 +10,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setupTopInset(this, R.id.main)
 
         val searchButton = findViewById<Button>(R.id.search)
         val mediaButton = findViewById<Button>(R.id.media)
