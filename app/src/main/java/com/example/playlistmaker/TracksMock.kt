@@ -1,7 +1,7 @@
 package com.example.playlistmaker
 
-fun generateTracksMock(): ArrayList<Track> {
-    return arrayListOf(
+fun generateTracksMock(): List<Track> {
+    return listOf(
         Track(
             "Smells Like Teen Spirit",
             "Nirvana",
