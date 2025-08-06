@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
 class SearchActivity : AppCompatActivityWithToolBar() {
@@ -18,11 +20,7 @@ class SearchActivity : AppCompatActivityWithToolBar() {
         setupToolBar(getResources().getString(R.string.main_search))
         setupSearchBar()
 
-        // TODO
-        // строка добавлена для демонстрации работы onRestoreInstanceState
-        // при повороте экрана
-        // убрать после ревью
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR)
+        fillList()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -58,6 +56,14 @@ class SearchActivity : AppCompatActivityWithToolBar() {
             editText.setText("")
             hideKeyboardFrom(this, editText)
         }
+    }
+
+    private fun fillList() {
+        val recycler = findViewById<RecyclerView>(R.id.commentsList)
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = TracksAdapter(
+            generateTracksMock()
+        )
     }
 
     companion object {

@@ -7,14 +7,22 @@
     <dimen name="padding_xl">24dp</dimen>
     <dimen name="padding_xxl">28dp</dimen>
 
+    <dimen name="radius_xxxs">2dp</dimen>
+    <dimen name="radius_xxs">4dp</dimen>
     <dimen name="radius_xs">8dp</dimen>
     <dimen name="radius_s">12dp</dimen>
     <dimen name="radius_m">16dp</dimen>
 
+    <dimen name="text_s">11sp</dimen>
     <dimen name="text_m">16sp</dimen>
     <dimen name="text_l">22sp</dimen>
+
+    <dimen name="icon_s">12dp</dimen>
+    <dimen name="icon_m">24dp</dimen>
 
     <dimen name="switch_size">32dp</dimen>
     <dimen name="icon_width">40dp</dimen>
     <dimen name="icon_height">36dp</dimen>
+    <dimen name="list_item_height">60dp</dimen>
+
 </resources>
