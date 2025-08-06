@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">@color/white</color>
+    <color name="background_accent">@color/yp_blue</color>
+    <color name="text">@color/black</color>
+    <color name="text_accent">@color/yp_white</color>
+    <color name="icon_tint">@color/yp_text_gray</color>
+    <color name="background_search">@color/yp_light_gray</color>
+    <color name="hint_search">@color/yp_text_gray</color>
+    <color name="text_search">@color/yp_black</color>
+    <color name="toolbar_text">@color/yp_black</color>
+    <color name="switch_thumb">@color/default_switch</color>
+    <color name="switch_track">@color/default_switch_light</color>
+</resources>
