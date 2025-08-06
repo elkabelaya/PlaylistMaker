@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import android.content.Context
+import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.ComponentActivity
@@ -22,4 +23,11 @@ fun setupTopInset(activity: ComponentActivity, viewId: Int) {
         view.updatePadding(top = statusBar.top)
         insets
     }
+}
+
+fun dpToPx(dp: Float, context: Context): Int {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        dp,
+        context.resources.displayMetrics).toInt()
 }
