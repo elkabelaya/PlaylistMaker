@@ -35,6 +35,14 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
+    }
+
+    sourceSets.getByName("main") {
+        res.setSrcDirs(listOf("src/main/res",
+            file("src/main/res/app").listFiles(),
+            file("src/main/res/app/components").listFiles()
+        ))
     }
 }
 
@@ -53,5 +61,10 @@ dependencies {
 
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
+
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    implementation(libs.kotlin.reflect)
 
 }

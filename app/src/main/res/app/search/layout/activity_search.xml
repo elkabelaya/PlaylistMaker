@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main"
+
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".SearchActivity"
+        android:orientation="vertical"
+        android:background="@color/background">
+
+        <include layout="@layout/toolbar"/>
+        <include layout="@layout/searchbar"/>
+        <include android:id="@+id/progressbar"
+            layout="@layout/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_xxxxl"
+            android:visibility="invisible"/>
+        <include android:id="@+id/error_stub"
+            layout="@layout/error_stub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_xxxl"
+            android:layout_marginBottom="@dimen/padding_xl"
+            android:visibility="invisible"/>
+        <Button android:id="@+id/refresh_button"
+            style="@style/action_button"
+            android:text="@string/search_refresh"
+            android:visibility="invisible"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+</layout>
