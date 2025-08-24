@@ -41,7 +41,10 @@
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="@dimen/padding_xxs"
             android:drawableTint="@color/hint_search"
-            tools:ignore="LabelFor"/>
+            tools:ignore="LabelFor"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:textCursorDrawable="@drawable/shape_search_cursor"/>
 
         <ImageButton
             android:id="@+id/reset_button"
