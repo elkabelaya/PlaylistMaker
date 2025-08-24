@@ -1,11 +1,8 @@
 package com.example.playlistmaker.network
-
-import okhttp3.Interceptor;
-import okhttp3.Request;
-import okhttp3.Response;
-import java.io.IOException;
-
-class StatusCodeException(code: Int) : Exception(code.toString())
+import okhttp3.Interceptor
+import okhttp3.Response
+import java.io.IOException
+class StatusCodeException(code: Int): IOException(code.toString())
 
 class StatusCodeInterceptor: Interceptor {
     @Throws(IOException::class)

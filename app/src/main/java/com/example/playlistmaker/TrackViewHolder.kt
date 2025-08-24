@@ -1,7 +1,6 @@
 package com.example.playlistmaker
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -26,8 +25,8 @@ class TrackViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     private val dotView: ImageView = itemView.findViewById(R.id.dot)
 
     fun bind(model: Track) {
-        titleView.text = model.trackName
-        artistView.text = model.artistName
+        titleView.text = model.trackName.trim()
+        artistView.text = model.artistName?.trim()
         timeView.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTime)
 
         dotView.isVisible = artistView.text.isNotEmpty() and timeView.text.isNotEmpty()

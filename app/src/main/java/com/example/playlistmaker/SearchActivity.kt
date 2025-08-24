@@ -1,19 +1,17 @@
 package com.example.playlistmaker
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.databinding.ActivityMainBinding
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.error.ErrorType
 import com.example.playlistmaker.error.ErrorViewModel
@@ -33,7 +31,6 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
-        hideError()
         setupToolBar(getResources().getString(R.string.main_search))
         setupSearchBar()
         setupList()
@@ -71,15 +68,14 @@ class SearchActivity : AppCompatActivityWithToolBar() {
 
         editText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
-                fillList()
+                proceedSearch()
                 true
             }
             false
         }
 
         resetButton.setOnClickListener{
-            editText.setText("")
-            hideKeyboardFrom(this, editText)
+            clearInput()
         }
     }
 
@@ -94,18 +90,43 @@ class SearchActivity : AppCompatActivityWithToolBar() {
         val refreshButton = findViewById<Button>(R.id.refresh_button)
 
         refreshButton.setOnClickListener {
-            fillList()
+            proceedSearch()
         }
     }
 
-    private fun fillList() {
+    private fun clearInput() {
+        val editText = findViewById<EditText>(R.id.search_text)
+        editText.setText("")
         hideError()
-        Network.itunesService().findTrack(searchText).enqueue(object : Callback<Tracks> {
+        tracks.clear()
+        hideKeyboardFrom(this, editText)
+    }
+
+    private fun proceedSearch() {
+        val editText = findViewById<EditText>(R.id.search_text)
+        val input = editText.text.toString().trim()
+
+        editText.setText(input)
+        hideError()
+        tracks.clear()
+
+        if (input.isEmpty()) {
+            clearInput()
+        } else {
+            fillList(input)
+        }
+    }
+
+    private fun fillList(query: String) {
+        toggleLoader(true)
+
+        Network.itunesService().findTrack(query).enqueue(object : Callback<Tracks> {
             override fun onResponse(
                 call: Call<Tracks?>,
                 response: Response<Tracks?>
             ) {
-                tracks.clear()
+
+                toggleLoader(false)
                 val results = response.body()?.results?.filterNotNull()
                 if (results?.isNotEmpty() == true) {
                     tracks.addAll(results)
@@ -119,10 +140,16 @@ class SearchActivity : AppCompatActivityWithToolBar() {
                 call: Call<Tracks?>,
                 t: Throwable
             ) {
+                toggleLoader(false)
                 showError(ErrorType.WIFI, R.string.error_wifi)
             }
 
         })
+    }
+
+    private fun toggleLoader(show: Boolean) {
+        val progressbar = findViewById<ProgressBar>(R.id.progressbar)
+        progressbar.isVisible = show
     }
 
     private fun showError(type: ErrorType, stringId: Int) {

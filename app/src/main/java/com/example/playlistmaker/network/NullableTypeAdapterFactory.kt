@@ -1,10 +1,7 @@
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.JsonReader
-import com.google.gson.stream.JsonToken
 import com.google.gson.stream.JsonWriter
-import java.io.IOException
-import java.lang.reflect.Type
 import kotlin.jvm.internal.Reflection
 import kotlin.reflect.KClass
 import kotlin.reflect.full.memberProperties
@@ -33,7 +30,6 @@ class NullableTypeAdapterFactory : TypeAdapterFactory {
                     kotlinClass.memberProperties.forEach {
                         if (!it.returnType.isMarkedNullable && it.get(value) == null) {
                             return null
-                            //throw JsonParseException("Value of non-nullable member [${it.name}] cannot be null")
                         }
                     }
 
