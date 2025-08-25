@@ -8,7 +8,9 @@
     <color name="background_search">@color/yp_light_gray</color>
     <color name="hint_search">@color/yp_text_gray</color>
     <color name="text_search">@color/yp_black</color>
-    <color name="toolbar_text">@color/yp_black</color>
+    <color name="text_toolbar">@color/yp_black</color>
+    <color name="text_inverted">@color/yp_white</color>
+    <color name="background_inverted">@color/yp_black</color>
     <color name="switch_thumb">@color/default_switch</color>
     <color name="switch_track">@color/default_switch_light</color>
 </resources>

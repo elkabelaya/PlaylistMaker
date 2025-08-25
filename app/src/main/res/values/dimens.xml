@@ -6,19 +6,25 @@
     <dimen name="padding_l">20dp</dimen>
     <dimen name="padding_xl">24dp</dimen>
     <dimen name="padding_xxl">28dp</dimen>
+    <dimen name="padding_xxxl">102dp</dimen>
+    <dimen name="padding_xxxxl">140dp</dimen>
 
     <dimen name="radius_xxxs">2dp</dimen>
     <dimen name="radius_xxs">4dp</dimen>
     <dimen name="radius_xs">8dp</dimen>
     <dimen name="radius_s">12dp</dimen>
     <dimen name="radius_m">16dp</dimen>
+    <dimen name="radius_xxxl">54dp</dimen>
 
     <dimen name="text_s">11sp</dimen>
+    <dimen name="text_xm">14sp</dimen>
     <dimen name="text_m">16sp</dimen>
-    <dimen name="text_l">22sp</dimen>
+    <dimen name="text_l">19sp</dimen>
+    <dimen name="text_xl">22sp</dimen>
 
     <dimen name="icon_s">12dp</dimen>
     <dimen name="icon_m">24dp</dimen>
+    <dimen name="icon_xxxl">120dp</dimen>
 
     <dimen name="switch_size">32dp</dimen>
     <dimen name="icon_width">40dp</dimen>
