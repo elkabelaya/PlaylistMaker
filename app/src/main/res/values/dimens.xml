@@ -1,13 +1,17 @@
 <resources>
     <dimen name="padding_xxs">4dp</dimen>
     <dimen name="padding_xs">8dp</dimen>
+    <dimen name="padding_xss">10dp</dimen>
     <dimen name="padding_s">12dp</dimen>
+    <dimen name="padding_sm">14dp</dimen>
     <dimen name="padding_m">16dp</dimen>
+    <dimen name="padding_ml">18dp</dimen>
     <dimen name="padding_l">20dp</dimen>
     <dimen name="padding_xl">24dp</dimen>
     <dimen name="padding_xxl">28dp</dimen>
-    <dimen name="padding_xxxl">102dp</dimen>
-    <dimen name="padding_xxxxl">140dp</dimen>
+    <dimen name="padding_xxxl">42dp</dimen>
+    <dimen name="padding_xxxxl">102dp</dimen>
+    <dimen name="padding_xxxxxl">140dp</dimen>
 
     <dimen name="radius_xxxs">2dp</dimen>
     <dimen name="radius_xxs">4dp</dimen>
