@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -24,10 +25,12 @@ class TrackViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     private val imageView: ImageView = itemView.findViewById(R.id.image)
     private val dotView: ImageView = itemView.findViewById(R.id.dot)
 
-    fun bind(model: Track) {
+    fun bind(model: Track, onClickItem: (Track) -> Unit) {
         titleView.text = model.trackName.trim()
         artistView.text = model.artistName?.trim()
-        timeView.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTime)
+        try {
+            timeView.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTime)
+        } catch (e: Exception) {}
 
         dotView.isVisible = artistView.text.isNotEmpty() and timeView.text.isNotEmpty()
 
@@ -38,5 +41,8 @@ class TrackViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
             .transform(RoundedCorners(imageView.resources.getDimensionPixelSize(R.dimen.radius_xxxs)))
             .into(imageView)
 
+        itemView.setOnClickListener {
+            onClickItem(model)
+        }
     }
 }
