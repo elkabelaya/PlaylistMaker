@@ -1,8 +1,8 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.search
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.models.Track
 
 class TracksAdapter (val onClickItem: (Track) -> Unit) : RecyclerView.Adapter<TrackViewHolder> () {
     var tracks: List<Track> = emptyList()
