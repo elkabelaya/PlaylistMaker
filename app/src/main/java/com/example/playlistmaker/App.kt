@@ -3,7 +3,7 @@ package com.example.playlistmaker
 import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.Preferences
+import com.example.playlistmaker.utils.Preferences
 
 class App : Application() {
     var darkTheme: Boolean

@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.models
 
 fun generateTracksMock(): ArrayList<Track> {
     return arrayListOf(

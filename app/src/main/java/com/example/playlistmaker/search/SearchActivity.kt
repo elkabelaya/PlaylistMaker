@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.search
 
 import android.os.Bundle
 import android.text.Editable
@@ -13,15 +13,19 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Visibility
+import com.example.playlistmaker.App
+import com.example.playlistmaker.utils.AppCompatActivityWithToolBar
+import com.example.playlistmaker.R
+import com.example.playlistmaker.models.Track
+import com.example.playlistmaker.models.Tracks
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.error.ErrorType
 import com.example.playlistmaker.error.ErrorViewModel
+import com.example.playlistmaker.utils.hideKeyboardFrom
 import com.example.playlistmaker.network.Network
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class SearchActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivitySearchBinding
@@ -35,8 +39,8 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     private lateinit var historyManager: SearchHistoryManager
 
     init {
-        adapter = TracksAdapter(){ item -> onClickItem(item) }
-        historyAdapter = TracksAdapter(){ item -> onClickItem(item) }
+        adapter = TracksAdapter() { item -> onClickItem(item) }
+        historyAdapter = TracksAdapter() { item -> onClickItem(item) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

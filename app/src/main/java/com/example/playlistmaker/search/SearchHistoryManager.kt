@@ -1,7 +1,7 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.search
 
-import android.content.SharedPreferences
-import com.example.Preferences
+import com.example.playlistmaker.utils.Preferences
+import com.example.playlistmaker.models.Track
 
 class SearchHistoryManager(val prefs: Preferences, val maxCount: Int) {
     var elements = mutableListOf<Track>()

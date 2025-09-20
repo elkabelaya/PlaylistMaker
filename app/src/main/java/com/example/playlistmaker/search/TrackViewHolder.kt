@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import java.text.ParseException
+import com.example.playlistmaker.R
+import com.example.playlistmaker.models.Track
 import java.text.SimpleDateFormat
 import java.util.Locale
 

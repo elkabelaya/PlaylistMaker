@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.playlistmaker.utils.AppCompatActivityWithToolBar
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 

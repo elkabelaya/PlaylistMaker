@@ -1,7 +1,8 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.utils
 
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import com.example.playlistmaker.R
 import com.google.android.material.appbar.MaterialToolbar
 
 open class AppCompatActivityWithToolBar: AppCompatActivity() {

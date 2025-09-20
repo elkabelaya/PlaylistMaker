@@ -1,7 +1,8 @@
-package com.example
-import android.content.SharedPreferences
+package com.example.playlistmaker.utils
+
 import android.content.Context
-import com.example.playlistmaker.Track
+import android.content.SharedPreferences
+import com.example.playlistmaker.models.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -43,4 +44,3 @@ class Preferences(val context: Context) {
         const val TRACKS_PREFERENCES_KEY: String = "TRACKS_PREFERENCES_KEY"
     }
 }
-
