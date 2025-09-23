@@ -36,8 +36,7 @@
                 android:textSize="@dimen/text_xl"
                 android:textColor="@color/text_title"
                 app:layout_constraintTop_toBottomOf="@id/image"
-                android:layout_marginTop="@dimen/padding_xl"
-                tools:text="Yesterday (Remastered 2009)skjdfhskdj fhkshdjfhkjdfh"/>
+                android:layout_marginTop="@dimen/padding_xl"/>
             <TextView
                 android:id="@+id/artist"
                 android:layout_width="match_parent"
@@ -46,8 +45,7 @@
                 android:textSize="@dimen/text_xm"
                 android:textColor="@color/text_title"
                 app:layout_constraintTop_toBottomOf="@id/title"
-                android:layout_marginTop="@dimen/padding_s"
-                tools:text="Yesterday (Remastered 2009)skjdfhskdj fhkshdjfhkjdfh"/>
+                android:layout_marginTop="@dimen/padding_s"/>
 
             <ImageButton
                 android:id="@+id/add"
@@ -84,8 +82,7 @@
                 android:textSize="@dimen/text_xm"
                 android:textColor="@color/text_title"
                 app:layout_constraintTop_toBottomOf="@id/play"
-                android:layout_marginTop="@dimen/padding_s"
-                tools:text="0:30"/>
+                android:layout_marginTop="@dimen/padding_s" />
 
             <TextView
                 android:id="@+id/duration_label"
@@ -137,36 +134,31 @@
                 app:layout_constraintTop_toBottomOf="@id/time"
                 app:layout_constraintLeft_toRightOf="@id/barrier"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="@dimen/padding_5xl"
-                tools:text="0:30"/>
+                android:layout_marginTop="@dimen/padding_5xl" />
             <TextView
                 android:id="@+id/album"
                 style="@style/player_album_info"
                 app:layout_constraintTop_toBottomOf="@id/duration"
                 app:layout_constraintLeft_toRightOf="@id/barrier"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:text="какой-то длинный текст\ndfkgj"/>
+                app:layout_constraintRight_toRightOf="parent" />
             <TextView
                 android:id="@+id/year"
                 style="@style/player_info"
                 app:layout_constraintTop_toBottomOf="@id/album"
                 app:layout_constraintLeft_toRightOf="@id/barrier"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:text="2025"/>
+                app:layout_constraintRight_toRightOf="parent"/>
             <TextView
                 android:id="@+id/genre"
                 style="@style/player_info"
                 app:layout_constraintTop_toBottomOf="@id/year"
                 app:layout_constraintLeft_toRightOf="@id/barrier"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:text="Фолк"/>
+                app:layout_constraintRight_toRightOf="parent"/>
             <TextView
                 android:id="@+id/country"
                 style="@style/player_info"
                 app:layout_constraintTop_toBottomOf="@id/genre"
                 app:layout_constraintLeft_toRightOf="@id/barrier"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:text="Великобритания"/>
+                app:layout_constraintRight_toRightOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
