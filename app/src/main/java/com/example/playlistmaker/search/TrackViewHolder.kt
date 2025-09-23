@@ -29,9 +29,7 @@ class TrackViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
     fun bind(model: Track, onClickItem: (Track) -> Unit) {
         titleView.text = model.trackName.trim()
         artistView.text = model.artistName?.trim()
-        try {
-            timeView.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(model.trackTime)
-        } catch (e: Exception) {}
+        timeView.text = model.formattedTrackTime
 
         dotView.isVisible = artistView.text.isNotEmpty() and timeView.text.isNotEmpty()
 

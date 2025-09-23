@@ -5,7 +5,7 @@
     <color name="text_title">@color/yp_black</color>
     <color name="text">@color/black</color>
     <color name="text_accent">@color/yp_white</color>
-    <color name="icon_tint">@color/yp_text_gray</color>
+    <color name="text_secondary">@color/yp_text_gray</color>
     <color name="background_search">@color/yp_light_gray</color>
     <color name="hint_search">@color/yp_text_gray</color>
     <color name="text_search">@color/yp_black</color>
