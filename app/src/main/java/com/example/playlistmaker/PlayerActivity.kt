@@ -39,6 +39,8 @@ class PlayerActivity : AppCompatActivityWithToolBar() {
             .transform(RoundedCorners(imageView.resources.getDimensionPixelSize(R.dimen.radius_m)))
             .into(imageView)
 
+        val timeView = findViewById<TextView>(R.id.time)
+        timeView.text = "00:30"
         setTextOrHide(null, R.id.title,track.trackName)
         setTextOrHide(null, R.id.artist, track.artistName)
         setTextOrHide(R.id.duration_label, R.id.duration, track.formattedTrackTime)
