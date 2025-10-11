@@ -33,6 +33,7 @@
 
     <dimen name="icon_s">12dp</dimen>
     <dimen name="icon_m">24dp</dimen>
+    <dimen name="icon_l">44dp</dimen>
     <dimen name="icon_xl">51dp</dimen>
     <dimen name="icon_xxl">84dp</dimen>
     <dimen name="icon_xxxl">120dp</dimen>

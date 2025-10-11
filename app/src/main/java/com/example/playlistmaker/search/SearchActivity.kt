@@ -200,11 +200,13 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     }
 
     private fun onClickItem(item: Track) {
-        historyManager.add(item)
-        historyAdapter.notifyDataSetChanged()
-        val displayIntent = Intent(this, PlayerActivity::class.java)
-        displayIntent.putExtra(PlayerActivity.INTENT_KEY, item)
-        startActivity(displayIntent)
+        if (canClickDebounced()) {
+            historyManager.add(item)
+            historyAdapter.notifyDataSetChanged()
+            val displayIntent = Intent(this, PlayerActivity::class.java)
+            displayIntent.putExtra(PlayerActivity.INTENT_KEY, item)
+            startActivity(displayIntent)
+        }
     }
 
     companion object {
