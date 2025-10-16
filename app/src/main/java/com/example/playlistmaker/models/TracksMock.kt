@@ -10,7 +10,8 @@ fun generateTracksMock(): ArrayList<Track> {
             "Some",
             "2025",
             "Folk",
-            "USA"
+            "USA",
+            previewUrl = "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/ac/c7/d1/acc7d13f-6634-495f-caf6-491eccb505e8/mzaf_4002676889906514534.plus.aac.p.m4a"
         ),
         Track(
             "Billie Jean",
@@ -20,7 +21,8 @@ fun generateTracksMock(): ArrayList<Track> {
             "Some",
             "2025",
             "Folk",
-            "USA"
+            "USA",
+            previewUrl = "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/ac/c7/d1/acc7d13f-6634-495f-caf6-491eccb505e8/mzaf_4002676889906514534.plus.aac.p.m4a"
         ),
         Track(
             "Stayin' Alive",
@@ -30,7 +32,8 @@ fun generateTracksMock(): ArrayList<Track> {
             "Some",
             "2025",
             "Folk",
-            "USA"
+            "USA",
+            previewUrl = "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/ac/c7/d1/acc7d13f-6634-495f-caf6-491eccb505e8/mzaf_4002676889906514534.plus.aac.p.m4a"
         ),
         Track(
             "Whole Lotta Love",
@@ -40,7 +43,8 @@ fun generateTracksMock(): ArrayList<Track> {
             "Some",
             "2025",
             "Folk",
-            "USA"
+            "USA",
+            previewUrl = "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/ac/c7/d1/acc7d13f-6634-495f-caf6-491eccb505e8/mzaf_4002676889906514534.plus.aac.p.m4a"
         ),
         Track(
             "Sweet Child O'Mine",
@@ -50,7 +54,8 @@ fun generateTracksMock(): ArrayList<Track> {
             "Some",
             "2025",
             "Folk",
-            "USA"
+            "USA",
+            previewUrl = "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/ac/c7/d1/acc7d13f-6634-495f-caf6-491eccb505e8/mzaf_4002676889906514534.plus.aac.p.m4a"
         )
     )
 }
