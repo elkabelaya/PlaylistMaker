@@ -83,15 +83,6 @@ class SearchActivity : AppCompatActivityWithToolBar() {
             override fun afterTextChanged(s: Editable) {}
         })
 
-//        editText.setOnEditorActionListener { _, actionId, _ ->
-//            if (actionId == EditorInfo.IME_ACTION_DONE) {
-//                proceedSearch()
-//                changeHistoryGroup(false)
-//                true
-//            }
-//            false
-//        }
-
         editText.setOnFocusChangeListener { view, hasFocus ->
             changeHistoryGroup(hasFocus)
         }
