@@ -1,6 +1,7 @@
 package com.example.playlistmaker.search
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -25,13 +26,13 @@ import com.example.playlistmaker.error.ErrorType
 import com.example.playlistmaker.error.ErrorViewModel
 import com.example.playlistmaker.utils.hideKeyboardFrom
 import com.example.playlistmaker.network.Network
+import com.example.playlistmaker.utils.InputDebouncer
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SearchActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivitySearchBinding
-    private var searchText: String = TEXT_DEF
     private var tracks: MutableList<Track> = mutableListOf()
     private val adapter: TracksAdapter
     private val historyAdapter: TracksAdapter
@@ -39,7 +40,9 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     private lateinit var resetButton: ImageView
     private lateinit var historyGroup: ViewGroup
     private lateinit var historyManager: SearchHistoryManager
+    private var searchCall: Call<Tracks>? = null
 
+    private val searchDebouncer = InputDebouncer()
     init {
         adapter = TracksAdapter() { item -> onClickItem(item) }
         historyAdapter = TracksAdapter() { item -> onClickItem(item) }
@@ -61,14 +64,10 @@ class SearchActivity : AppCompatActivityWithToolBar() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(TEXT_KEY, searchText)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-
-        searchText = savedInstanceState.getString(TEXT_KEY, TEXT_DEF)
-        editText.setText(searchText)
     }
 
     private fun setupSearchBar() {
@@ -76,23 +75,22 @@ class SearchActivity : AppCompatActivityWithToolBar() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                val currentText = s.toString()
-                resetButton.isVisible = s.isNotEmpty()
-                searchText = currentText
+               resetButton.isVisible = s.isNotEmpty()
                 changeHistoryGroup(true)
+                searchDebounced()
             }
 
             override fun afterTextChanged(s: Editable) {}
         })
 
-        editText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                proceedSearch()
-                changeHistoryGroup(false)
-                true
-            }
-            false
-        }
+//        editText.setOnEditorActionListener { _, actionId, _ ->
+//            if (actionId == EditorInfo.IME_ACTION_DONE) {
+//                proceedSearch()
+//                changeHistoryGroup(false)
+//                true
+//            }
+//            false
+//        }
 
         editText.setOnFocusChangeListener { view, hasFocus ->
             changeHistoryGroup(hasFocus)
@@ -131,20 +129,21 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     }
 
     private fun changeHistoryGroup(hasFocus: Boolean) {
-        historyGroup.isVisible = hasFocus and searchText.isEmpty() and historyManager.elements.isNotEmpty()
+        historyGroup.isVisible = hasFocus and editText.getText().isEmpty() and historyManager.elements.isNotEmpty()
     }
     private fun clearInput() {
         editText.setText("")
         hideError()
         tracks.clear()
         hideKeyboardFrom(this, editText)
+        changeHistoryGroup(true)
     }
 
     private fun proceedSearch() {
         val input = editText.text.toString().trim()
 
-        editText.setText(input)
         hideError()
+
         tracks.clear()
 
         if (input.isEmpty()) {
@@ -154,15 +153,21 @@ class SearchActivity : AppCompatActivityWithToolBar() {
         }
     }
 
+    private fun searchDebounced() {
+        searchDebouncer.debounce {
+            proceedSearch()
+        }
+    }
     private fun fillList(query: String) {
         toggleLoader(true)
-
-        Network.itunesService.findTrack(query).enqueue(object : Callback<Tracks> {
+        changeHistoryGroup(true)
+        searchCall?.cancel()
+        searchCall = Network.itunesService.findTrack(query)
+        searchCall?.enqueue(object : Callback<Tracks> {
             override fun onResponse(
                 call: Call<Tracks?>,
                 response: Response<Tracks?>
             ) {
-
                 toggleLoader(false)
                 val results = response.body()?.results?.filterNotNull()
                 if (results?.isNotEmpty() == true) {
