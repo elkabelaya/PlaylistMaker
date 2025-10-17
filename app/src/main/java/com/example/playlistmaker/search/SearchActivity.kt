@@ -1,5 +1,6 @@
 package com.example.playlistmaker.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.App
+import com.example.playlistmaker.PlayerActivity
 import com.example.playlistmaker.utils.AppCompatActivityWithToolBar
 import com.example.playlistmaker.R
 import com.example.playlistmaker.models.Track
@@ -200,6 +202,9 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     private fun onClickItem(item: Track) {
         historyManager.add(item)
         historyAdapter.notifyDataSetChanged()
+        val displayIntent = Intent(this, PlayerActivity::class.java)
+        displayIntent.putExtra(PlayerActivity.INTENT_KEY, item)
+        startActivity(displayIntent)
     }
 
     companion object {

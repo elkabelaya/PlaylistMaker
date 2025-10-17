@@ -16,13 +16,13 @@
             layout="@layout/progressbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_xxxxxl"
+            android:layout_marginTop="@dimen/padding_10xl"
             android:visibility="gone"/>
         <include android:id="@+id/error_stub"
             layout="@layout/error_stub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_xxxxl"
+            android:layout_marginTop="@dimen/padding_9xl"
             android:layout_marginBottom="@dimen/padding_xl"
             android:visibility="gone"/>
         <Button android:id="@+id/refresh_button"
@@ -43,7 +43,7 @@
                 android:textSize="@dimen/text_l"
                 android:textColor="@color/text_title"
                 android:layout_marginBottom="@dimen/padding_s"
-                android:layout_marginTop="@dimen/padding_xxxl"/>
+                android:layout_marginTop="@dimen/padding_7xl"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/history"
                 android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             <Button android:id="@+id/clear_button"
                 style="@style/action_button"
                 android:text="@string/search_history_clear"
-                android:layout_marginBottom="@dimen/padding_xxl"
+                android:layout_marginBottom="@dimen/padding_4xl"
                 android:layout_marginTop="@dimen/padding_xl"/>
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView

@@ -17,7 +17,7 @@
 
     <style name="settings_button" parent="@style/Widget.AppCompat.Button.Borderless" >
         <item name="iconGravity">end</item>
-        <item name="iconTint">@color/icon_tint</item>
+        <item name="iconTint">@color/text_secondary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/list_item_height</item>
         <item name="android:backgroundTint">@color/yp_white</item>
