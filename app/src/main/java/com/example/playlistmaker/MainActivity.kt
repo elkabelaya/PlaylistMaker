@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.search.SearchActivity
+import com.example.playlistmaker.utils.ClickDebouncer
+import com.example.playlistmaker.utils.ClickDebouncerInterface
 import com.example.playlistmaker.utils.setupTopInset
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ClickDebouncerInterface {
+    private var clickDebouncer = ClickDebouncer()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -18,18 +21,26 @@ class MainActivity : AppCompatActivity() {
         val settingsButton = findViewById<Button>(R.id.settings)
 
         searchButton.setOnClickListener {
-            val displayIntent = Intent(this, SearchActivity::class.java)
-            startActivity(displayIntent)
+            if (canClickDebounced()) {
+                val displayIntent = Intent(this, SearchActivity::class.java)
+                startActivity(displayIntent)
+            }
         }
 
         mediaButton.setOnClickListener {
-            val displayIntent = Intent(this, MediaActivity::class.java)
-            startActivity(displayIntent)
+            if (canClickDebounced()) {
+                val displayIntent = Intent(this, MediaActivity::class.java)
+                startActivity(displayIntent)
+            }
         }
 
         settingsButton.setOnClickListener {
-            val displayIntent = Intent(this, SettingsActivity::class.java)
-            startActivity(displayIntent)
+            if (canClickDebounced()) {
+                val displayIntent = Intent(this, SettingsActivity::class.java)
+                startActivity(displayIntent)
+            }
         }
     }
+
+    override fun canClickDebounced(): Boolean = clickDebouncer.canClickDebounced()
 }

@@ -42,7 +42,6 @@
             android:drawablePadding="@dimen/padding_xxs"
             android:drawableTint="@color/hint_search"
             tools:ignore="LabelFor"
-            android:imeOptions="actionDone"
             android:singleLine="true"
             android:textCursorDrawable="@drawable/shape_search_cursor"/>
 

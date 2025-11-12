@@ -29,29 +29,44 @@ class SettingsActivity : AppCompatActivityWithToolBar() {
 
         nightSwitch.isChecked = (applicationContext as App).darkTheme
         nightSwitch.setOnCheckedChangeListener { switcher, isChecked ->
+            //Здесь проверка на canClickDebounced не нужна,
+            //если в ответ на быстрые клики пользователя
+            //одновременно открыть окно ( в других разделах настроек )
+            //и переключить тему (в этом блоке кода)
+            //то это не будет негативно влиять на UX
+            //TODO: убрать комментарий после прохождения ревью
             (applicationContext as App).switchTheme(isChecked)
         }
 
         shareButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.setType("text/html")
-            intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.settings_share_url))
-            startActivity(intent)
+            if (canClickDebounced()) {
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.setType("text/html")
+                intent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    getResources().getString(R.string.settings_share_url)
+                )
+                startActivity(intent)
+            }
         }
 
         supportButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_SENDTO)
-            val recipient = getResources().getString(R.string.settings_support_email)
-            val subject = getResources().getString(R.string.settings_support_subject)
-            val body = getResources().getString(R.string.settings_support_body)
-            intent.setData(Uri.parse("mailto:${recipient}?subject=${subject}&body=${body}"));
-            startActivity(intent)
+            if (canClickDebounced()) {
+                val intent = Intent(Intent.ACTION_SENDTO)
+                val recipient = getResources().getString(R.string.settings_support_email)
+                val subject = getResources().getString(R.string.settings_support_subject)
+                val body = getResources().getString(R.string.settings_support_body)
+                intent.setData(Uri.parse("mailto:${recipient}?subject=${subject}&body=${body}"));
+                startActivity(intent)
+            }
         }
 
         agreementButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.setData(Uri.parse(getResources().getString(R.string.settings_agreement_url)))
-            startActivity(intent)
+            if (canClickDebounced()) {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.setData(Uri.parse(getResources().getString(R.string.settings_agreement_url)))
+                startActivity(intent)
+            }
         }
     }
 

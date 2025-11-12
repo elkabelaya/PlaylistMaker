@@ -1,11 +1,17 @@
 package com.example.playlistmaker.utils
 
+import android.os.Handler
+import android.os.Looper
 import android.view.MenuItem
+import android.view.View
+import android.view.View.OnClickListener
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.R
 import com.google.android.material.appbar.MaterialToolbar
 
-open class AppCompatActivityWithToolBar: AppCompatActivity() {
+open class AppCompatActivityWithToolBar: AppCompatActivity(), ClickDebouncerInterface {
+    private var clickDebouncer = ClickDebouncer()
+
     fun setupToolBar(title: String) {
         setupTopInset(this, R.id.main)
 
@@ -28,4 +34,6 @@ open class AppCompatActivityWithToolBar: AppCompatActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
+    override fun canClickDebounced(): Boolean = clickDebouncer.canClickDebounced()
 }
