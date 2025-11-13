@@ -2,8 +2,12 @@ package com.example.playlistmaker.data.repository
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.playlistmaker.data.model.TrackDto
+import com.example.playlistmaker.data.model.TracksDto
 import com.example.playlistmaker.domain.model.Tracks
 import com.example.playlistmaker.domain.repository.PreferencesRepository
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class PreferencesRepositoryImpl(val context: Context, val mapper: TracksMapper): PreferencesRepository {
     override var isNightMode: Boolean
@@ -16,13 +20,20 @@ class PreferencesRepositoryImpl(val context: Context, val mapper: TracksMapper):
 
     override var searchHistory: Tracks
         get() {
-            val dto = historyPreferences.getString(TRACKS_PREFERENCES_KEY,"")
-            return mapper.map(dto)
+            var tracksDto: TracksDto? = null
+            try {
+                val json = historyPreferences.getString(TRACKS_PREFERENCES_KEY, "")
+                val listType = object : TypeToken<TracksDto>() {}.type
+                tracksDto = Gson().fromJson(json, listType)
+            } catch (ex: Exception) {}
+
+            return mapper.map(tracksDto ?: TracksDto(listOf<TrackDto>()))
         }
 
         set(value) {
+            val json = Gson().toJson(mapper.map(value))
             historyPreferences.edit()
-                .putString(TRACKS_PREFERENCES_KEY, mapper.map(value))
+                .putString(TRACKS_PREFERENCES_KEY, json)
                 .apply()
         }
 
