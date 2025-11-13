@@ -3,10 +3,12 @@ package com.example.playlistmaker.presentation.utils
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.R
+import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.domain.use_case.ClickDebounceUseCase
 import com.google.android.material.appbar.MaterialToolbar
 
-open class AppCompatActivityWithToolBar: AppCompatActivity(), ClickDebouncerInterface {
-    private var clickDebouncer = ClickDebouncer()
+open class AppCompatActivityWithToolBar: AppCompatActivity(), ClickDebounceUseCase {
+    private var clickDebounceUseCase = Creator.provideClickDebounceUseCase()
 
     fun setupToolBar(title: String) {
         setupTopInset(this, R.id.main)
@@ -31,5 +33,5 @@ open class AppCompatActivityWithToolBar: AppCompatActivity(), ClickDebouncerInte
         }
     }
 
-    override fun canClickDebounced(): Boolean = clickDebouncer.canClickDebounced()
+    override fun canClickDebounced(): Boolean = clickDebounceUseCase.canClickDebounced()
 }

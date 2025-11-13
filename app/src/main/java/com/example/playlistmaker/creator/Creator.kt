@@ -3,6 +3,7 @@ package com.example.playlistmaker.creator
 import android.content.Context
 import com.example.playlistmaker.data.mapper.TracksMapperImpl
 import com.example.playlistmaker.data.network.TracksRetrofitNetworkClient
+import com.example.playlistmaker.data.repository.LoopRepositoryImpl
 import com.example.playlistmaker.data.repository.PlayerRepositoryImpl
 import com.example.playlistmaker.data.repository.PreferencesRepositoryImpl
 import com.example.playlistmaker.data.repository.ThemeRepositoryImpl
@@ -12,14 +13,19 @@ import com.example.playlistmaker.domain.api.HistoryInteractor
 import com.example.playlistmaker.domain.api.ModeInteractor
 import com.example.playlistmaker.domain.api.PlayerInteractor
 import com.example.playlistmaker.domain.api.TracksInteractor
+import com.example.playlistmaker.domain.impl.ClickDebounceUseCaseImpl
 import com.example.playlistmaker.domain.impl.HistoryInteractorImpl
+import com.example.playlistmaker.domain.impl.InputDebounceUseCaseImpl
 import com.example.playlistmaker.domain.impl.ModeInteractorImpl
 import com.example.playlistmaker.domain.impl.PlayerInteractorImpl
 import com.example.playlistmaker.domain.impl.TracksInteractorImpl
+import com.example.playlistmaker.domain.repository.LoopRepository
 import com.example.playlistmaker.domain.repository.PlayerRepository
 import com.example.playlistmaker.domain.repository.PreferencesRepository
 import com.example.playlistmaker.domain.repository.ThemeRepository
 import com.example.playlistmaker.domain.repository.TracksRepository
+import com.example.playlistmaker.domain.use_case.ClickDebounceUseCase
+import com.example.playlistmaker.domain.use_case.InputDebounceUseCase
 
 object Creator {
     private fun getTracksRepository(): TracksRepository {
@@ -59,5 +65,17 @@ object Creator {
         repository.onPrepared = { interactor.onPrepared() }
         repository.onComplete = { interactor.onComplete() }
         return interactor
+    }
+
+    private fun getLoopRepository(): LoopRepository {
+        return LoopRepositoryImpl()
+    }
+
+    fun provideClickDebounceUseCase(): ClickDebounceUseCase {
+        return ClickDebounceUseCaseImpl(getLoopRepository())
+    }
+
+    fun provideInputDebounceUseCase(): InputDebounceUseCase {
+        return InputDebounceUseCaseImpl(getLoopRepository())
     }
 }

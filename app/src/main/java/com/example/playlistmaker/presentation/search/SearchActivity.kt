@@ -24,7 +24,6 @@ import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.presentation.error.ErrorType
 import com.example.playlistmaker.presentation.error.ErrorViewModel
 import com.example.playlistmaker.presentation.utils.hideKeyboardFrom
-import com.example.playlistmaker.presentation.utils.InputDebouncer
 import retrofit2.Call
 import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.domain.api.HistoryInteractor
@@ -44,7 +43,7 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     private val handler = Handler(Looper.getMainLooper())
     private var tracksRunnable: Runnable? = null
 
-    private val searchDebouncer = InputDebouncer()
+    private val inputDebounceUseCase = Creator.provideInputDebounceUseCase()
     val tracksInteractor = Creator.provideTracksInteractor()
 
     init {
@@ -149,7 +148,7 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     }
 
     private fun searchDebounced() {
-        searchDebouncer.debounce {
+        inputDebounceUseCase.debounce {
             proceedSearch()
         }
     }
