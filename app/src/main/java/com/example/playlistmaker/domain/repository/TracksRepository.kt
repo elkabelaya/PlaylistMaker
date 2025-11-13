@@ -1,6 +1,6 @@
 package com.example.playlistmaker.domain.repository
 
-import Resource
+import com.example.playlistmaker.domain.model.Resource
 import com.example.playlistmaker.domain.model.Tracks
 
 interface TracksRepository {

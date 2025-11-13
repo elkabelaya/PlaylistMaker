@@ -1,6 +1,5 @@
 package com.example.playlistmaker.domain.api
 
-import Resource
 import com.example.playlistmaker.domain.consumer.ResourceConsumer
 import com.example.playlistmaker.domain.model.Tracks
 

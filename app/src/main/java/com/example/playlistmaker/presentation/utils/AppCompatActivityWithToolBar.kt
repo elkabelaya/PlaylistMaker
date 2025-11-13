@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui.utils
+package com.example.playlistmaker.presentation.utils
 
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity

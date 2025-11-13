@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui
+package com.example.playlistmaker.presentation
 
 import android.os.Bundle
 import android.os.Handler
@@ -16,7 +16,7 @@ import com.example.playlistmaker.domain.api.PlayerInteractor.Companion.STATE_PAU
 import com.example.playlistmaker.domain.api.PlayerInteractor.Companion.STATE_PLAYING
 import com.example.playlistmaker.domain.api.PlayerInteractor.Companion.STATE_PREPARED
 import com.example.playlistmaker.domain.model.Track
-import com.example.playlistmaker.ui.utils.AppCompatActivityWithToolBar
+import com.example.playlistmaker.presentation.utils.AppCompatActivityWithToolBar
 
 class PlayerActivity : AppCompatActivityWithToolBar() {
     var isFavorite: Boolean = false

@@ -1,4 +1,4 @@
-package com.example.playlistmaker.error
+package com.example.playlistmaker.presentation.error
 
 enum class ErrorType {
     EMPTY,

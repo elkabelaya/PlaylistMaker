@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui
+package com.example.playlistmaker.presentation
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -9,7 +9,7 @@ import android.widget.Switch
 import com.example.playlistmaker.R
 import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.domain.api.ModeInteractor
-import com.example.playlistmaker.ui.utils.AppCompatActivityWithToolBar
+import com.example.playlistmaker.presentation.utils.AppCompatActivityWithToolBar
 
 
 class SettingsActivity : AppCompatActivityWithToolBar() {

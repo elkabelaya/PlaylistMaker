@@ -1,8 +1,8 @@
-package com.example.playlistmaker.ui
+package com.example.playlistmaker.presentation
 
 import android.os.Bundle
 import com.example.playlistmaker.R
-import com.example.playlistmaker.ui.utils.AppCompatActivityWithToolBar
+import com.example.playlistmaker.presentation.utils.AppCompatActivityWithToolBar
 
 class MediaActivity : AppCompatActivityWithToolBar() {
     override fun onCreate(savedInstanceState: Bundle?) {

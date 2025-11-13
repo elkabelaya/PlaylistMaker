@@ -1,14 +1,14 @@
-package com.example.playlistmaker.ui
+package com.example.playlistmaker.presentation
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.R
-import com.example.playlistmaker.ui.search.SearchActivity
-import com.example.playlistmaker.ui.utils.ClickDebouncer
-import com.example.playlistmaker.ui.utils.ClickDebouncerInterface
-import com.example.playlistmaker.ui.utils.setupTopInset
+import com.example.playlistmaker.presentation.search.SearchActivity
+import com.example.playlistmaker.presentation.utils.ClickDebouncer
+import com.example.playlistmaker.presentation.utils.ClickDebouncerInterface
+import com.example.playlistmaker.presentation.utils.setupTopInset
 
 class MainActivity : AppCompatActivity(), ClickDebouncerInterface {
     private var clickDebouncer = ClickDebouncer()

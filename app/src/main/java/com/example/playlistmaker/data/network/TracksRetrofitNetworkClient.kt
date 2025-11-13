@@ -1,8 +1,8 @@
 package com.example.playlistmaker.data.network
 
-import TracksNetworkClient
 import com.example.playlistmaker.data.model.TracksDto
 import com.example.playlistmaker.data.model.NetworkResponse
+import com.example.playlistmaker.data.repository.TracksNetworkClient
 
 class TracksRetrofitNetworkClient : TracksNetworkClient {
 

@@ -1,6 +1,5 @@
 package com.example.playlistmaker.creator
 
-import TracksRepositoryImpl
 import android.content.Context
 import com.example.playlistmaker.data.mapper.TracksMapperImpl
 import com.example.playlistmaker.data.network.TracksRetrofitNetworkClient
@@ -8,6 +7,7 @@ import com.example.playlistmaker.data.repository.PlayerRepositoryImpl
 import com.example.playlistmaker.data.repository.PreferencesRepositoryImpl
 import com.example.playlistmaker.data.repository.ThemeRepositoryImpl
 import com.example.playlistmaker.data.repository.TracksMapper
+import com.example.playlistmaker.data.repository.TracksRepositoryImpl
 import com.example.playlistmaker.domain.api.HistoryInteractor
 import com.example.playlistmaker.domain.api.ModeInteractor
 import com.example.playlistmaker.domain.api.PlayerInteractor

@@ -1,6 +1,5 @@
-package com.example.playlistmaker.ui.search
+package com.example.playlistmaker.presentation.search
 
-import Resource
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -16,20 +15,21 @@ import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.ui.PlayerActivity
-import com.example.playlistmaker.ui.utils.AppCompatActivityWithToolBar
+import com.example.playlistmaker.presentation.PlayerActivity
+import com.example.playlistmaker.presentation.utils.AppCompatActivityWithToolBar
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.model.Tracks
 import com.example.playlistmaker.databinding.ActivitySearchBinding
-import com.example.playlistmaker.error.ErrorType
-import com.example.playlistmaker.error.ErrorViewModel
-import com.example.playlistmaker.ui.utils.hideKeyboardFrom
-import com.example.playlistmaker.ui.utils.InputDebouncer
+import com.example.playlistmaker.presentation.error.ErrorType
+import com.example.playlistmaker.presentation.error.ErrorViewModel
+import com.example.playlistmaker.presentation.utils.hideKeyboardFrom
+import com.example.playlistmaker.presentation.utils.InputDebouncer
 import retrofit2.Call
 import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.domain.api.HistoryInteractor
 import com.example.playlistmaker.domain.consumer.ResourceConsumer
+import com.example.playlistmaker.domain.model.Resource
 
 class SearchActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivitySearchBinding
