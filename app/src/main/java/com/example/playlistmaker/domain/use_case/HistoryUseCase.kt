@@ -1,9 +1,9 @@
-package com.example.playlistmaker.domain.api
+package com.example.playlistmaker.domain.use_case
 
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.model.Tracks
 
-interface HistoryInteractor {
+interface HistoryUseCase {
     val elements: Tracks
     fun add(element: Track)
     fun clear()

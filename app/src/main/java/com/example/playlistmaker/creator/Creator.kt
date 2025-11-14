@@ -9,31 +9,29 @@ import com.example.playlistmaker.data.repository.PreferencesRepositoryImpl
 import com.example.playlistmaker.data.repository.ThemeRepositoryImpl
 import com.example.playlistmaker.data.repository.TracksMapper
 import com.example.playlistmaker.data.repository.TracksRepositoryImpl
-import com.example.playlistmaker.domain.api.HistoryInteractor
+import com.example.playlistmaker.domain.use_case.HistoryUseCase
 import com.example.playlistmaker.domain.api.ModeInteractor
 import com.example.playlistmaker.domain.api.PlayerInteractor
-import com.example.playlistmaker.domain.api.TracksInteractor
+import com.example.playlistmaker.domain.api.SearchInteractor
 import com.example.playlistmaker.domain.impl.ClickDebounceUseCaseImpl
-import com.example.playlistmaker.domain.impl.HistoryInteractorImpl
+import com.example.playlistmaker.domain.impl.HistoryUseCaseImpl
 import com.example.playlistmaker.domain.impl.InputDebounceUseCaseImpl
 import com.example.playlistmaker.domain.impl.ModeInteractorImpl
 import com.example.playlistmaker.domain.impl.PlayerInteractorImpl
-import com.example.playlistmaker.domain.impl.TracksInteractorImpl
+import com.example.playlistmaker.domain.impl.SearchInteractorImpl
+import com.example.playlistmaker.domain.impl.GetTracksUseCaseImpl
 import com.example.playlistmaker.domain.repository.LoopRepository
 import com.example.playlistmaker.domain.repository.PlayerRepository
 import com.example.playlistmaker.domain.repository.PreferencesRepository
 import com.example.playlistmaker.domain.repository.ThemeRepository
 import com.example.playlistmaker.domain.repository.TracksRepository
 import com.example.playlistmaker.domain.use_case.ClickDebounceUseCase
+import com.example.playlistmaker.domain.use_case.GetTracksUseCase
 import com.example.playlistmaker.domain.use_case.InputDebounceUseCase
 
 object Creator {
     private fun getTracksRepository(): TracksRepository {
         return TracksRepositoryImpl(TracksRetrofitNetworkClient(), getTracksMapper())
-    }
-
-    fun provideTracksInteractor(): TracksInteractor {
-        return TracksInteractorImpl(getTracksRepository())
     }
 
     private fun getTracksMapper(): TracksMapper {
@@ -45,10 +43,6 @@ object Creator {
 
     private fun getThemeRepository(): ThemeRepository {
         return ThemeRepositoryImpl()
-    }
-
-    fun provideHistoryInteractor(context: Context): HistoryInteractor {
-        return HistoryInteractorImpl(getPreferensiesRepository(context), 10)
     }
 
     fun provideModeInteractor(context: Context): ModeInteractor {
@@ -77,5 +71,24 @@ object Creator {
 
     fun provideInputDebounceUseCase(): InputDebounceUseCase {
         return InputDebounceUseCaseImpl(getLoopRepository())
+    }
+
+    fun provideGetTracksUseCase(): GetTracksUseCase {
+        return GetTracksUseCaseImpl(getTracksRepository())
+    }
+
+    fun provideHistoryUseCase(context: Context): HistoryUseCase {
+        return HistoryUseCaseImpl(getPreferensiesRepository(context), 10)
+    }
+
+    fun provideSearchInteractor(context: Context, onState:(Int) -> Unit): SearchInteractor {
+
+        return SearchInteractorImpl(
+            onState,
+            provideInputDebounceUseCase(),
+            provideGetTracksUseCase(),
+            provideHistoryUseCase(context),
+            getLoopRepository()
+        )
     }
 }

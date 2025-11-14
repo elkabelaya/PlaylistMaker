@@ -6,8 +6,12 @@ import com.example.playlistmaker.domain.use_case.InputDebounceUseCase
 
 open class InputDebounceUseCaseImpl(val loopRepository: LoopRepository): InputDebounceUseCase {
    override fun debounce(callBack:() -> Unit) {
-        loopRepository.clear()
+       cancel()
         loopRepository.post(callBack, INPUT_DEBOUNCE_DELAY)
+    }
+
+    override fun cancel() {
+        loopRepository.clear()
     }
 
     companion object {

@@ -2,8 +2,6 @@ package com.example.playlistmaker.presentation.search
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.ViewGroup
@@ -19,32 +17,30 @@ import com.example.playlistmaker.presentation.PlayerActivity
 import com.example.playlistmaker.presentation.utils.AppCompatActivityWithToolBar
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.model.Track
-import com.example.playlistmaker.domain.model.Tracks
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.presentation.error.ErrorType
 import com.example.playlistmaker.presentation.error.ErrorViewModel
 import com.example.playlistmaker.presentation.utils.hideKeyboardFrom
-import retrofit2.Call
 import com.example.playlistmaker.creator.Creator
-import com.example.playlistmaker.domain.api.HistoryInteractor
-import com.example.playlistmaker.domain.consumer.ResourceConsumer
-import com.example.playlistmaker.domain.model.Resource
+import com.example.playlistmaker.domain.api.SearchInteractor
+import com.example.playlistmaker.domain.api.SearchInteractor.Companion.STATE_DEFAULT
+import com.example.playlistmaker.domain.api.SearchInteractor.Companion.STATE_EMPTY
+import com.example.playlistmaker.domain.api.SearchInteractor.Companion.STATE_ENTER
+import com.example.playlistmaker.domain.api.SearchInteractor.Companion.STATE_ERROR
+import com.example.playlistmaker.domain.api.SearchInteractor.Companion.STATE_HISTORY
+import com.example.playlistmaker.domain.api.SearchInteractor.Companion.STATE_LOADING
+import com.example.playlistmaker.domain.api.SearchInteractor.Companion.STATE_RESULT
 
 class SearchActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivitySearchBinding
-    private var tracks: MutableList<Track> = mutableListOf()
     private val adapter: TracksAdapter
     private val historyAdapter: TracksAdapter
     private lateinit var editText: EditText
     private lateinit var resetButton: ImageView
+    private lateinit var tracksList: RecyclerView
     private lateinit var historyGroup: ViewGroup
-    private lateinit var historyInteractor: HistoryInteractor
-    private var searchCall: Call<Tracks>? = null
-    private val handler = Handler(Looper.getMainLooper())
-    private var tracksRunnable: Runnable? = null
-
-    private val inputDebounceUseCase = Creator.provideInputDebounceUseCase()
-    val tracksInteractor = Creator.provideTracksInteractor()
+    private lateinit var progressbar: ProgressBar
+    lateinit var searchInteractor: SearchInteractor
 
     init {
         adapter = TracksAdapter() { item -> onClickItem(item) }
@@ -53,11 +49,64 @@ class SearchActivity : AppCompatActivityWithToolBar() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        historyInteractor = Creator.provideHistoryInteractor(this)
+        searchInteractor = Creator.provideSearchInteractor(this){ state ->
+            when (state) {
+                STATE_DEFAULT -> {
+                    resetButton.isVisible = false
+                    historyGroup.isVisible = false
+                    progressbar.isVisible = false
+                    tracksList.isVisible = false
+                    hideError()
+                }
+                STATE_HISTORY -> {
+                    resetButton.isVisible = false
+                    historyGroup.isVisible = true
+                    progressbar.isVisible = false
+                    tracksList.isVisible = false
+                    hideError()
+                }
+                STATE_ENTER -> {
+                    resetButton.isVisible = true
+                    historyGroup.isVisible = false
+                    progressbar.isVisible = false
+                    tracksList.isVisible = false
+                    hideError()
+                }
+                STATE_LOADING -> {
+                    resetButton.isVisible = true
+                    historyGroup.isVisible = false
+                    progressbar.isVisible = true
+                    tracksList.isVisible = false
+                    hideError()
+                }
+                STATE_RESULT -> {
+                    resetButton.isVisible = true
+                    historyGroup.isVisible = false
+                    progressbar.isVisible = false
+                    tracksList.isVisible = true
+                    adapter.tracks = searchInteractor.tracks
+                    adapter.notifyDataSetChanged()
+                    hideError()
+                }
+                STATE_EMPTY -> {
+                    resetButton.isVisible = true
+                    historyGroup.isVisible = false
+                    progressbar.isVisible = false
+                    showError(ErrorType.EMPTY, R.string.error_not_found)
+                }
+                STATE_ERROR -> {
+                    resetButton.isVisible = true
+                    historyGroup.isVisible = false
+                    progressbar.isVisible = false
+                    showError(ErrorType.WIFI, R.string.error_wifi)
+                }
+            }
+        }
         binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
         editText = findViewById<EditText>(R.id.search_text)
         resetButton = findViewById<ImageView>(R.id.reset_button)
         historyGroup = findViewById<ViewGroup>(R.id.history_group)
+        progressbar = findViewById<ProgressBar>(R.id.progressbar)
         setupToolBar(getResources().getString(R.string.main_search))
         setupSearchBar()
         setupList()
@@ -78,25 +127,25 @@ class SearchActivity : AppCompatActivityWithToolBar() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-               resetButton.isVisible = s.isNotEmpty()
-                changeHistoryGroup(true)
-                searchDebounced()
+                searchInteractor.changeQuery(s)
             }
 
             override fun afterTextChanged(s: Editable) {}
         })
 
         editText.setOnFocusChangeListener { view, hasFocus ->
-            changeHistoryGroup(hasFocus)
+            searchInteractor.changeFocus(hasFocus)
         }
 
-        resetButton.setOnClickListener{
-            clearInput()
+        resetButton.setOnClickListener {
+            searchInteractor.clearQuery()
+            editText.setText("")
+            hideKeyboardFrom(this, editText)
         }
     }
     private fun setupList() {
-        adapter.tracks = tracks
-        val tracksList = findViewById<RecyclerView>(R.id.list)
+        adapter.tracks = searchInteractor.tracks
+        tracksList = findViewById<RecyclerView>(R.id.list)
         tracksList.layoutManager = LinearLayoutManager(this)
         tracksList.adapter = adapter
     }
@@ -105,92 +154,20 @@ class SearchActivity : AppCompatActivityWithToolBar() {
         val refreshButton = findViewById<Button>(R.id.refresh_button)
 
         refreshButton.setOnClickListener {
-            proceedSearch()
+            searchInteractor.refresh()
         }
     }
     private fun setupHistoryGroup() {
-        historyAdapter.tracks = historyInteractor.elements
+        historyAdapter.tracks = searchInteractor.history
         val historyList = findViewById<RecyclerView>(R.id.history)
         historyList.layoutManager = LinearLayoutManager(this)
         historyList.adapter = historyAdapter
 
         val clearButton = findViewById<Button>(R.id.clear_button)
         clearButton.setOnClickListener {
-            historyInteractor.clear()
+            searchInteractor.clearHistory()
             historyAdapter.notifyDataSetChanged()
-            changeHistoryGroup(false)
         }
-    }
-
-    private fun changeHistoryGroup(hasFocus: Boolean) {
-        historyGroup.isVisible = hasFocus and editText.getText().isEmpty() and historyInteractor.elements.isNotEmpty()
-    }
-    private fun clearInput() {
-        editText.setText("")
-        hideError()
-        tracks.clear()
-        hideKeyboardFrom(this, editText)
-        changeHistoryGroup(true)
-    }
-
-    private fun proceedSearch() {
-        val input = editText.text.toString().trim()
-
-        hideError()
-
-        tracks.clear()
-
-        if (input.isEmpty()) {
-            clearInput()
-        } else {
-            fillList(input)
-        }
-    }
-
-    private fun searchDebounced() {
-        inputDebounceUseCase.debounce {
-            proceedSearch()
-        }
-    }
-    private fun fillList(query: String) {
-        toggleLoader(true)
-        changeHistoryGroup(true)
-
-        tracksInteractor.getTracks(
-            query,
-            consumer = object : ResourceConsumer<Tracks> {
-                override fun consume(resource: Resource<Tracks>) {
-                    val currentRunnable = tracksRunnable
-                    if (currentRunnable != null) {
-                        handler.removeCallbacks(currentRunnable)
-                    }
-
-                    val newRunnable = Runnable {
-                        toggleLoader(false)
-                        when (resource) {
-                            is Resource.Success -> {
-                                if (!resource.data.isEmpty()) {
-                                    tracks.addAll(resource.data)
-                                    adapter.notifyDataSetChanged()
-                                } else {
-                                    showError(ErrorType.EMPTY, R.string.error_not_found)
-                                }
-                            }
-
-                            is Resource.Error -> {
-                                showError(ErrorType.WIFI, R.string.error_wifi)
-                            }
-                        }
-                    }
-                    tracksRunnable = newRunnable
-                    handler.post(newRunnable)
-                }
-            })
-    }
-
-    private fun toggleLoader(show: Boolean) {
-        val progressbar = findViewById<ProgressBar>(R.id.progressbar)
-        progressbar.isVisible = show
     }
 
     private fun showError(type: ErrorType, stringId: Int) {
@@ -205,16 +182,11 @@ class SearchActivity : AppCompatActivityWithToolBar() {
 
     private fun onClickItem(item: Track) {
         if (canClickDebounced()) {
-            historyInteractor.add(item)
+            searchInteractor.select(item)
             historyAdapter.notifyDataSetChanged()
             val displayIntent = Intent(this, PlayerActivity::class.java)
             displayIntent.putExtra(PlayerActivity.INTENT_KEY, item)
             startActivity(displayIntent)
         }
-    }
-
-    companion object {
-        const val TEXT_KEY = "TEXT_KEY"
-        const val TEXT_DEF = ""
     }
 }

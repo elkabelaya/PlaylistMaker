@@ -1,11 +1,11 @@
 package com.example.playlistmaker.domain.impl
 
-import com.example.playlistmaker.domain.api.HistoryInteractor
+import com.example.playlistmaker.domain.use_case.HistoryUseCase
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.repository.PreferencesRepository
 
-class HistoryInteractorImpl(val repository: PreferencesRepository, val maxCount: Int):
-    HistoryInteractor {
+class HistoryUseCaseImpl(val repository: PreferencesRepository, val maxCount: Int):
+    HistoryUseCase {
     override var elements = mutableListOf<Track>()
         private set
 

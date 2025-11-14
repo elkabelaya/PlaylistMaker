@@ -1,8 +1,8 @@
-package com.example.playlistmaker.domain.api
+package com.example.playlistmaker.domain.use_case
 
 import com.example.playlistmaker.domain.consumer.ResourceConsumer
 import com.example.playlistmaker.domain.model.Tracks
 
-interface TracksInteractor {
+interface GetTracksUseCase {
     fun getTracks(query: String, consumer: ResourceConsumer<Tracks>)
 }
