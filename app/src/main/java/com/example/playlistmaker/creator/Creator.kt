@@ -37,7 +37,7 @@ object Creator {
     private fun getTracksMapper(): TracksMapper {
         return TracksMapperImpl()
     }
-    private fun getPreferensiesRepository(context: Context): PreferencesRepository {
+    private fun getPreferencesRepository(context: Context): PreferencesRepository {
         return PreferencesRepositoryImpl(context, getTracksMapper())
     }
 
@@ -46,7 +46,7 @@ object Creator {
     }
 
     fun provideModeInteractor(context: Context): ModeInteractor {
-        return ModeInteractorImpl(getPreferensiesRepository(context),getThemeRepository())
+        return ModeInteractorImpl(getPreferencesRepository(context),getThemeRepository())
     }
 
     private fun getPlayerRepository(url: String): PlayerRepository {
@@ -78,7 +78,7 @@ object Creator {
     }
 
     fun provideHistoryUseCase(context: Context): HistoryUseCase {
-        return HistoryUseCaseImpl(getPreferensiesRepository(context), 10)
+        return HistoryUseCaseImpl(getPreferencesRepository(context), 10)
     }
 
     fun provideSearchInteractor(context: Context, onState:(Int) -> Unit): SearchInteractor {
