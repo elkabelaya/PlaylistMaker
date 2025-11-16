@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <import type="com.example.playlistmaker.error.ErrorViewModel" />
-        <import type="com.example.playlistmaker.error.ErrorType" />
+        <import type="com.example.playlistmaker.presentation.error.ErrorViewModel" />
+        <import type="com.example.playlistmaker.presentation.error.ErrorType" />
         <import type="android.view.View"/>
         <variable
             name="errorViewModel"
-            type="com.example.playlistmaker.error.ErrorViewModel" />
+            type="com.example.playlistmaker.presentation.error.ErrorViewModel" />
     </data>
 
 

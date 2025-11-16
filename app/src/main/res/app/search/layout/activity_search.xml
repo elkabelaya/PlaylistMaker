@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:id="@+id/main"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".search.SearchActivity"
+        tools:context=".presentation.search.SearchActivity"
         android:orientation="vertical"
         android:background="@color/background">
 
