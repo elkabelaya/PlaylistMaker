@@ -16,9 +16,9 @@ fun hideKeyboardFrom(context: Context, view: View) {
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun setupTopInset(activity: ComponentActivity, viewId: Int) {
+fun setupTopInset(activity: ComponentActivity, view: View) {
     activity.enableEdgeToEdge()
-    ViewCompat.setOnApplyWindowInsetsListener(activity.findViewById(viewId)) { view, insets ->
+    ViewCompat.setOnApplyWindowInsetsListener(view) { view, insets ->
         val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
         view.updatePadding(top = statusBar.top)
         insets

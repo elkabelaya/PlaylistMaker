@@ -8,33 +8,32 @@ import android.widget.Button
 import android.widget.Switch
 import com.example.playlistmaker.R
 import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.databinding.ActivityPlayerBinding
+import com.example.playlistmaker.databinding.ActivitySettingsBinding
 import com.example.playlistmaker.domain.api.ModeInteractor
 import com.example.playlistmaker.presentation.utils.AppCompatActivityWithToolBar
 
 
 class SettingsActivity : AppCompatActivityWithToolBar() {
+    private lateinit var binding: ActivitySettingsBinding
     lateinit var modeInteractor: ModeInteractor
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupToolBar(getResources().getString(R.string.main_settings), binding.root, binding.toolbar)
         modeInteractor = Creator.provideModeInteractor(this)
-        setContentView(R.layout.activity_settings)
-        setupToolBar(getResources().getString(R.string.main_settings))
         setupListeners()
     }
 
     @SuppressLint("UseSwitchCompatOrMaterialCode", "IntentReset")
     private fun setupListeners() {
-        val nightSwitch = findViewById<Switch>(R.id.switch_night_mode)
-        val shareButton = findViewById<Button>(R.id.share)
-        val supportButton = findViewById<Button>(R.id.support)
-        val agreementButton = findViewById<Button>(R.id.agreement)
-
-        nightSwitch.isChecked = modeInteractor.darkTheme
-        nightSwitch.setOnCheckedChangeListener { switcher, isChecked ->
+        binding.nightSwitch.isChecked = modeInteractor.darkTheme
+        binding.nightSwitch.setOnCheckedChangeListener { switcher, isChecked ->
             modeInteractor.switchTheme(isChecked)
         }
 
-        shareButton.setOnClickListener {
+        binding.shareButton.setOnClickListener {
             if (canClickDebounced()) {
                 val intent = Intent(Intent.ACTION_SEND)
                 intent.setType("text/html")
@@ -46,7 +45,7 @@ class SettingsActivity : AppCompatActivityWithToolBar() {
             }
         }
 
-        supportButton.setOnClickListener {
+        binding.supportButton.setOnClickListener {
             if (canClickDebounced()) {
                 val intent = Intent(Intent.ACTION_SENDTO)
                 val recipient = getResources().getString(R.string.settings_support_email)
@@ -57,7 +56,7 @@ class SettingsActivity : AppCompatActivityWithToolBar() {
             }
         }
 
-        agreementButton.setOnClickListener {
+        binding.agreementButton.setOnClickListener {
             if (canClickDebounced()) {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.setData(Uri.parse(getResources().getString(R.string.settings_agreement_url)))

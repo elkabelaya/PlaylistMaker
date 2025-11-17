@@ -9,34 +9,32 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
+import com.example.playlistmaker.databinding.TrackViewBinding
 import com.example.playlistmaker.domain.model.Track
 
-class TrackViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(
-    LayoutInflater.from(parent.context).inflate(
-        R.layout.track_view,
-        parent,
-        false)
-) {
+class TrackViewHolder(private val binding: TrackViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private val titleView: TextView = itemView.findViewById(R.id.title)
-    private val artistView: TextView = itemView.findViewById(R.id.artist)
-    private val timeView: TextView = itemView.findViewById(R.id.time)
-    private val imageView: ImageView = itemView.findViewById(R.id.image)
-    private val dotView: ImageView = itemView.findViewById(R.id.dot)
+    companion object {
+        fun from(parent: ViewGroup): TrackViewHolder {
+            val inflater = LayoutInflater.from(parent.context)
+            val binding = TrackViewBinding.inflate(inflater, parent, false)
+            return TrackViewHolder(binding)
+        }
+    }
 
     fun bind(model: Track, onClickItem: (Track) -> Unit) {
-        titleView.text = model.trackName.trim()
-        artistView.text = model.artistName?.trim()
-        timeView.text = model.trackTime
+        binding.titleView.text = model.trackName.trim()
+        binding.artistView.text = model.artistName?.trim()
+        binding.timeView.text = model.trackTime
 
-        dotView.isVisible = artistView.text.isNotEmpty() and timeView.text.isNotEmpty()
+        binding.dotView.isVisible =  binding.artistView.text.isNotEmpty() and  binding.timeView.text.isNotEmpty()
 
-        Glide.with(imageView)
+        Glide.with( binding.imageView)
             .load(model.imageUrl)
             .placeholder(R.drawable.bg_placeholder)
             .centerCrop()
-            .transform(RoundedCorners(imageView.resources.getDimensionPixelSize(R.dimen.radius_xxxs)))
-            .into(imageView)
+            .transform(RoundedCorners( binding.imageView.resources.getDimensionPixelSize(R.dimen.radius_xxxs)))
+            .into( binding.imageView)
 
         itemView.setOnClickListener {
             onClickItem(model)

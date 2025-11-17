@@ -22,6 +22,7 @@ import com.example.playlistmaker.presentation.error.ErrorType
 import com.example.playlistmaker.presentation.error.ErrorViewModel
 import com.example.playlistmaker.presentation.utils.hideKeyboardFrom
 import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.databinding.ActivityMediaBinding
 import com.example.playlistmaker.domain.api.SearchInteractor
 import com.example.playlistmaker.domain.api.SearchInteractor.Companion.STATE_DEFAULT
 import com.example.playlistmaker.domain.api.SearchInteractor.Companion.STATE_EMPTY
@@ -35,11 +36,6 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivitySearchBinding
     private val adapter: TracksAdapter
     private val historyAdapter: TracksAdapter
-    private lateinit var editText: EditText
-    private lateinit var resetButton: ImageView
-    private lateinit var tracksList: RecyclerView
-    private lateinit var historyGroup: ViewGroup
-    private lateinit var progressbar: ProgressBar
     lateinit var searchInteractor: SearchInteractor
 
     init {
@@ -49,65 +45,63 @@ class SearchActivity : AppCompatActivityWithToolBar() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySearchBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupToolBar(getResources().getString(R.string.main_search), binding.root, binding.toolbar)
+
         searchInteractor = Creator.provideSearchInteractor(this){ state ->
             when (state) {
                 STATE_DEFAULT -> {
-                    resetButton.isVisible = false
-                    historyGroup.isVisible = false
-                    progressbar.isVisible = false
-                    tracksList.isVisible = false
+                    binding.searchbar.resetButton.isVisible = false
+                    binding.historyGroup.isVisible = false
+                    binding.progressbar.root.isVisible = false
+                    binding.tracksList.isVisible = false
                     hideError()
                 }
                 STATE_HISTORY -> {
-                    resetButton.isVisible = false
-                    historyGroup.isVisible = true
-                    progressbar.isVisible = false
-                    tracksList.isVisible = false
+                    binding.searchbar.resetButton.isVisible = false
+                    binding.historyGroup.isVisible = true
+                    binding.progressbar.root.isVisible = false
+                    binding.tracksList.isVisible = false
                     hideError()
                 }
                 STATE_ENTER -> {
-                    resetButton.isVisible = true
-                    historyGroup.isVisible = false
-                    progressbar.isVisible = false
-                    tracksList.isVisible = false
+                    binding.searchbar.resetButton.isVisible = true
+                    binding.historyGroup.isVisible = false
+                    binding.progressbar.root.isVisible = false
+                    binding.tracksList.isVisible = false
                     hideError()
                 }
                 STATE_LOADING -> {
-                    resetButton.isVisible = true
-                    historyGroup.isVisible = false
-                    progressbar.isVisible = true
-                    tracksList.isVisible = false
+                    binding.searchbar.resetButton.isVisible = true
+                    binding.historyGroup.isVisible = false
+                    binding.progressbar.root.isVisible = true
+                    binding.tracksList.isVisible = false
                     hideError()
                 }
                 STATE_RESULT -> {
-                    resetButton.isVisible = true
-                    historyGroup.isVisible = false
-                    progressbar.isVisible = false
-                    tracksList.isVisible = true
+                    binding.searchbar.resetButton.isVisible = true
+                    binding.historyGroup.isVisible = false
+                    binding.progressbar.root.isVisible = false
+                    binding.tracksList.isVisible = true
                     adapter.tracks = searchInteractor.tracks
                     adapter.notifyDataSetChanged()
                     hideError()
                 }
                 STATE_EMPTY -> {
-                    resetButton.isVisible = true
-                    historyGroup.isVisible = false
-                    progressbar.isVisible = false
+                    binding.searchbar.resetButton.isVisible = true
+                    binding.historyGroup.isVisible = false
+                    binding.progressbar.root.isVisible = false
                     showError(ErrorType.EMPTY, R.string.error_not_found)
                 }
                 STATE_ERROR -> {
-                    resetButton.isVisible = true
-                    historyGroup.isVisible = false
-                    progressbar.isVisible = false
+                    binding.searchbar.resetButton.isVisible = true
+                    binding.historyGroup.isVisible = false
+                    binding.progressbar.root.isVisible = false
                     showError(ErrorType.WIFI, R.string.error_wifi)
                 }
             }
         }
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_search)
-        editText = findViewById<EditText>(R.id.search_text)
-        resetButton = findViewById<ImageView>(R.id.reset_button)
-        historyGroup = findViewById<ViewGroup>(R.id.history_group)
-        progressbar = findViewById<ProgressBar>(R.id.progressbar)
-        setupToolBar(getResources().getString(R.string.main_search))
         setupSearchBar()
         setupList()
         setupErrorStub()
@@ -123,7 +117,7 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     }
 
     private fun setupSearchBar() {
-        editText.addTextChangedListener(object : TextWatcher {
+        binding.searchbar.editText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -133,38 +127,33 @@ class SearchActivity : AppCompatActivityWithToolBar() {
             override fun afterTextChanged(s: Editable) {}
         })
 
-        editText.setOnFocusChangeListener { view, hasFocus ->
+        binding.searchbar.editText.setOnFocusChangeListener { view, hasFocus ->
             searchInteractor.changeFocus(hasFocus)
         }
 
-        resetButton.setOnClickListener {
+        binding.searchbar.resetButton.setOnClickListener {
             searchInteractor.clearQuery()
-            editText.setText("")
-            hideKeyboardFrom(this, editText)
+            binding.searchbar.editText.setText("")
+            hideKeyboardFrom(this, binding.searchbar.editText)
         }
     }
     private fun setupList() {
         adapter.tracks = searchInteractor.tracks
-        tracksList = findViewById<RecyclerView>(R.id.list)
-        tracksList.layoutManager = LinearLayoutManager(this)
-        tracksList.adapter = adapter
+        binding.tracksList.layoutManager = LinearLayoutManager(this)
+        binding.tracksList.adapter = adapter
     }
 
     private fun setupErrorStub() {
-        val refreshButton = findViewById<Button>(R.id.refresh_button)
-
-        refreshButton.setOnClickListener {
+        binding.refreshButton.setOnClickListener {
             searchInteractor.refresh()
         }
     }
     private fun setupHistoryGroup() {
         historyAdapter.tracks = searchInteractor.history
-        val historyList = findViewById<RecyclerView>(R.id.history)
-        historyList.layoutManager = LinearLayoutManager(this)
-        historyList.adapter = historyAdapter
+        binding.historyList.layoutManager = LinearLayoutManager(this)
+        binding.historyList.adapter = historyAdapter
 
-        val clearButton = findViewById<Button>(R.id.clear_button)
-        clearButton.setOnClickListener {
+        binding.clearButton.setOnClickListener {
             searchInteractor.clearHistory()
             historyAdapter.notifyDataSetChanged()
         }

@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.databinding.ActivityMediaBinding
+import com.example.playlistmaker.databinding.ActivityPlayerBinding
 import com.example.playlistmaker.domain.api.PlayerInteractor
 import com.example.playlistmaker.domain.api.PlayerInteractor.Companion.STATE_PAUSED
 import com.example.playlistmaker.domain.api.PlayerInteractor.Companion.STATE_PLAYING
@@ -19,21 +21,20 @@ import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.presentation.utils.AppCompatActivityWithToolBar
 
 class PlayerActivity : AppCompatActivityWithToolBar() {
+    private lateinit var binding: ActivityPlayerBinding
     var isFavorite: Boolean = false
 
 
     private val handler = Handler(Looper.getMainLooper())
 
-    lateinit var addView: ImageButton
-    lateinit var playView: ImageButton
-    lateinit var favoriteView: ImageButton
-    lateinit var timeView: TextView
     var playerInteractor: PlayerInteractor? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_player)
-        setupToolBar(getResources().getString(R.string.empty_title))
+        binding = ActivityPlayerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupToolBar(getResources().getString(R.string.empty_title), binding.root, binding.toolbar)
+
         val track: Track? = intent.getSerializableExtra(INTENT_KEY) as? Track
         track?.let {
             setupTrack(track)
@@ -44,17 +45,17 @@ class PlayerActivity : AppCompatActivityWithToolBar() {
 
                 when (state){
                     STATE_PREPARED -> {
-                        playView.isEnabled = true
-                        timeView.text = "00:00"
-                        playView.setImageResource(R.drawable.ic_player_play_button)
+                        binding.playView.isEnabled = true
+                        binding.timeView.text = "00:00"
+                        binding.playView.setImageResource(R.drawable.ic_player_play_button)
                     }
                     STATE_PLAYING -> {
-                        playView.setImageResource(R.drawable.ic_player_pause_button)
+                        binding.playView.setImageResource(R.drawable.ic_player_pause_button)
 
                         handler.postDelayed(
                             object: Runnable {
                                 override fun run() {
-                                    timeView.text = playerInteractor?.time()
+                                    binding.timeView.text = playerInteractor?.time()
                                     handler.postDelayed(this, PLAYER_DEBOUNCE_DELAY)
                                 }
                             },
@@ -62,7 +63,7 @@ class PlayerActivity : AppCompatActivityWithToolBar() {
                         )
                     }
                    STATE_PAUSED -> {
-                       playView.setImageResource(R.drawable.ic_player_play_button)
+                       binding.playView.setImageResource(R.drawable.ic_player_play_button)
 
                    }
 
@@ -83,52 +84,41 @@ class PlayerActivity : AppCompatActivityWithToolBar() {
     }
 
     fun setupTrack(track: Track) {
-        val imageView = findViewById<ImageView>(R.id.image)
-        Glide.with(imageView)
+        Glide.with(binding.imageView)
             .load(track.coverUrl)
             .placeholder(R.drawable.bg_placeholder)
             .centerCrop()
-            .transform(RoundedCorners(imageView.resources.getDimensionPixelSize(R.dimen.radius_m)))
-            .into(imageView)
+            .transform(RoundedCorners(binding.imageView.resources.getDimensionPixelSize(R.dimen.radius_m)))
+            .into(binding.imageView)
 
-        timeView = findViewById<TextView>(R.id.time)
-        timeView.text = getString(R.string.player_empty_time)
+        binding.timeView.text = getString(R.string.player_empty_time)
 
-        setTextOrHide(null, R.id.title,track.trackName)
-        setTextOrHide(null, R.id.artist, track.artistName)
-        setTextOrHide(R.id.duration_label, R.id.duration, track.trackTime)
-        setTextOrHide(R.id.album_label, R.id.album, track.collectionName)
-        setTextOrHide(R.id.year_label, R.id.year, track.year)
-        setTextOrHide(R.id.genre_label, R.id.genre, track.primaryGenreName)
-        setTextOrHide(R.id.country_label, R.id.country, track.country)
+        setTextOrHide(null, binding.title,track.trackName)
+        setTextOrHide(null, binding.artist, track.artistName)
+        setTextOrHide(binding.durationLabel, binding.duration, track.trackTime)
+        setTextOrHide(binding.albumLabel, binding.album, track.collectionName)
+        setTextOrHide(binding.yearLabel, binding.year, track.year)
+        setTextOrHide(binding.genreLabel, binding.genre, track.primaryGenreName)
+        setTextOrHide(binding.countryLabel, binding.country, track.country)
     }
 
     fun setupButtons() {
-        addView = findViewById<ImageButton>(R.id.add)
-        playView = findViewById<ImageButton>(R.id.play)
-        favoriteView = findViewById<ImageButton>(R.id.favorite)
-
-        addView.setOnClickListener {
+        binding.addView.setOnClickListener {
             //do nothing by now
         }
 
-        playView.isEnabled = false
-        playView.setOnClickListener {
+        binding.playView.isEnabled = false
+        binding.playView.setOnClickListener {
             playerInteractor?.togglePlay()
         }
 
-        favoriteView.setOnClickListener {
+        binding.favoriteView.setOnClickListener {
             isFavorite = !isFavorite
-            favoriteView.setImageResource( if(isFavorite) R.drawable.ic_player_heart_fill else R.drawable.ic_player_heart_stroke )
+            binding.favoriteView.setImageResource( if(isFavorite) R.drawable.ic_player_heart_fill else R.drawable.ic_player_heart_stroke )
         }
     }
 
-    fun setTextOrHide(labelId: Int?, viewId: Int, value: String?) {
-        var labelView:TextView? = null
-        if (labelId != null) {
-            labelView = findViewById<TextView>(labelId)
-        }
-        val view = findViewById<TextView>(viewId)
+    fun setTextOrHide(labelView: TextView?, view: TextView, value: String?) {
         if (value?.trim()?.isNotEmpty() == true) {
             view.text = value
         } else {

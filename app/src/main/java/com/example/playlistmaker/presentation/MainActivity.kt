@@ -6,36 +6,35 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.R
 import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.databinding.ActivityMainBinding
 import com.example.playlistmaker.domain.use_case.ClickDebounceUseCase
 import com.example.playlistmaker.presentation.search.SearchActivity
 import com.example.playlistmaker.presentation.utils.setupTopInset
 
 class MainActivity : AppCompatActivity(), ClickDebounceUseCase {
+    private lateinit var binding: ActivityMainBinding
     private var clickDebounceUseCase = Creator.provideClickDebounceUseCase()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setupTopInset(this, R.id.main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setupTopInset(this, binding.root)
 
-        val searchButton = findViewById<Button>(R.id.search)
-        val mediaButton = findViewById<Button>(R.id.media)
-        val settingsButton = findViewById<Button>(R.id.settings)
-
-        searchButton.setOnClickListener {
+        binding.searchButton.setOnClickListener {
             if (canClickDebounced()) {
                 val displayIntent = Intent(this, SearchActivity::class.java)
                 startActivity(displayIntent)
             }
         }
 
-        mediaButton.setOnClickListener {
+        binding.mediaButton.setOnClickListener {
             if (canClickDebounced()) {
                 val displayIntent = Intent(this, MediaActivity::class.java)
                 startActivity(displayIntent)
             }
         }
 
-        settingsButton.setOnClickListener {
+        binding.settingsButton.setOnClickListener {
             if (clickDebounceUseCase.canClickDebounced()) {
                 val displayIntent = Intent(this, SettingsActivity::class.java)
                 startActivity(displayIntent)
