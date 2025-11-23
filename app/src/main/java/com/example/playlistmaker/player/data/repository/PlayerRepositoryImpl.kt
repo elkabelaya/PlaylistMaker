@@ -1,10 +1,10 @@
-package com.example.playlistmaker.data.repository
+package com.example.playlistmaker.player.data.repository
 
 import android.media.MediaPlayer
-import com.example.playlistmaker.domain.repository.PlayerRepository
+import com.example.playlistmaker.player.domain.repository.PlayerRepository
 
 class PlayerRepositoryImpl(val url: String): PlayerRepository {
-    private var mediaPlayer:MediaPlayer = MediaPlayer()
+    private var mediaPlayer: MediaPlayer = MediaPlayer()
     private var isPrepared: Boolean = false
     override lateinit var onPrepared: () -> Unit
     override lateinit var onComplete: () -> Unit

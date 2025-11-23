@@ -1,18 +1,14 @@
-package com.example.playlistmaker.presentation
+package com.example.playlistmaker.settings.presentation
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Switch
 import com.example.playlistmaker.R
 import com.example.playlistmaker.creator.Creator
-import com.example.playlistmaker.databinding.ActivityPlayerBinding
 import com.example.playlistmaker.databinding.ActivitySettingsBinding
 import com.example.playlistmaker.domain.api.ModeInteractor
 import com.example.playlistmaker.presentation.utils.AppCompatActivityWithToolBar
-
 
 class SettingsActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivitySettingsBinding

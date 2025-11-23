@@ -1,14 +1,14 @@
-package com.example.playlistmaker.presentation
+package com.example.playlistmaker.main.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.example.playlistmaker.R
 import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.databinding.ActivityMainBinding
 import com.example.playlistmaker.domain.use_case.ClickDebounceUseCase
-import com.example.playlistmaker.presentation.search.SearchActivity
+import com.example.playlistmaker.presentation.MediaActivity
+import com.example.playlistmaker.settings.presentation.SettingsActivity
+import com.example.playlistmaker.search.presentation.SearchActivity
 import com.example.playlistmaker.presentation.utils.setupTopInset
 
 class MainActivity : AppCompatActivity(), ClickDebounceUseCase {

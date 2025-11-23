@@ -1,19 +1,12 @@
-package com.example.playlistmaker.presentation.search
+package com.example.playlistmaker.search.presentation
 
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.presentation.PlayerActivity
+import com.example.playlistmaker.player.presentation.PlayerActivity
 import com.example.playlistmaker.presentation.utils.AppCompatActivityWithToolBar
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.model.Track
@@ -22,7 +15,6 @@ import com.example.playlistmaker.presentation.error.ErrorType
 import com.example.playlistmaker.presentation.error.ErrorViewModel
 import com.example.playlistmaker.presentation.utils.hideKeyboardFrom
 import com.example.playlistmaker.creator.Creator
-import com.example.playlistmaker.databinding.ActivityMediaBinding
 import com.example.playlistmaker.domain.api.SearchInteractor
 import com.example.playlistmaker.domain.api.SearchInteractor.Companion.STATE_DEFAULT
 import com.example.playlistmaker.domain.api.SearchInteractor.Companion.STATE_EMPTY

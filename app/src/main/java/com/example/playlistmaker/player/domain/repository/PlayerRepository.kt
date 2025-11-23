@@ -1,4 +1,4 @@
-package com.example.playlistmaker.domain.repository
+package com.example.playlistmaker.player.domain.repository
 
 interface PlayerRepository {
     fun time(): Int
