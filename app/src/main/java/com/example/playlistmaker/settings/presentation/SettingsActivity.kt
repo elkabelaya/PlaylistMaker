@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import com.example.playlistmaker.R
 import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.data.repository.NavigatorRepositoryImpl
 import com.example.playlistmaker.databinding.ActivitySettingsBinding
 import com.example.playlistmaker.domain.api.ModeInteractor
 import com.example.playlistmaker.presentation.utils.AppCompatActivityWithToolBar
@@ -54,9 +55,7 @@ class SettingsActivity : AppCompatActivityWithToolBar() {
 
         binding.agreementButton.setOnClickListener {
             if (canClickDebounced()) {
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.setData(Uri.parse(getResources().getString(R.string.settings_agreement_url)))
-                startActivity(intent)
+                NavigatorRepositoryImpl(this).openWeb(getResources().getString(R.string.settings_agreement_url))
             }
         }
     }

@@ -1,8 +1,7 @@
-package com.example.playlistmaker.domain.impl
+package com.example.playlistmaker.search.domain.impl
 
 import com.example.playlistmaker.domain.repository.LoopRepository
-import com.example.playlistmaker.domain.use_case.ClickDebounceUseCase
-import com.example.playlistmaker.domain.use_case.InputDebounceUseCase
+import com.example.playlistmaker.search.domain.use_case.InputDebounceUseCase
 
 open class InputDebounceUseCaseImpl(val loopRepository: LoopRepository): InputDebounceUseCase {
    override fun debounce(callBack:() -> Unit) {

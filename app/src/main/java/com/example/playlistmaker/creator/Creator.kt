@@ -2,33 +2,38 @@ package com.example.playlistmaker.creator
 
 import android.content.Context
 import com.example.playlistmaker.data.mapper.TracksMapperImpl
-import com.example.playlistmaker.data.network.TracksRetrofitNetworkClient
+import com.example.playlistmaker.search.data.network.TracksRetrofitNetworkClient
 import com.example.playlistmaker.data.repository.LoopRepositoryImpl
+import com.example.playlistmaker.data.repository.NavigatorRepositoryImpl
 import com.example.playlistmaker.player.data.repository.PlayerRepositoryImpl
 import com.example.playlistmaker.data.repository.PreferencesRepositoryImpl
 import com.example.playlistmaker.data.repository.ThemeRepositoryImpl
 import com.example.playlistmaker.data.repository.TracksMapper
-import com.example.playlistmaker.data.repository.TracksRepositoryImpl
-import com.example.playlistmaker.domain.use_case.HistoryUseCase
+import com.example.playlistmaker.search.data.repository.TracksRepositoryImpl
 import com.example.playlistmaker.domain.api.ModeInteractor
 import com.example.playlistmaker.player.domain.api.PlayerInteractor
-import com.example.playlistmaker.domain.api.SearchInteractor
+import com.example.playlistmaker.search.domain.api.SearchInteractor
 import com.example.playlistmaker.domain.impl.ClickDebounceUseCaseImpl
-import com.example.playlistmaker.domain.impl.HistoryUseCaseImpl
-import com.example.playlistmaker.domain.impl.InputDebounceUseCaseImpl
+import com.example.playlistmaker.search.domain.impl.HistoryUseCaseImpl
+import com.example.playlistmaker.search.domain.impl.InputDebounceUseCaseImpl
 import com.example.playlistmaker.domain.impl.ModeInteractorImpl
 import com.example.playlistmaker.player.domain.impl.PlayerInteractorImpl
-import com.example.playlistmaker.domain.impl.SearchInteractorImpl
-import com.example.playlistmaker.domain.impl.GetTracksUseCaseImpl
+import com.example.playlistmaker.search.domain.impl.SearchInteractorImpl
+import com.example.playlistmaker.search.domain.impl.GetTracksUseCaseImpl
 import com.example.playlistmaker.domain.repository.LoopRepository
+import com.example.playlistmaker.domain.repository.NavigatorRepository
 import com.example.playlistmaker.player.domain.repository.PlayerRepository
 import com.example.playlistmaker.domain.repository.PreferencesRepository
 import com.example.playlistmaker.domain.repository.ThemeRepository
-import com.example.playlistmaker.domain.repository.TracksRepository
+import com.example.playlistmaker.search.domain.repository.TracksRepository
 import com.example.playlistmaker.domain.use_case.ClickDebounceUseCase
-import com.example.playlistmaker.domain.use_case.GetTracksUseCase
-import com.example.playlistmaker.domain.use_case.InputDebounceUseCase
+import com.example.playlistmaker.search.domain.use_case.HistoryUseCase
+import com.example.playlistmaker.search.domain.use_case.GetTracksUseCase
+import com.example.playlistmaker.search.domain.use_case.InputDebounceUseCase
 import com.example.playlistmaker.player.domain.api.PlayerState
+import com.example.playlistmaker.search.domain.api.SearchNavigatorInteractor
+import com.example.playlistmaker.search.domain.api.SearchState
+import com.example.playlistmaker.search.domain.impl.SearchNavigatorInteractorImpl
 
 object Creator {
     private fun getTracksRepository(): TracksRepository {
@@ -82,7 +87,14 @@ object Creator {
         return HistoryUseCaseImpl(getPreferencesRepository(context), 10)
     }
 
-    fun provideSearchInteractor(context: Context, onState:(Int) -> Unit): SearchInteractor {
+    fun getNavigatorRepository(context: Context): NavigatorRepository {
+        return NavigatorRepositoryImpl(context)
+    }
+    fun provideSearchNavigatorInteractor(context: Context): SearchNavigatorInteractor {
+        return SearchNavigatorInteractorImpl(getNavigatorRepository(context))
+    }
+
+    fun provideSearchInteractor(context: Context, onState:(SearchState) -> Unit): SearchInteractor {
 
         return SearchInteractorImpl(
             onState,

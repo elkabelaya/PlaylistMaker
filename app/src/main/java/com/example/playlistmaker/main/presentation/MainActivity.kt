@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity(), ClickDebounceUseCase {
         binding.searchButton.setOnClickListener {
             if (canClickDebounced()) {
                 val displayIntent = Intent(this, SearchActivity::class.java)
+
                 startActivity(displayIntent)
             }
         }

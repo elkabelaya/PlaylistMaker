@@ -1,9 +1,9 @@
-package com.example.playlistmaker.domain.impl
+package com.example.playlistmaker.search.domain.impl
 
-import com.example.playlistmaker.domain.use_case.GetTracksUseCase
 import com.example.playlistmaker.domain.consumer.ResourceConsumer
 import com.example.playlistmaker.domain.model.Tracks
-import com.example.playlistmaker.domain.repository.TracksRepository
+import com.example.playlistmaker.search.domain.repository.TracksRepository
+import com.example.playlistmaker.search.domain.use_case.GetTracksUseCase
 import java.util.concurrent.Executors
 
 class GetTracksUseCaseImpl(private val repository: TracksRepository) : GetTracksUseCase {

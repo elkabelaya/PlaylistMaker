@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 class PlayerInteractorImpl(private val playerRepository: PlayerRepository,
-                           val onState:(PlayerState)-> Unit): PlayerInteractor {
+                           override val onState:(PlayerState)-> Unit): PlayerInteractor {
 
     private var playerState: PlayerState = PlayerState.STATE_DEFAULT
         set(value) {

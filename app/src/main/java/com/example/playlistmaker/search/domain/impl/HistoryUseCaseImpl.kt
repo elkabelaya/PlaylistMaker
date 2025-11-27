@@ -1,8 +1,8 @@
-package com.example.playlistmaker.domain.impl
+package com.example.playlistmaker.search.domain.impl
 
-import com.example.playlistmaker.domain.use_case.HistoryUseCase
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.repository.PreferencesRepository
+import com.example.playlistmaker.search.domain.use_case.HistoryUseCase
 
 class HistoryUseCaseImpl(val repository: PreferencesRepository, val maxCount: Int):
     HistoryUseCase {
