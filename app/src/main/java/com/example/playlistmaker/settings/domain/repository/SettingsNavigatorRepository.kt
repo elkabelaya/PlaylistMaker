@@ -1,8 +1,9 @@
 package com.example.playlistmaker.settings.domain.repository
 
-import com.example.playlistmaker.domain.model.Email
+import com.example.playlistmaker.common.domain.model.Email
 
 interface SettingsNavigatorRepository {
-    fun getShareLink(): String
+    fun getShareUrl(): String
     fun getEmail(): Email
+    fun getAgreementUrl(): String
 }

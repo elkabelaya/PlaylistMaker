@@ -1,6 +1,6 @@
 package com.example.playlistmaker.search.domain.api
 
-import com.example.playlistmaker.domain.model.Tracks
+import com.example.playlistmaker.common.domain.model.Tracks
 
 sealed class SearchState {
     data object Default: SearchState()

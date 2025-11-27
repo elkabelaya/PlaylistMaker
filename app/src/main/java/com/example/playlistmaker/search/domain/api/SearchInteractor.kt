@@ -1,7 +1,7 @@
 package com.example.playlistmaker.search.domain.api
 
-import com.example.playlistmaker.domain.model.Track
-import com.example.playlistmaker.domain.model.Tracks
+import com.example.playlistmaker.common.domain.model.Track
+import com.example.playlistmaker.common.domain.model.Tracks
 
 interface SearchInteractor {
     val onState:(state: SearchState) -> Unit

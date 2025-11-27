@@ -1,7 +1,7 @@
 package com.example.playlistmaker.search.domain.impl
 
-import com.example.playlistmaker.domain.consumer.ResourceConsumer
-import com.example.playlistmaker.domain.model.Tracks
+import com.example.playlistmaker.common.domain.consumer.ResourceConsumer
+import com.example.playlistmaker.common.domain.model.Tracks
 import com.example.playlistmaker.search.domain.repository.TracksRepository
 import com.example.playlistmaker.search.domain.use_case.GetTracksUseCase
 import java.util.concurrent.Executors

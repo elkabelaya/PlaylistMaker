@@ -2,7 +2,7 @@ package com.example.playlistmaker.search.presentation
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.domain.model.Track
+import com.example.playlistmaker.common.domain.model.Track
 
 class TracksAdapter (val onClickItem: (Track) -> Unit) : RecyclerView.Adapter<TrackViewHolder> () {
     var tracks: List<Track> = emptyList()

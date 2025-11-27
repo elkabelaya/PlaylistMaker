@@ -1,21 +1,17 @@
 package com.example.playlistmaker.search.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.playlistmaker.player.presentation.PlayerActivity
-import com.example.playlistmaker.presentation.utils.AppCompatActivityWithToolBar
+import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
 import com.example.playlistmaker.R
-import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.databinding.ActivitySearchBinding
-import com.example.playlistmaker.player.presentation.PlayerViewModelImpl
-import com.example.playlistmaker.presentation.error.ErrorType
-import com.example.playlistmaker.presentation.error.ErrorViewModel
-import com.example.playlistmaker.presentation.utils.hideKeyboardFrom
+import com.example.playlistmaker.common.presentation.error.ErrorType
+import com.example.playlistmaker.common.presentation.error.ErrorViewModel
+import com.example.playlistmaker.common.presentation.utils.hideKeyboardFrom
 import com.example.playlistmaker.search.domain.api.SearchState
 
 class SearchActivity : AppCompatActivityWithToolBar() {

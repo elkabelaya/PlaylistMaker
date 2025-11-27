@@ -1,9 +1,9 @@
 package com.example.playlistmaker.search.data.repository
 
-import com.example.playlistmaker.data.model.TracksDto
-import com.example.playlistmaker.data.repository.TracksMapper
-import com.example.playlistmaker.domain.model.Resource
-import com.example.playlistmaker.domain.model.Tracks
+import com.example.playlistmaker.common.data.model.TracksDto
+import com.example.playlistmaker.common.data.repository.TracksMapper
+import com.example.playlistmaker.common.domain.model.Resource
+import com.example.playlistmaker.common.domain.model.Tracks
 import com.example.playlistmaker.search.domain.repository.TracksRepository
 
 class TracksRepositoryImpl(

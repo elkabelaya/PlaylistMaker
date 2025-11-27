@@ -1,6 +1,6 @@
 package com.example.playlistmaker.search.domain.impl
 
-import com.example.playlistmaker.domain.repository.LoopRepository
+import com.example.playlistmaker.common.domain.repository.LoopRepository
 import com.example.playlistmaker.search.domain.use_case.InputDebounceUseCase
 
 open class InputDebounceUseCaseImpl(val loopRepository: LoopRepository): InputDebounceUseCase {

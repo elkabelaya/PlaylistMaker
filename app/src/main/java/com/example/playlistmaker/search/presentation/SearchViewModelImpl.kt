@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.playlistmaker.creator.Creator
-import com.example.playlistmaker.domain.model.Track
+import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.search.domain.api.SearchInteractor
 import com.example.playlistmaker.search.domain.api.SearchNavigatorInteractor
 import com.example.playlistmaker.search.domain.api.SearchState
@@ -54,8 +54,5 @@ class SearchViewModelImpl(val context: Context): SearchViewModel, ViewModel() {
                 SearchViewModelImpl(context)
             }
         }
-
-        const val INTENT_KEY = "INTENT_KEY"
-        private const val PLAYER_DEBOUNCE_DELAY = 300L
     }
 }
