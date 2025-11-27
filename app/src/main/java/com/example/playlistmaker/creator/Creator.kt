@@ -34,6 +34,12 @@ import com.example.playlistmaker.player.domain.api.PlayerState
 import com.example.playlistmaker.search.domain.api.SearchNavigatorInteractor
 import com.example.playlistmaker.search.domain.api.SearchState
 import com.example.playlistmaker.search.domain.impl.SearchNavigatorInteractorImpl
+import com.example.playlistmaker.search.domain.repository.SearchNavigatorRepository
+import com.example.playlistmaker.search.presentation.repository.SearchNavigatorRepositoryImpl
+import com.example.playlistmaker.settings.domain.api.SettingsNavigatorInteractor
+import com.example.playlistmaker.settings.domain.impl.SettingsNavigatorInteractorImpl
+import com.example.playlistmaker.settings.domain.repository.SettingsNavigatorRepository
+import com.example.playlistmaker.settings.presentation.repository.SettingsNavigatorRepositoryImpl
 
 object Creator {
     private fun getTracksRepository(): TracksRepository {
@@ -90,12 +96,14 @@ object Creator {
     fun getNavigatorRepository(context: Context): NavigatorRepository {
         return NavigatorRepositoryImpl(context)
     }
+    fun getSearchNavigatorRepository(): SearchNavigatorRepository {
+        return SearchNavigatorRepositoryImpl()
+    }
     fun provideSearchNavigatorInteractor(context: Context): SearchNavigatorInteractor {
-        return SearchNavigatorInteractorImpl(getNavigatorRepository(context))
+        return SearchNavigatorInteractorImpl(getNavigatorRepository(context), getSearchNavigatorRepository())
     }
 
     fun provideSearchInteractor(context: Context, onState:(SearchState) -> Unit): SearchInteractor {
-
         return SearchInteractorImpl(
             onState,
             provideInputDebounceUseCase(),
@@ -103,5 +111,12 @@ object Creator {
             provideHistoryUseCase(context),
             getLoopRepository()
         )
+    }
+
+    fun getSettingsNavigatorRepository(context: Context): SettingsNavigatorRepository {
+        return SettingsNavigatorRepositoryImpl(context)
+    }
+    fun provideSettingsNavigatorInteractor(context: Context): SettingsNavigatorInteractor {
+        return SettingsNavigatorInteractorImpl(getNavigatorRepository(context),getSettingsNavigatorRepository(context))
     }
 }

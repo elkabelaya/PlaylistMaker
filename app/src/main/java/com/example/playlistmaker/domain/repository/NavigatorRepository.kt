@@ -1,9 +1,10 @@
 package com.example.playlistmaker.domain.repository
-import java.io.Serializable
+import com.example.playlistmaker.domain.model.Email
+import com.example.playlistmaker.domain.model.Navigation
 
 interface NavigatorRepository {
-    fun navigateTo(activity: Class<*>, data: Serializable)
+    fun navigateTo(navigation: Navigation)
     fun shareLink(link: String)
     fun openWeb(link: String)
-    fun openEmail(email: String)
+    fun openEmail(email: Email)
 }

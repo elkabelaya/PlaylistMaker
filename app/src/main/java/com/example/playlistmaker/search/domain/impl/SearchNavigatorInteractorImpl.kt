@@ -2,11 +2,12 @@ package com.example.playlistmaker.search.domain.impl
 
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.repository.NavigatorRepository
-import com.example.playlistmaker.player.presentation.PlayerActivity
 import com.example.playlistmaker.search.domain.api.SearchNavigatorInteractor
+import com.example.playlistmaker.search.domain.repository.SearchNavigatorRepository
 
-class SearchNavigatorInteractorImpl(val repository: NavigatorRepository): SearchNavigatorInteractor {
+class SearchNavigatorInteractorImpl(val repository: NavigatorRepository,
+    val searchRepository: SearchNavigatorRepository): SearchNavigatorInteractor {
     override fun navigateTo(track: Track) {
-        repository.navigateTo(PlayerActivity::class.java, track)
+        repository.navigateTo(searchRepository.getPlayerActivity(track))
     }
 }

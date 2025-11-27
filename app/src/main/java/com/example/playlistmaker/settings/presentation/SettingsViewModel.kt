@@ -1,4 +1,4 @@
-package com.example.playlistmaker.search.presentation
+package com.example.playlistmaker.settings.presentation
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -13,12 +13,10 @@ import com.example.playlistmaker.search.domain.api.SearchInteractor
 import com.example.playlistmaker.search.domain.api.SearchNavigatorInteractor
 import com.example.playlistmaker.search.domain.api.SearchState
 
-interface SearchViewModel {
-    fun observeState(): LiveData<SearchState>
-    fun changeQuery(query: CharSequence)
-    fun changeFocus(isFocused: Boolean)
-    fun clearQuery()
-    fun select(track: Track)
-    fun clearHistory()
-    fun refresh()
+interface SettingsViewModel {
+    fun observeDarkMode(): LiveData<Boolean>
+    fun switch(isDarck: Boolean)
+    fun share()
+    fun support()
+    fun agreement()
 }
