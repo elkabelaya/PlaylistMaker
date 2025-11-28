@@ -5,33 +5,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.SettingsActivity"
+    tools:context=".settings.presentation.SettingsActivity"
     android:orientation="vertical"
     android:background="@color/background">
     
-    <include layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
 
     <Switch
-        android:id="@+id/switch_night_mode"
+        android:id="@+id/night_switch"
         style="@style/app_switch"
         android:text="@string/settings_theme"
         tools:ignore="RtlSymmetry,UseSwitchCompatOrMaterialXml"
         tools:checked="true"/>
 
     <Button
-        android:id="@+id/share"
+        android:id="@+id/share_button"
         app:icon="@drawable/ic_settings_share"
         android:text="@string/settings_share"
         style="@style/settings_button" />
 
     <Button
-        android:id="@+id/support"
+        android:id="@+id/support_button"
         app:icon="@drawable/ic_settings_support"
         android:text="@string/settings_support"
         style="@style/settings_button" />
 
     <Button
-        android:id="@+id/agreement"
+        android:id="@+id/agreement_button"
         app:icon="@drawable/ic_arrow_right"
         android:text="@string/settings_agreement"
         style="@style/settings_button" />
