@@ -12,6 +12,7 @@ import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.common.presentation.error.ErrorType
 import com.example.playlistmaker.common.presentation.error.ErrorViewModel
 import com.example.playlistmaker.common.presentation.utils.hideKeyboardFrom
+import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.search.domain.api.SearchState
 
 class SearchActivity : AppCompatActivityWithToolBar() {
@@ -49,8 +50,13 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProvider(this, SearchViewModelImpl.getFactory(this ))
-            .get(SearchViewModelImpl::class.java)
+        viewModel = ViewModelProvider(this,
+            SearchViewModelImpl.getFactory(
+            Creator.provideSearchInteractor(this),
+                    Creator.provideSearchNavigatorInteractor(this),
+                    Creator.provideClickDebounceUseCase()
+            )
+        ).get(SearchViewModelImpl::class.java)
         viewModel.observeState().observe(this) { state ->
             when (state) {
                 is SearchState.Default -> {
@@ -61,6 +67,7 @@ class SearchActivity : AppCompatActivityWithToolBar() {
                     hideError()
                 }
                 is SearchState.History -> {
+                    binding.historyList.layoutManager?.scrollToPosition(0)
                     historyAdapter.tracks = state.tracks
                     historyAdapter.notifyDataSetChanged()
                     binding.searchbar.resetButton.isVisible = false
@@ -84,6 +91,7 @@ class SearchActivity : AppCompatActivityWithToolBar() {
                     hideError()
                 }
                 is SearchState.Result -> {
+                    binding.tracksList.layoutManager?.scrollToPosition(0)
                     adapter.tracks = state.tracks
                     adapter.notifyDataSetChanged()
                     binding.searchbar.resetButton.isVisible = true

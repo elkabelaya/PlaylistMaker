@@ -3,50 +3,62 @@ package com.example.playlistmaker.player.domain.impl
 import com.example.playlistmaker.player.domain.repository.PlayerRepository
 import com.example.playlistmaker.player.domain.api.PlayerInteractor
 import com.example.playlistmaker.player.domain.api.PlayerState
+import com.example.playlistmaker.player.domain.repository.PlayerDefaultsRepository
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class PlayerInteractorImpl(private val playerRepository: PlayerRepository,
-                           override val onState:(PlayerState)-> Unit): PlayerInteractor {
-
-    private var playerState: PlayerState = PlayerState.STATE_DEFAULT
+class PlayerInteractorImpl(
+    private val playerRepository: PlayerRepository,
+    private val playerDefaultsRepository: PlayerDefaultsRepository
+): PlayerInteractor {
+    private var sendState:((PlayerState)-> Unit)? = null
+    private var playerState: PlayerState = PlayerState.Default(time())
         set(value) {
             field = value
-            onState(value)
+            sendState?.let {
+                it(value)
+            }
         }
     private var dateFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
 
+    override fun onState(state: (PlayerState) -> Unit) {
+        sendState = state
+    }
     override fun time(): String {
-        return dateFormatter.format(playerRepository.time())
+        return try {
+            dateFormatter.format(playerRepository.time())
+        } catch (e: Exception) {
+            playerDefaultsRepository.getEmptyTime()
+        }
     }
     override fun onPrepared() {
-        playerState = PlayerState.STATE_PREPARED
+        playerState = PlayerState.Prepared(time())
     }
 
     override fun onComplete() {
-        playerState = PlayerState.STATE_PREPARED
+        playerState = PlayerState.Prepared(time())
     }
 
     override fun togglePlay() {
         when(playerState) {
-            PlayerState.STATE_PLAYING -> {
+            is PlayerState.Playing -> {
                 pause()
             }
-            PlayerState.STATE_PREPARED, PlayerState.STATE_PAUSED -> {
+            is PlayerState.Prepared, is PlayerState.Paused -> {
                 play()
             }
-            PlayerState.STATE_DEFAULT -> {}
+            is PlayerState.Default -> {}
         }
     }
 
     override fun pause() {
         playerRepository.pause()
-        playerState = PlayerState.STATE_PAUSED
+        playerState = PlayerState.Paused(time())
     }
 
     fun play() {
         playerRepository.play()
-        playerState = PlayerState.STATE_PLAYING
+        playerState = PlayerState.Playing(time())
     }
 
     override fun release() {

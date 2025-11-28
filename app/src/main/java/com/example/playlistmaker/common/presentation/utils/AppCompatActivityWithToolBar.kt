@@ -3,11 +3,9 @@ package com.example.playlistmaker.common.presentation.utils
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.databinding.ToolbarBinding
 
 open class AppCompatActivityWithToolBar: AppCompatActivity() {
-    private var clickDebounceUseCase = Creator.provideClickDebounceUseCase()
     fun setupToolBar(title: String, root: View, toolbar: ToolbarBinding) {
         setupTopInset(this, root)
 

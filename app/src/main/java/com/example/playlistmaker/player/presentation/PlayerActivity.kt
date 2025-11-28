@@ -11,6 +11,7 @@ import com.example.playlistmaker.databinding.ActivityPlayerBinding
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.player.domain.api.PlayerState
 import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
+import com.example.playlistmaker.creator.Creator
 
 class PlayerActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivityPlayerBinding
@@ -39,35 +40,32 @@ class PlayerActivity : AppCompatActivityWithToolBar() {
     }
 
     fun setupViewModel(url: String?) {
-        viewModel= ViewModelProvider(this, PlayerViewModelImpl.getFactory(url))
-            .get(PlayerViewModelImpl::class.java)
+        viewModel= ViewModelProvider(this,
+            PlayerViewModelImpl.getFactory(
+                Creator.providePlayerInteractor(url ?: "", this)
+            )
+        ).get(PlayerViewModelImpl::class.java)
         viewModel.observePlayerState().observe(this) {
             when (it){
-                PlayerState.STATE_DEFAULT -> {
+                is PlayerState.Default -> {
                     binding.playView.isEnabled = false
-                    binding.timeView.text = "00:00"
+                    binding.timeView.text = it.time
                     binding.playView.setImageResource(R.drawable.ic_player_play_button)
                 }
-                PlayerState.STATE_PREPARED -> {
+                is PlayerState.Prepared -> {
                     binding.playView.isEnabled = true
-                    binding.timeView.text = "00:00"
+                    binding.timeView.text = it.time
                     binding.playView.setImageResource(R.drawable.ic_player_play_button)
                 }
-                PlayerState.STATE_PLAYING -> {
+                is PlayerState.Playing -> {
+                    binding.timeView.text = it.time
                     binding.playView.setImageResource(R.drawable.ic_player_pause_button)
                 }
-                PlayerState.STATE_PAUSED -> {
+                is PlayerState.Paused -> {
+                    binding.timeView.text = it.time
                     binding.playView.setImageResource(R.drawable.ic_player_play_button)
                 }
             }
-        }
-
-        viewModel.observeProgressTime().observe(this) {
-            binding.timeView.text = it
-        }
-
-        viewModel.observeFavorite().observe(this) {
-            binding.favoriteView.setImageResource( if(it) R.drawable.ic_player_heart_fill else R.drawable.ic_player_heart_stroke )
         }
     }
     fun setupTrack(track: Track) {
@@ -77,8 +75,6 @@ class PlayerActivity : AppCompatActivityWithToolBar() {
             .centerCrop()
             .transform(RoundedCorners(binding.imageView.resources.getDimensionPixelSize(R.dimen.radius_m)))
             .into(binding.imageView)
-
-        binding.timeView.text = getString(R.string.player_empty_time)
 
         setTextOrHide(null, binding.title,track.trackName)
         setTextOrHide(null, binding.artist, track.artistName)

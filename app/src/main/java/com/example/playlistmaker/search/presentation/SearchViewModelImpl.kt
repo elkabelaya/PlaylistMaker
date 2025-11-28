@@ -9,22 +9,22 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.common.domain.model.Track
+import com.example.playlistmaker.common.domain.use_case.ClickDebounceUseCase
 import com.example.playlistmaker.search.domain.api.SearchInteractor
 import com.example.playlistmaker.search.domain.api.SearchNavigatorInteractor
 import com.example.playlistmaker.search.domain.api.SearchState
 
-class SearchViewModelImpl(val context: Context): SearchViewModel, ViewModel() {
+class SearchViewModelImpl(
+    val searchInteractor: SearchInteractor,
+    val navigatorInteractor: SearchNavigatorInteractor,
+    val clickDebounceUseCase: ClickDebounceUseCase
+    ): SearchViewModel, ViewModel() {
     private val stateLiveData= MutableLiveData<SearchState>(SearchState.Default)
     override fun observeState(): LiveData<SearchState> = stateLiveData
-
-    private lateinit var searchInteractor: SearchInteractor
-    private lateinit var navigatorInteractor: SearchNavigatorInteractor
-    private var clickDebounceUseCase = Creator.provideClickDebounceUseCase()
     init {
-        searchInteractor = Creator.provideSearchInteractor(context) { state ->
-            stateLiveData.postValue(state)
+        searchInteractor.onState { state ->
+            stateLiveData.postValue( state)
         }
-        navigatorInteractor = Creator.provideSearchNavigatorInteractor(context)
     }
     override fun changeQuery(query: CharSequence) {
         searchInteractor.changeQuery(query)
@@ -49,9 +49,15 @@ class SearchViewModelImpl(val context: Context): SearchViewModel, ViewModel() {
         searchInteractor.refresh()
     }
     companion object {
-        fun getFactory(context: Context): ViewModelProvider.Factory = viewModelFactory {
+        fun getFactory( searchInteractor: SearchInteractor,
+                        navigatorInteractor: SearchNavigatorInteractor,
+                        clickDebounceUseCase: ClickDebounceUseCase): ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                SearchViewModelImpl(context)
+                SearchViewModelImpl(
+                    searchInteractor,
+                    navigatorInteractor,
+                    clickDebounceUseCase
+                )
             }
         }
     }

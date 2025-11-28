@@ -13,12 +13,12 @@ import com.example.playlistmaker.common.domain.api.ModeInteractor
 import com.example.playlistmaker.settings.domain.api.SettingsNavigatorInteractor
 
 
-class SettingsViewModelImpl(val context: Context): SettingsViewModel, ViewModel() {
+class SettingsViewModelImpl(
+    val modeInteractor: ModeInteractor,
+    val navigatorInteractor: SettingsNavigatorInteractor
+): SettingsViewModel, ViewModel() {
     private val darkModeLiveData = MutableLiveData(false)
     override fun observeDarkMode(): LiveData<Boolean> = darkModeLiveData
-
-    private lateinit var modeInteractor: ModeInteractor
-    private lateinit var navigatorInteractor: SettingsNavigatorInteractor
     private var clickDebounceUseCase = Creator.provideClickDebounceUseCase()
 
     override fun switch(isDark: Boolean) {
@@ -45,19 +45,16 @@ class SettingsViewModelImpl(val context: Context): SettingsViewModel, ViewModel(
     }
 
     init {
-        modeInteractor = Creator.provideModeInteractor(context)
-        navigatorInteractor = Creator.provideSettingsNavigatorInteractor(context)
         darkModeLiveData.postValue(modeInteractor.darkTheme)
     }
 
     companion object {
-        fun getFactory(context: Context): ViewModelProvider.Factory = viewModelFactory {
+        fun getFactory(modeInteractor: ModeInteractor,
+                       navigatorInteractor: SettingsNavigatorInteractor
+        ): ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                SettingsViewModelImpl(context)
+                SettingsViewModelImpl(modeInteractor, navigatorInteractor)
             }
         }
-
-        const val INTENT_KEY = "INTENT_KEY"
-        private const val PLAYER_DEBOUNCE_DELAY = 300L
     }
 }

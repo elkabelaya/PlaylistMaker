@@ -34,9 +34,9 @@ import com.example.playlistmaker.main.presentation.repository.MainNavigatorRepos
 import com.example.playlistmaker.search.domain.use_case.HistoryUseCase
 import com.example.playlistmaker.search.domain.use_case.GetTracksUseCase
 import com.example.playlistmaker.search.domain.use_case.InputDebounceUseCase
-import com.example.playlistmaker.player.domain.api.PlayerState
+import com.example.playlistmaker.player.domain.repository.PlayerDefaultsRepository
+import com.example.playlistmaker.player.presentation.repository.PlayerDefaultsRepositoryImpl
 import com.example.playlistmaker.search.domain.api.SearchNavigatorInteractor
-import com.example.playlistmaker.search.domain.api.SearchState
 import com.example.playlistmaker.search.domain.impl.SearchNavigatorInteractorImpl
 import com.example.playlistmaker.search.domain.repository.SearchNavigatorRepository
 import com.example.playlistmaker.search.presentation.repository.SearchNavigatorRepositoryImpl
@@ -69,9 +69,13 @@ object Creator {
         return PlayerRepositoryImpl(url)
     }
 
-    fun providePlayerInteractor(url: String, onState:(PlayerState) -> Unit): PlayerInteractor {
+    private fun getPlayerDefaultsRepository(context: Context): PlayerDefaultsRepository {
+        return PlayerDefaultsRepositoryImpl(context)
+    }
+
+    fun providePlayerInteractor(url: String, context: Context): PlayerInteractor {
         val repository = getPlayerRepository(url)
-        val interactor = PlayerInteractorImpl(repository, onState)
+        val interactor = PlayerInteractorImpl(repository, getPlayerDefaultsRepository(context))
         repository.onPrepared = { interactor.onPrepared() }
         repository.onComplete = { interactor.onComplete() }
         return interactor
@@ -107,9 +111,8 @@ object Creator {
         return SearchNavigatorInteractorImpl(getNavigatorRepository(context), getSearchNavigatorRepository())
     }
 
-    fun provideSearchInteractor(context: Context, onState:(SearchState) -> Unit): SearchInteractor {
+    fun provideSearchInteractor(context: Context): SearchInteractor {
         return SearchInteractorImpl(
-            onState,
             provideInputDebounceUseCase(),
             provideGetTracksUseCase(),
             provideHistoryUseCase(context),

@@ -5,16 +5,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.example.playlistmaker.common.domain.use_case.ClickDebounceUseCase
 import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.main.domain.api.MainNavigatorInteractor
 
-class MainViewModelImpl(context: Context): MainViewModel, ViewModel() {
-    private var clickDebounceUseCase = Creator.provideClickDebounceUseCase()
-    private lateinit var navigatorInteractor: MainNavigatorInteractor
-
-    init {
-        navigatorInteractor = Creator.provideMainNavigatorInteractor(context)
-    }
+class MainViewModelImpl(
+    val navigatorInteractor: MainNavigatorInteractor,
+    val clickDebounceUseCase: ClickDebounceUseCase
+    ): MainViewModel, ViewModel() {
 
     override fun search() {
         if (clickDebounceUseCase.canClickDebounced()) {
@@ -35,9 +33,12 @@ class MainViewModelImpl(context: Context): MainViewModel, ViewModel() {
     }
 
     companion object {
-        fun getFactory(context: Context): ViewModelProvider.Factory = viewModelFactory {
+        fun getFactory(
+            navigatorInteractor: MainNavigatorInteractor,
+            clickDebounceUseCase: ClickDebounceUseCase
+        ): ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                MainViewModelImpl(context)
+                MainViewModelImpl(navigatorInteractor, clickDebounceUseCase)
             }
         }
     }

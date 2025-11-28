@@ -7,6 +7,7 @@ import com.example.playlistmaker.R
 import com.example.playlistmaker.common.data.repository.NavigatorRepositoryImpl
 import com.example.playlistmaker.databinding.ActivitySettingsBinding
 import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
+import com.example.playlistmaker.creator.Creator
 
 class SettingsActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivitySettingsBinding
@@ -22,8 +23,14 @@ class SettingsActivity : AppCompatActivityWithToolBar() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProvider(this, SettingsViewModelImpl.getFactory(this))
-            .get(SettingsViewModelImpl::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            SettingsViewModelImpl.getFactory(
+                Creator.provideModeInteractor(this),
+                Creator.provideSettingsNavigatorInteractor(this)
+                )
+            ).get(SettingsViewModelImpl::class.java)
+
         viewModel.observeDarkMode().observe(this) { mode ->
             binding.nightSwitch.isChecked = mode
         }

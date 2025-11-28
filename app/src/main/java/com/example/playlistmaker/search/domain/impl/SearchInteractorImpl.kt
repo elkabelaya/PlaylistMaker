@@ -12,20 +12,25 @@ import com.example.playlistmaker.search.domain.api.SearchInteractor
 import com.example.playlistmaker.search.domain.api.SearchState
 
 class SearchInteractorImpl(
-    override val onState:(SearchState) -> Unit,
     private val inputDebounceUseCase: InputDebounceUseCase,
     private val getTracksUseCase: GetTracksUseCase,
     private val historyUseCase: HistoryUseCase,
     private val loopRepository: LoopRepository,
 
     ) : SearchInteractor {
+    private var sendState:((SearchState) -> Unit)? = null
     private var erroredQuery: String? = null
+
     private var state: SearchState = SearchState.Default
        set(value) {
            field = value
            loopRepository.clear()
-           loopRepository.post({onState(value)}, 0)
+           loopRepository.post({sendState?.let{it(value)}}, 0)
        }
+
+    override fun onState(state: (SearchState) -> Unit) {
+        sendState = state
+    }
 
     override fun changeQuery(query: CharSequence) {
         val trimmedQuery = query.toString().trim()
