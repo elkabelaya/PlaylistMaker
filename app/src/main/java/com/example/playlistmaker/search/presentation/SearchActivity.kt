@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
 import com.example.playlistmaker.R
@@ -12,14 +11,17 @@ import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.common.presentation.error.ErrorType
 import com.example.playlistmaker.common.presentation.error.ErrorViewModel
 import com.example.playlistmaker.common.presentation.utils.hideKeyboardFrom
-import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.search.di.searchModules
 import com.example.playlistmaker.search.domain.api.SearchState
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.GlobalContext.loadKoinModules
+import org.koin.core.context.GlobalContext.unloadKoinModules
 
 class SearchActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivitySearchBinding
     private val adapter: TracksAdapter
     private val historyAdapter: TracksAdapter
-    lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by viewModel()
 
     init {
 
@@ -30,6 +32,7 @@ class SearchActivity : AppCompatActivityWithToolBar() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadKoinModules(searchModules)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupToolBar(getResources().getString(R.string.main_search), binding.root, binding.toolbar)
@@ -41,6 +44,11 @@ class SearchActivity : AppCompatActivityWithToolBar() {
         setupHistoryGroup()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unloadKoinModules(searchModules)
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
     }
@@ -50,13 +58,6 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     }
 
     private fun setupViewModel() {
-        viewModel = ViewModelProvider(this,
-            SearchViewModelImpl.getFactory(
-            Creator.provideSearchInteractor(this),
-                    Creator.provideSearchNavigatorInteractor(this),
-                    Creator.provideClickDebounceUseCase()
-            )
-        ).get(SearchViewModelImpl::class.java)
         viewModel.observeState().observe(this) { state ->
             when (state) {
                 is SearchState.Default -> {

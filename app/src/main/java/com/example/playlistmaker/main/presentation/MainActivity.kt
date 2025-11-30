@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmaker.databinding.ActivityMainBinding
 import com.example.playlistmaker.common.presentation.utils.setupTopInset
-import com.example.playlistmaker.creator.Creator
-import com.example.playlistmaker.main.domain.api.MainNavigatorInteractor
+import com.example.playlistmaker.common.di.Creator
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

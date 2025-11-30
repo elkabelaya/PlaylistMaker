@@ -4,10 +4,9 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmaker.R
-import com.example.playlistmaker.common.data.repository.NavigatorRepositoryImpl
 import com.example.playlistmaker.databinding.ActivitySettingsBinding
 import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
-import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.common.di.Creator
 
 class SettingsActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivitySettingsBinding

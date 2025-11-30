@@ -1,4 +1,4 @@
-package com.example.playlistmaker.creator
+package com.example.playlistmaker.common.di
 
 import android.content.Context
 import com.example.playlistmaker.common.data.mapper.TracksMapperImpl
@@ -44,11 +44,9 @@ import com.example.playlistmaker.settings.domain.api.SettingsNavigatorInteractor
 import com.example.playlistmaker.settings.domain.impl.SettingsNavigatorInteractorImpl
 import com.example.playlistmaker.settings.domain.repository.SettingsNavigatorRepository
 import com.example.playlistmaker.settings.presentation.repository.SettingsNavigatorRepositoryImpl
+import org.koin.java.KoinJavaComponent.inject
 
 object Creator {
-    private fun getTracksRepository(): TracksRepository {
-        return TracksRepositoryImpl(TracksRetrofitNetworkClient(), getTracksMapper())
-    }
 
     private fun getTracksMapper(): TracksMapper {
         return TracksMapperImpl()
@@ -89,36 +87,13 @@ object Creator {
         return ClickDebounceUseCaseImpl(getLoopRepository())
     }
 
-    fun provideInputDebounceUseCase(): InputDebounceUseCase {
-        return InputDebounceUseCaseImpl(getLoopRepository())
-    }
-
-    fun provideGetTracksUseCase(): GetTracksUseCase {
-        return GetTracksUseCaseImpl(getTracksRepository())
-    }
-
-    fun provideHistoryUseCase(context: Context): HistoryUseCase {
-        return HistoryUseCaseImpl(getPreferencesRepository(context), 10)
-    }
-
     fun getNavigatorRepository(context: Context): NavigatorRepository {
         return NavigatorRepositoryImpl(context)
     }
     fun getSearchNavigatorRepository(): SearchNavigatorRepository {
         return SearchNavigatorRepositoryImpl()
     }
-    fun provideSearchNavigatorInteractor(context: Context): SearchNavigatorInteractor {
-        return SearchNavigatorInteractorImpl(getNavigatorRepository(context), getSearchNavigatorRepository())
-    }
 
-    fun provideSearchInteractor(context: Context): SearchInteractor {
-        return SearchInteractorImpl(
-            provideInputDebounceUseCase(),
-            provideGetTracksUseCase(),
-            provideHistoryUseCase(context),
-            getLoopRepository()
-        )
-    }
 
     fun getSettingsNavigatorRepository(context: Context): SettingsNavigatorRepository {
         return SettingsNavigatorRepositoryImpl(context)

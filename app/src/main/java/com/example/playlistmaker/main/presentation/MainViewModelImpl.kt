@@ -1,12 +1,10 @@
 package com.example.playlistmaker.main.presentation
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.playlistmaker.common.domain.use_case.ClickDebounceUseCase
-import com.example.playlistmaker.creator.Creator
 import com.example.playlistmaker.main.domain.api.MainNavigatorInteractor
 
 class MainViewModelImpl(

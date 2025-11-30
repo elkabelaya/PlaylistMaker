@@ -11,7 +11,7 @@ import com.example.playlistmaker.databinding.ActivityPlayerBinding
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.player.domain.api.PlayerState
 import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
-import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.common.di.Creator
 
 class PlayerActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivityPlayerBinding

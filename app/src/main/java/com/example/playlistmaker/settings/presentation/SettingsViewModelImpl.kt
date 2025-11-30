@@ -1,13 +1,12 @@
 package com.example.playlistmaker.settings.presentation
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.common.di.Creator
 import com.example.playlistmaker.common.domain.api.ModeInteractor
 
 import com.example.playlistmaker.settings.domain.api.SettingsNavigatorInteractor
