@@ -48,29 +48,6 @@ import org.koin.java.KoinJavaComponent.inject
 
 object Creator {
 
-    private fun getTracksMapper(): TracksMapper {
-        return TracksMapperImpl()
-    }
-    private fun getPreferencesRepository(context: Context): PreferencesRepository {
-        return PreferencesRepositoryImpl(context, getTracksMapper())
-    }
-
-    private fun getPlayerRepository(url: String): PlayerRepository {
-        return PlayerRepositoryImpl(url)
-    }
-
-    private fun getPlayerDefaultsRepository(context: Context): PlayerDefaultsRepository {
-        return PlayerDefaultsRepositoryImpl(context)
-    }
-
-    fun providePlayerInteractor(url: String, context: Context): PlayerInteractor {
-        val repository = getPlayerRepository(url)
-        val interactor = PlayerInteractorImpl(repository, getPlayerDefaultsRepository(context))
-        repository.onPrepared = { interactor.onPrepared() }
-        repository.onComplete = { interactor.onComplete() }
-        return interactor
-    }
-
     private fun getLoopRepository(): LoopRepository {
         return LoopRepositoryImpl()
     }
@@ -83,10 +60,6 @@ object Creator {
         return NavigatorRepositoryImpl(context)
     }
 
-
-    fun getSettingsNavigatorRepository(context: Context): SettingsNavigatorRepository {
-        return SettingsNavigatorRepositoryImpl(context)
-    }
 
     fun getMainNavigatorRepository(): MainNavigatorRepository {
         return MainNavigatorRepositoryImpl()

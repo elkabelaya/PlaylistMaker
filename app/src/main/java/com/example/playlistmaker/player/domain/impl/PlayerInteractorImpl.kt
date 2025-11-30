@@ -21,9 +21,14 @@ class PlayerInteractorImpl(
         }
     private var dateFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
 
+    override fun setup(url: String) {
+        playerRepository.setupPlayer(url, {onPrepared()}, {onComplete()})
+    }
+
     override fun onState(state: (PlayerState) -> Unit) {
         sendState = state
     }
+
     override fun time(): String {
         return try {
             dateFormatter.format(playerRepository.time())

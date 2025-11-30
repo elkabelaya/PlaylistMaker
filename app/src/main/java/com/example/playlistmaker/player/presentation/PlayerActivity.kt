@@ -12,12 +12,20 @@ import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.player.domain.api.PlayerState
 import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
 import com.example.playlistmaker.common.di.Creator
+import com.example.playlistmaker.player.di.playerModules
+import com.example.playlistmaker.search.di.searchModules
+import com.example.playlistmaker.search.presentation.SearchViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.GlobalContext.loadKoinModules
+import org.koin.core.context.GlobalContext.unloadKoinModules
+import kotlin.getValue
 
 class PlayerActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivityPlayerBinding
-    private lateinit var viewModel: PlayerViewModel
+    private val viewModel: PlayerViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadKoinModules(playerModules)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupToolBar(getResources().getString(R.string.empty_title), binding.root, binding.toolbar)
@@ -37,14 +45,11 @@ class PlayerActivity : AppCompatActivityWithToolBar() {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.onDestroy()
+        unloadKoinModules(playerModules)
     }
 
     fun setupViewModel(url: String?) {
-        viewModel= ViewModelProvider(this,
-            PlayerViewModelImpl.getFactory(
-                Creator.providePlayerInteractor(url ?: "", this)
-            )
-        ).get(PlayerViewModelImpl::class.java)
+        viewModel.setup(url)
         viewModel.observePlayerState().observe(this) {
             when (it){
                 is PlayerState.Default -> {

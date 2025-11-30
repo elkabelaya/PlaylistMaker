@@ -12,7 +12,7 @@ import com.example.playlistmaker.player.domain.api.PlayerInteractor
 import com.example.playlistmaker.player.domain.api.PlayerState
 
 
-class PlayerViewModelImpl(val playerInteractor: PlayerInteractor) : PlayerViewModel, ViewModel() {
+class PlayerViewModelImpl(val playerInteractor: PlayerInteractor) : PlayerViewModel() {
     private val playerStateLiveData: MutableLiveData<PlayerState> = MutableLiveData(PlayerState.Default(""))
     override fun observePlayerState(): LiveData<PlayerState> = playerStateLiveData
     private val handler = Handler(Looper.getMainLooper())
@@ -36,6 +36,9 @@ class PlayerViewModelImpl(val playerInteractor: PlayerInteractor) : PlayerViewMo
 
     }
 
+    override fun setup(url: String?) {
+        playerInteractor.setup(url ?: "")
+    }
 
     override fun togglePlay(){
         playerInteractor.togglePlay()
@@ -54,11 +57,6 @@ class PlayerViewModelImpl(val playerInteractor: PlayerInteractor) : PlayerViewMo
     }
 
     companion object {
-        fun getFactory(playerInteractor: PlayerInteractor): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                PlayerViewModelImpl(playerInteractor)
-            }
-        }
         private const val PLAYER_DEBOUNCE_DELAY = 300L
     }
 }
