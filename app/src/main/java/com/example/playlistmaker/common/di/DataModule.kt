@@ -16,9 +16,9 @@ import org.koin.dsl.module
 
 val commonDataModule = module {
     single<ItunesApi>{ RetrofitClient.itunesService }
-    factory<TracksMapper> { TracksMapperImpl() }
+    single<TracksMapper> { TracksMapperImpl() }
     factory<LoopRepository>{ LoopRepositoryImpl() }
-    factory<PreferencesRepository>{ PreferencesRepositoryImpl(get(), get()) }
-    factory<NavigatorRepository>{ NavigatorRepositoryImpl(get()) }
-    factory<ThemeRepository>{ ThemeRepositoryImpl() }
+    single<PreferencesRepository>{ PreferencesRepositoryImpl(get(), get()) }
+    single<NavigatorRepository>{ NavigatorRepositoryImpl(get()) }
+    single<ThemeRepository>{ ThemeRepositoryImpl() }
 }

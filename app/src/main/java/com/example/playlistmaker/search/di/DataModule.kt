@@ -7,6 +7,6 @@ import com.example.playlistmaker.search.domain.repository.TracksRepository
 import org.koin.dsl.module
 
 val searchDataModule = module {
-    factory<TracksNetworkClient> { TracksRetrofitNetworkClient(get())}
+    single<TracksNetworkClient> { TracksRetrofitNetworkClient(get())}
     factory<TracksRepository> { TracksRepositoryImpl(get(), get()) }
 }
