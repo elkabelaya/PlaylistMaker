@@ -1,7 +1,9 @@
 package com.example.playlistmaker.main.presentation
 
-interface MainViewModel {
-    fun search()
-    fun media()
-    fun settings()
+import androidx.lifecycle.ViewModel
+
+abstract class MainViewModel: ViewModel() {
+    abstract fun search()
+    abstract fun media()
+    abstract fun settings()
 }

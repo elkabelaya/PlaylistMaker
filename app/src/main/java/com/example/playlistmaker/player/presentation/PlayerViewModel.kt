@@ -1,11 +1,13 @@
 package com.example.playlistmaker.player.presentation
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import com.example.playlistmaker.player.domain.api.PlayerState
-interface PlayerViewModel {
-    fun observePlayerState(): LiveData<PlayerState>
-    fun togglePlay()
-    fun toggleFavorite()
-    fun onPause()
-    fun onDestroy()
+abstract class PlayerViewModel: ViewModel() {
+    abstract fun setup(url: String?)
+    abstract fun observePlayerState(): LiveData<PlayerState>
+    abstract fun togglePlay()
+    abstract fun toggleFavorite()
+    abstract fun onPause()
+    abstract fun onDestroy()
 }

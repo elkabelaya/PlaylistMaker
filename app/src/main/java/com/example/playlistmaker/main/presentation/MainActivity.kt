@@ -5,19 +5,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.playlistmaker.databinding.ActivityMainBinding
 import com.example.playlistmaker.common.presentation.utils.setupTopInset
-import com.example.playlistmaker.creator.Creator
-import com.example.playlistmaker.main.domain.api.MainNavigatorInteractor
+import com.example.playlistmaker.main.di.mainModules
+import com.example.playlistmaker.search.di.searchModules
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.context.GlobalContext.loadKoinModules
+import org.koin.core.context.GlobalContext.unloadKoinModules
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    lateinit var viewModel: MainViewModel
+    val viewModel: MainViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadKoinModules(mainModules)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupTopInset(this, binding.root)
-        setupViewModel()
         setupListeners()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unloadKoinModules(mainModules)
     }
 
     private fun setupListeners() {
@@ -32,14 +40,5 @@ class MainActivity : AppCompatActivity() {
         binding.settingsButton.setOnClickListener {
             viewModel.settings()
         }
-    }
-
-    private fun setupViewModel() {
-        viewModel = ViewModelProvider(this,
-            MainViewModelImpl.getFactory(
-                Creator.provideMainNavigatorInteractor(this),
-                Creator.provideClickDebounceUseCase()
-            )
-        ).get(MainViewModelImpl::class.java)
     }
 }

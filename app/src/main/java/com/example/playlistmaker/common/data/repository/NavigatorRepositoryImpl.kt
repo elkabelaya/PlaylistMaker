@@ -9,11 +9,12 @@ import com.example.playlistmaker.common.domain.repository.NavigatorRepository
 
 class NavigatorRepositoryImpl(private val context: Context): NavigatorRepository {
     override fun navigateTo(navigation: Navigation) {
-        val displayIntent = Intent(context, navigation.activity)
+        val intent = Intent(context, navigation.activity)
         if (navigation.key != null && navigation.data != null) {
-            displayIntent.putExtra(navigation.key, navigation.data)
+            intent.putExtra(navigation.key, navigation.data)
         }
-        context.startActivity(displayIntent)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivity(intent)
     }
 
     override fun shareLink(link: String) {
@@ -22,18 +23,21 @@ class NavigatorRepositoryImpl(private val context: Context): NavigatorRepository
         intent.putExtra(
             Intent.EXTRA_TEXT,link
         )
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 
     override fun openWeb(link: String) {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.setData(Uri.parse(link))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 
     override fun openEmail(email: Email) {
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.setData(Uri.parse("mailto:${email.recipient}?subject=${email.subject}&body=${email.body}"));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
 }
