@@ -4,7 +4,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.MediaActivity"
+    tools:context=".media.presentation.MediaActivity"
     android:background="@color/background">
-    <include layout="@layout/toolbar"/>
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

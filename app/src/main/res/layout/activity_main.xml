@@ -20,19 +20,19 @@
         android:paddingBottom="@dimen/padding_xl"/>
         
     <Button
-        android:id="@+id/search"
+        android:id="@+id/search_button"
         app:icon="@drawable/ic_main_search"
         android:text="@string/main_search"
         style="@style/main_button" />
 
     <Button
-        android:id="@+id/media"
+        android:id="@+id/media_button"
         app:icon="@drawable/ic_main_media"
         android:text="@string/main_media"
         style="@style/main_button" />
 
     <Button
-        android:id="@+id/settings"
+        android:id="@+id/settings_button"
         app:icon="@drawable/ic_main_settings"
         android:text="@string/main_settings"
         style="@style/main_button" />

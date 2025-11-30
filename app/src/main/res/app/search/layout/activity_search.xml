@@ -6,12 +6,14 @@
         android:layout_height="match_parent"
         android:id="@+id/main"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".presentation.search.SearchActivity"
+        tools:context=".search.presentation.SearchActivity"
         android:orientation="vertical"
         android:background="@color/background">
 
-        <include layout="@layout/toolbar"/>
-        <include layout="@layout/searchbar"/>
+        <include android:id="@+id/toolbar"
+            layout="@layout/toolbar"/>
+        <include android:id="@+id/searchbar"
+            layout="@layout/searchbar"/>
         <include android:id="@+id/progressbar"
             layout="@layout/progressbar"
             android:layout_width="match_parent"
@@ -45,7 +47,7 @@
                 android:layout_marginBottom="@dimen/padding_s"
                 android:layout_marginTop="@dimen/padding_7xl"/>
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/history"
+                android:id="@+id/history_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
@@ -56,7 +58,7 @@
                 android:layout_marginTop="@dimen/padding_xl"/>
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+            android:id="@+id/tracks_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

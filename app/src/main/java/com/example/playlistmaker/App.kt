@@ -1,10 +1,8 @@
 package com.example.playlistmaker
 
 import android.app.Application
-import android.content.Context
-import androidx.appcompat.app.AppCompatDelegate
 import com.example.playlistmaker.creator.Creator
-import com.example.playlistmaker.domain.api.ModeInteractor
+import com.example.playlistmaker.common.domain.api.ModeInteractor
 
 class App : Application() {
     lateinit var modeInteractor: ModeInteractor
