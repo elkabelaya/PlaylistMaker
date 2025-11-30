@@ -10,7 +10,7 @@ import com.example.playlistmaker.main.domain.api.MainNavigatorInteractor
 class MainViewModelImpl(
     val navigatorInteractor: MainNavigatorInteractor,
     val clickDebounceUseCase: ClickDebounceUseCase
-    ): MainViewModel, ViewModel() {
+    ): MainViewModel() {
 
     override fun search() {
         if (clickDebounceUseCase.canClickDebounced()) {
@@ -27,17 +27,6 @@ class MainViewModelImpl(
     override fun settings() {
         if (clickDebounceUseCase.canClickDebounced()) {
             navigatorInteractor.navigateToSettings()
-        }
-    }
-
-    companion object {
-        fun getFactory(
-            navigatorInteractor: MainNavigatorInteractor,
-            clickDebounceUseCase: ClickDebounceUseCase
-        ): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                MainViewModelImpl(navigatorInteractor, clickDebounceUseCase)
-            }
         }
     }
 }

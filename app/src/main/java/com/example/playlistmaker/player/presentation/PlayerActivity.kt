@@ -11,7 +11,6 @@ import com.example.playlistmaker.databinding.ActivityPlayerBinding
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.player.domain.api.PlayerState
 import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
-import com.example.playlistmaker.common.di.Creator
 import com.example.playlistmaker.player.di.playerModules
 import com.example.playlistmaker.search.di.searchModules
 import com.example.playlistmaker.search.presentation.SearchViewModel

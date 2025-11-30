@@ -1,7 +1,6 @@
 package com.example.playlistmaker
 
 import android.app.Application
-import com.example.playlistmaker.common.di.Creator
 import com.example.playlistmaker.common.di.commonModules
 import com.example.playlistmaker.common.domain.api.ModeInteractor
 import org.koin.android.ext.android.get
