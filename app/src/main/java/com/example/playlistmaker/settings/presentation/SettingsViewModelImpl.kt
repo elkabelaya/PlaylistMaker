@@ -15,7 +15,7 @@ import com.example.playlistmaker.settings.domain.api.SettingsNavigatorInteractor
 class SettingsViewModelImpl(
     val modeInteractor: ModeInteractor,
     val navigatorInteractor: SettingsNavigatorInteractor
-): SettingsViewModel, ViewModel() {
+): SettingsViewModel() {
     private val darkModeLiveData = MutableLiveData(false)
     override fun observeDarkMode(): LiveData<Boolean> = darkModeLiveData
     private var clickDebounceUseCase = Creator.provideClickDebounceUseCase()
@@ -45,15 +45,5 @@ class SettingsViewModelImpl(
 
     init {
         darkModeLiveData.postValue(modeInteractor.darkTheme)
-    }
-
-    companion object {
-        fun getFactory(modeInteractor: ModeInteractor,
-                       navigatorInteractor: SettingsNavigatorInteractor
-        ): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                SettingsViewModelImpl(modeInteractor, navigatorInteractor)
-            }
-        }
     }
 }

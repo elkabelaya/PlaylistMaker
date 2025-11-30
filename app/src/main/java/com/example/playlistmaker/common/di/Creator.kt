@@ -55,14 +55,6 @@ object Creator {
         return PreferencesRepositoryImpl(context, getTracksMapper())
     }
 
-    private fun getThemeRepository(): ThemeRepository {
-        return ThemeRepositoryImpl()
-    }
-
-    fun provideModeInteractor(context: Context): ModeInteractor {
-        return ModeInteractorImpl(getPreferencesRepository(context),getThemeRepository())
-    }
-
     private fun getPlayerRepository(url: String): PlayerRepository {
         return PlayerRepositoryImpl(url)
     }
@@ -90,16 +82,10 @@ object Creator {
     fun getNavigatorRepository(context: Context): NavigatorRepository {
         return NavigatorRepositoryImpl(context)
     }
-    fun getSearchNavigatorRepository(): SearchNavigatorRepository {
-        return SearchNavigatorRepositoryImpl()
-    }
 
 
     fun getSettingsNavigatorRepository(context: Context): SettingsNavigatorRepository {
         return SettingsNavigatorRepositoryImpl(context)
-    }
-    fun provideSettingsNavigatorInteractor(context: Context): SettingsNavigatorInteractor {
-        return SettingsNavigatorInteractorImpl(getNavigatorRepository(context),getSettingsNavigatorRepository(context))
     }
 
     fun getMainNavigatorRepository(): MainNavigatorRepository {
