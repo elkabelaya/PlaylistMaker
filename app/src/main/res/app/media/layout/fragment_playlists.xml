@@ -5,9 +5,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".media.presentation.PlaylistsFragment">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".search.presentation.SearchActivity"
+        android:orientation="vertical"
+        android:background="@color/background">
+    <Button android:id="@+id/create_button"
+        style="@style/action_button"
+        android:text="@string/media_playlist_create"
+        android:layout_marginTop="@dimen/padding_xl"/>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/error_fragment"
+        android:name="com.example.playlistmaker.common.presentation.error.ErrorFragment"
+        android:layout_marginTop="@dimen/padding_7xl"
+        style="@style/ErrorStyle"/>
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

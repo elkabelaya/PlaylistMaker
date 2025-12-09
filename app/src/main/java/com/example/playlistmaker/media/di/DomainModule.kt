@@ -1,12 +1,12 @@
 package com.example.playlistmaker.media.di
 
-import com.example.playlistmaker.main.domain.api.MainNavigatorInteractor
-import com.example.playlistmaker.main.domain.impl.MainNavigatorInteractorImpl
-import com.example.playlistmaker.player.domain.api.PlayerInteractor
-import com.example.playlistmaker.player.domain.impl.PlayerInteractorImpl
+import com.example.playlistmaker.media.domain.api.MediaFavoritesInteractor
+import com.example.playlistmaker.media.domain.api.MediaPlaylistsInteractor
+import com.example.playlistmaker.media.domain.impl.MediaFavoritesInteractorImpl
+import com.example.playlistmaker.media.domain.impl.MediaPlaylistsInteractorImpl
 import org.koin.dsl.module
 
 val mediaDomainModule = module {
-//     factory<PlayerInteractor> { PlayerInteractorImpl(get(), get()) }
-//    factory<MainNavigatorInteractor> { MainNavigatorInteractorImpl(get(), get()) }
+    factory<MediaFavoritesInteractor> { MediaFavoritesInteractorImpl(get(), get()) }
+    factory<MediaPlaylistsInteractor> { MediaPlaylistsInteractorImpl(get(), get()) }
 }

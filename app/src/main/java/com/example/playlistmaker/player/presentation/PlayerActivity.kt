@@ -9,7 +9,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivityPlayerBinding
 import com.example.playlistmaker.common.domain.model.Track
-import com.example.playlistmaker.player.domain.api.PlayerState
+import com.example.playlistmaker.player.domain.model.PlayerState
 import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
 import com.example.playlistmaker.player.di.playerModules
 import com.example.playlistmaker.search.di.searchModules
@@ -49,7 +49,7 @@ class PlayerActivity : AppCompatActivityWithToolBar() {
 
     fun setupViewModel(url: String?) {
         viewModel.setup(url)
-        viewModel.observePlayerState().observe(this) {
+        viewModel.observeState().observe(this) {
             when (it){
                 is PlayerState.Default -> {
                     binding.playView.isEnabled = false

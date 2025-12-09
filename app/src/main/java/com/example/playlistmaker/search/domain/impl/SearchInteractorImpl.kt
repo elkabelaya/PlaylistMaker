@@ -1,6 +1,7 @@
 package com.example.playlistmaker.search.domain.impl
 
 import com.example.playlistmaker.common.domain.consumer.ResourceConsumer
+import com.example.playlistmaker.common.domain.model.ErrorState
 import com.example.playlistmaker.common.domain.model.Resource
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.common.domain.model.Tracks
@@ -9,14 +10,15 @@ import com.example.playlistmaker.search.domain.use_case.HistoryUseCase
 import com.example.playlistmaker.search.domain.use_case.GetTracksUseCase
 import com.example.playlistmaker.search.domain.use_case.InputDebounceUseCase
 import com.example.playlistmaker.search.domain.api.SearchInteractor
-import com.example.playlistmaker.search.domain.api.SearchState
+import com.example.playlistmaker.search.domain.model.SearchState
+import com.example.playlistmaker.search.domain.repository.SearchErrorRepository
 
 class SearchInteractorImpl(
     private val inputDebounceUseCase: InputDebounceUseCase,
     private val getTracksUseCase: GetTracksUseCase,
     private val historyUseCase: HistoryUseCase,
     private val loopRepository: LoopRepository,
-
+    private val errorRepository: SearchErrorRepository
     ) : SearchInteractor {
     private var sendState:((SearchState) -> Unit)? = null
     private var erroredQuery: String? = null
@@ -101,13 +103,13 @@ class SearchInteractorImpl(
                             if (!resource.data.isEmpty()) {
                                 state = SearchState.Result(resource.data)
                             } else {
-                                state = SearchState.Empty
+                                state = SearchState.Error(ErrorState.Empty(errorRepository.getEmptyText()))
                             }
                         }
 
                         is Resource.Error -> {
                             erroredQuery = query
-                            state = SearchState.Error
+                            state = SearchState.Error(ErrorState.Wifi(errorRepository.getWifiText()))
                         }
                     }
                 }

@@ -15,8 +15,7 @@ import org.koin.dsl.module
 val searchDomainModule = module {
     factory<GetTracksUseCase> { GetTracksUseCaseImpl(get()) }
     factory<InputDebounceUseCase>{ InputDebounceUseCaseImpl(get()) }
-    factory<SearchInteractor>{SearchInteractorImpl(get(), get(), get(), get())}
-
+    factory<SearchInteractor>{SearchInteractorImpl(get(), get(), get(), get(), get())}
     factory<HistoryUseCase>{ HistoryUseCaseImpl(get(), 10) }
     factory<SearchNavigatorInteractor> { SearchNavigatorInteractorImpl(get(), get()) }
 }

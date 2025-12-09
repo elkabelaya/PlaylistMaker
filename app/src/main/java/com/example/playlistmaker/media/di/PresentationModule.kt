@@ -1,9 +1,12 @@
 package com.example.playlistmaker.media.di
 
-import com.example.playlistmaker.main.domain.repository.MainNavigatorRepository
-import com.example.playlistmaker.main.presentation.repository.MainNavigatorRepositoryImpl
+import com.example.playlistmaker.media.domain.repository.MediaFavoritesErrorRepository
+import com.example.playlistmaker.media.domain.repository.MediaPlaylistsErrorRepository
+import com.example.playlistmaker.media.presentation.repository.MediaFavoritesErrorRepositoryImpl
+import com.example.playlistmaker.media.presentation.repository.MediaPlaylistsErrorsRepositoryImpl
 import org.koin.dsl.module
 
 val mediaPresentationModule = module {
-    //factory<MainNavigatorRepository>{ MainNavigatorRepositoryImpl() }
+    factory<MediaFavoritesErrorRepository>{ MediaFavoritesErrorRepositoryImpl(get()) }
+    factory<MediaPlaylistsErrorRepository>{ MediaPlaylistsErrorsRepositoryImpl(get()) }
 }

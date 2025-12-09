@@ -1,4 +1,7 @@
 <resources>
     <string name="media_tab_favorites">Избранные треки</string>
     <string name="media_tab_playlists">Плейлисты</string>
+    <string name="media_favorites_error_empty">Ваша медиатека пуста</string>
+    <string name="media_playlist_error_not_created">Вы не создали\nни одного плейлиста</string>
+    <string name="media_playlist_create">Новый плейлист</string>
 </resources>

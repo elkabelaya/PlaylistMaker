@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <data>
-        <import type="com.example.playlistmaker.common.presentation.error.ErrorViewModel" />
-        <import type="com.example.playlistmaker.common.presentation.error.ErrorType" />
-        <import type="android.view.View"/>
-        <variable
-            name="errorViewModel"
-            type="com.example.playlistmaker.common.presentation.error.ErrorViewModel" />
-    </data>
-
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".common.presentation.error.ErrorFragment">
 
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="@{errorViewModel == null ? View.GONE : View.VISIBLE}">
+        android:orientation="vertical">
 
         <ImageView
-            android:src="@{errorViewModel.type == ErrorType.WIFI ? @drawable/ic_error_wifi : @drawable/ic_error_empty}"
+            android:id="@+id/icon"
             android:layout_width="@dimen/icon_xxxl"
             android:layout_height="@dimen/icon_xxxl"
             android:layout_gravity="center"
@@ -27,7 +20,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/time"
+            android:id="@+id/text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ys_display_medium"
@@ -36,7 +29,7 @@
             android:textAlignment="center"
             android:paddingTop="@dimen/padding_m"
             android:paddingHorizontal="@dimen/padding_xl"
-            android:text="@{errorViewModel.text}"
             tools:text="@string/error_wifi"/>
     </LinearLayout>
-</layout>
+
+</FrameLayout>

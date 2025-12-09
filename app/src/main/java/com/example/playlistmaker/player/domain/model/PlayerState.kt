@@ -1,7 +1,4 @@
-package com.example.playlistmaker.player.domain.api
-
-import com.example.playlistmaker.common.domain.model.Tracks
-import com.example.playlistmaker.search.domain.api.SearchState
+package com.example.playlistmaker.player.domain.model
 
 sealed class PlayerState {
     data class Default(val time: String): PlayerState()
