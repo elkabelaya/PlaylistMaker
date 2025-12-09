@@ -6,9 +6,8 @@
     android:orientation="vertical"
     tools:context=".media.presentation.FavoritesFragment">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/error_fragment"
-        android:name="com.example.playlistmaker.common.presentation.error.ErrorFragment"
+    <com.example.playlistmaker.common.presentation.error.ErrorView
+        android:id="@+id/error"
         android:layout_marginTop="@dimen/padding_9xl"
         style="@style/ErrorStyle"/>
 </LinearLayout>

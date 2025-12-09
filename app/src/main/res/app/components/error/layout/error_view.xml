@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".common.presentation.error.ErrorFragment">
-
-    <LinearLayout
-        android:id="@+id/main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    android:orientation="vertical">
 
         <ImageView
             android:id="@+id/icon"
@@ -31,5 +26,3 @@
             android:paddingHorizontal="@dimen/padding_xl"
             tools:text="@string/error_wifi"/>
     </LinearLayout>
-
-</FrameLayout>

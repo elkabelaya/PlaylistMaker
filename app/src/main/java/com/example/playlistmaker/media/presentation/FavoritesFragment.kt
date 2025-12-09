@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import com.example.playlistmaker.common.presentation.error.ErrorFragment
+import com.example.playlistmaker.common.presentation.error.ErrorView
 import com.example.playlistmaker.databinding.FragmentFavoritesBinding
 import com.example.playlistmaker.media.domain.model.MediaFavoritesState
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,12 +32,12 @@ class FavoritesFragment : Fragment() {
         viewModel.observeState().observe(viewLifecycleOwner) { state ->
             when (state) {
                 is MediaFavoritesState.Error -> {
-                    binding.errorFragment.isVisible = true
-                    binding.errorFragment.getFragment<ErrorFragment>().setState(state.errorState)
+                    binding.error.isVisible = true
+                    binding.error.setState(state.errorState)
                     //do nothing by now
                 }
             else -> {
-                binding.errorFragment.isVisible = false
+                binding.error.isVisible = false
                 //do nothing by now
                 }
             }

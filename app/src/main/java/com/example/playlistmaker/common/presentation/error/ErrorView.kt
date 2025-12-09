@@ -1,31 +1,25 @@
 package com.example.playlistmaker.common.presentation.error
 
+import android.content.Context
 import android.os.Bundle
+import android.util.AttributeSet
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import android.widget.LinearLayout
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.ErrorState
-import com.example.playlistmaker.databinding.FragmentErrorBinding
-import com.example.playlistmaker.databinding.TrackViewBinding
-import org.koin.androidx.viewmodel.ext.android.activityViewModel
+import com.example.playlistmaker.databinding.ErrorViewBinding
 
-class ErrorFragment : Fragment() {
-    private lateinit var binding: FragmentErrorBinding
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentErrorBinding.inflate(inflater, container, false)
-        return binding.root
+class ErrorView(
+    context: Context,
+    attrs: AttributeSet? = null,
+) : LinearLayout(context, attrs) {
+    private lateinit var binding: ErrorViewBinding
+    init {
+        binding = ErrorViewBinding.inflate(LayoutInflater.from(context), this, true)
     }
-
-
     fun setState(state: ErrorState) {
         when (state) {
             is ErrorState.Empty -> {
@@ -37,11 +31,5 @@ class ErrorFragment : Fragment() {
                 binding.text.text = state.text
             }
         }
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            ErrorFragment()
     }
 }

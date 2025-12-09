@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.ErrorState
-import com.example.playlistmaker.common.presentation.error.ErrorFragment
+import com.example.playlistmaker.common.presentation.error.ErrorView
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.common.presentation.utils.hideKeyboardFrom
 import com.example.playlistmaker.search.di.searchModules
@@ -64,8 +64,7 @@ class SearchActivity : AppCompatActivityWithToolBar() {
                     binding.historyGroup.isVisible = false
                     binding.progressbar.root.isVisible = false
                     binding.tracksList.isVisible = false
-                    binding.errorFragment.isVisible = false
-                    hideError()
+                   hideError()
                 }
                 is SearchState.History -> {
                     binding.historyList.layoutManager?.scrollToPosition(0)
@@ -75,7 +74,6 @@ class SearchActivity : AppCompatActivityWithToolBar() {
                     binding.historyGroup.isVisible = true
                     binding.progressbar.root.isVisible = false
                     binding.tracksList.isVisible = false
-                    binding.errorFragment.isVisible = false
                     hideError()
                 }
                 is SearchState.Enter -> {
@@ -83,7 +81,6 @@ class SearchActivity : AppCompatActivityWithToolBar() {
                     binding.historyGroup.isVisible = false
                     binding.progressbar.root.isVisible = false
                     binding.tracksList.isVisible = false
-                    binding.errorFragment.isVisible = false
                     hideError()
                 }
                 is SearchState.Loading -> {
@@ -91,7 +88,6 @@ class SearchActivity : AppCompatActivityWithToolBar() {
                     binding.historyGroup.isVisible = false
                     binding.progressbar.root.isVisible = true
                     binding.tracksList.isVisible = false
-                    binding.errorFragment.isVisible = false
                     hideError()
                 }
                 is SearchState.Result -> {
@@ -154,13 +150,13 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     }
 
     private fun showError(state: ErrorState) {
-        binding.errorFragment.getFragment<ErrorFragment>().setState(state)
-        binding.errorFragment.isVisible = true
+        binding.error.setState(state)
+        binding.error.isVisible = true
         binding.refreshButton.isVisible = state is ErrorState.Wifi
     }
 
     private fun hideError() {
-        binding.errorFragment.isVisible = false
+        binding.error.isVisible = false
         binding.refreshButton.isVisible = false
     }
 }
