@@ -1,11 +1,7 @@
-package com.example.playlistmaker.search.data.repository
+package com.example.playlistmaker.search.presentation.repository
 
 import android.content.Context
 import com.example.playlistmaker.R
-import com.example.playlistmaker.common.domain.model.Email
-import com.example.playlistmaker.common.domain.model.Navigation
-import com.example.playlistmaker.common.domain.model.Track
-import com.example.playlistmaker.player.presentation.PlayerActivity
 import com.example.playlistmaker.search.domain.repository.SearchErrorRepository
 
 class SearchErrorRepositoryImpl(val context: Context): SearchErrorRepository {

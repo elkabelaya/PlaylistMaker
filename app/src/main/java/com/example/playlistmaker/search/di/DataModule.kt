@@ -1,7 +1,7 @@
 package com.example.playlistmaker.search.di
 
 import com.example.playlistmaker.search.data.network.TracksRetrofitNetworkClient
-import com.example.playlistmaker.search.data.repository.SearchErrorRepositoryImpl
+import com.example.playlistmaker.search.presentation.repository.SearchErrorRepositoryImpl
 import com.example.playlistmaker.search.data.repository.TracksNetworkClient
 import com.example.playlistmaker.search.data.repository.TracksRepositoryImpl
 import com.example.playlistmaker.search.domain.repository.SearchErrorRepository
