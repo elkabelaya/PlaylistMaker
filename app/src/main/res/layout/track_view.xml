@@ -13,7 +13,9 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_gravity="center"
-        tools:ignore="ContentDescription,RtlSymmetry" />
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription,RtlSymmetry"
+        tools:src="@tools:sample/backgrounds/scenic"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -31,7 +33,8 @@
             android:textSize="@dimen/text_m"
             android:textColor="@color/text"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            tools:text="@tools:sample/lorem"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +48,8 @@
                 android:textColor="@color/text_secondary"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                tools:text="@tools:sample/last_names"/>
             <ImageView
                 android:id="@+id/dot_view"
                 android:src="@drawable/ic_dot"
@@ -61,7 +65,8 @@
                 android:textSize="@dimen/text_xs"
                 android:textColor="@color/text_secondary"
                 android:maxLines="1"
-                android:ellipsize="end"/>
+                android:ellipsize="end"
+                tools:text="@tools:sample/date/hhmm"/>
         </LinearLayout>
     </LinearLayout>
 

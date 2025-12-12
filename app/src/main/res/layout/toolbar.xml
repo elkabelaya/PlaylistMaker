@@ -15,6 +15,6 @@
             android:background="@color/background"
             app:contentInsetStartWithNavigation="0dp"
             app:layout_collapseMode="pin"
-            tools:title="@string/main_settings"
+            tools:title="@tools:sample/lorem"
             app:titleTextAppearance="@style/app_toolbar_title"/>
 </com.google.android.material.appbar.AppBarLayout>
