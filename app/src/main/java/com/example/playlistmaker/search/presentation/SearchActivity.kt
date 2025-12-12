@@ -7,15 +7,16 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
 import com.example.playlistmaker.R
+import com.example.playlistmaker.common.domain.model.ErrorState
+import com.example.playlistmaker.common.presentation.error.ErrorView
 import com.example.playlistmaker.databinding.ActivitySearchBinding
-import com.example.playlistmaker.common.presentation.error.ErrorType
-import com.example.playlistmaker.common.presentation.error.ErrorViewModel
 import com.example.playlistmaker.common.presentation.utils.hideKeyboardFrom
 import com.example.playlistmaker.search.di.searchModules
-import com.example.playlistmaker.search.domain.api.SearchState
+import com.example.playlistmaker.search.domain.model.SearchState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.GlobalContext.loadKoinModules
 import org.koin.core.context.GlobalContext.unloadKoinModules
+import kotlin.getValue
 
 class SearchActivity : AppCompatActivityWithToolBar() {
     private lateinit var binding: ActivitySearchBinding
@@ -24,10 +25,8 @@ class SearchActivity : AppCompatActivityWithToolBar() {
     private val viewModel: SearchViewModel by viewModel()
 
     init {
-
         adapter = TracksAdapter() { item -> viewModel.select(item) }
         historyAdapter = TracksAdapter() { item -> viewModel.select(item) }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +64,7 @@ class SearchActivity : AppCompatActivityWithToolBar() {
                     binding.historyGroup.isVisible = false
                     binding.progressbar.root.isVisible = false
                     binding.tracksList.isVisible = false
-                    hideError()
+                   hideError()
                 }
                 is SearchState.History -> {
                     binding.historyList.layoutManager?.scrollToPosition(0)
@@ -101,17 +100,11 @@ class SearchActivity : AppCompatActivityWithToolBar() {
                     binding.tracksList.isVisible = true
                     hideError()
                 }
-                is SearchState.Empty -> {
-                    binding.searchbar.resetButton.isVisible = true
-                    binding.historyGroup.isVisible = false
-                    binding.progressbar.root.isVisible = false
-                    showError(ErrorType.EMPTY, R.string.error_not_found)
-                }
                 is SearchState.Error -> {
                     binding.searchbar.resetButton.isVisible = true
                     binding.historyGroup.isVisible = false
                     binding.progressbar.root.isVisible = false
-                    showError(ErrorType.WIFI, R.string.error_wifi)
+                    showError(state.errorState)
                 }
             }
         }
@@ -156,13 +149,14 @@ class SearchActivity : AppCompatActivityWithToolBar() {
         }
     }
 
-    private fun showError(type: ErrorType, stringId: Int) {
-        binding.errorStub.errorViewModel = ErrorViewModel(type, getResources().getString(stringId))
-        binding.refreshButton.isVisible = type == ErrorType.WIFI
+    private fun showError(state: ErrorState) {
+        binding.error.setState(state)
+        binding.error.isVisible = true
+        binding.refreshButton.isVisible = state is ErrorState.Wifi
     }
 
     private fun hideError() {
-        binding.errorStub.errorViewModel = null
+        binding.error.isVisible = false
         binding.refreshButton.isVisible = false
     }
 }

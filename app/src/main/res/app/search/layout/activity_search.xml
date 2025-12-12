@@ -20,13 +20,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_10xl"
             android:visibility="gone"/>
-        <include android:id="@+id/error_stub"
-            layout="@layout/error_stub"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <com.example.playlistmaker.common.presentation.error.ErrorView
+            android:id="@+id/error"
             android:layout_marginTop="@dimen/padding_9xl"
-            android:layout_marginBottom="@dimen/padding_xl"
-            android:visibility="gone"/>
+            style="@style/ErrorStyle"/>
         <Button android:id="@+id/refresh_button"
             style="@style/action_button"
             android:text="@string/search_refresh"
@@ -60,6 +57,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/tracks_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            tools:listitem="@layout/track_view"/>
     </LinearLayout>
 </layout>

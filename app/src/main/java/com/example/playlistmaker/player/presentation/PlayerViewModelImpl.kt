@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.playlistmaker.player.domain.api.PlayerInteractor
-import com.example.playlistmaker.player.domain.api.PlayerState
+import com.example.playlistmaker.player.domain.model.PlayerState
 
 
 class PlayerViewModelImpl(val playerInteractor: PlayerInteractor) : PlayerViewModel() {
     private val playerStateLiveData: MutableLiveData<PlayerState> = MutableLiveData(PlayerState.Default(""))
-    override fun observePlayerState(): LiveData<PlayerState> = playerStateLiveData
+    override fun observeState(): LiveData<PlayerState> = playerStateLiveData
     private val handler = Handler(Looper.getMainLooper())
 
     init {

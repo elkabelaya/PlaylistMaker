@@ -1,0 +1,3 @@
+package com.example.playlistmaker.media.domain.repository
+
+interface MediaFavoritesErrorRepository: MediaErrorRepository

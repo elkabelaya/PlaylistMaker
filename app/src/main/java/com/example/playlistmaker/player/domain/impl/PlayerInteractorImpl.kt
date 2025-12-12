@@ -2,7 +2,7 @@ package com.example.playlistmaker.player.domain.impl
 
 import com.example.playlistmaker.player.domain.repository.PlayerRepository
 import com.example.playlistmaker.player.domain.api.PlayerInteractor
-import com.example.playlistmaker.player.domain.api.PlayerState
+import com.example.playlistmaker.player.domain.model.PlayerState
 import com.example.playlistmaker.player.domain.repository.PlayerDefaultsRepository
 import java.text.SimpleDateFormat
 import java.util.Locale

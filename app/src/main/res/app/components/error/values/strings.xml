@@ -1,6 +1,4 @@
 <resources>
     <string name="error_wifi">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
     <string name="error_not_found">Ничего не нашлось</string>
-    <string name="error_empty">Ваша медиатека пуста</string>
-    <string name="error_not_created">Вы не создали\nни одного плейлиста</string>
 </resources>
