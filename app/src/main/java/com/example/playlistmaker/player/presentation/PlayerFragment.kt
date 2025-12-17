@@ -1,34 +1,42 @@
 package com.example.playlistmaker.player.presentation
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
-import com.example.playlistmaker.databinding.ActivityPlayerBinding
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.player.domain.model.PlayerState
-import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
+import com.example.playlistmaker.databinding.FragmentPlayerBinding
 import com.example.playlistmaker.player.di.playerModules
-import com.example.playlistmaker.search.di.searchModules
-import com.example.playlistmaker.search.presentation.SearchViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.GlobalContext.loadKoinModules
 import org.koin.core.context.GlobalContext.unloadKoinModules
 import kotlin.getValue
 
-class PlayerActivity : AppCompatActivityWithToolBar() {
-    private lateinit var binding: ActivityPlayerBinding
+class PlayerFragment : Fragment() {
+    private var _binding: FragmentPlayerBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: PlayerViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadKoinModules(playerModules)
-        binding = ActivityPlayerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setupToolBar(getResources().getString(R.string.empty_title), binding.root, binding.toolbar)
-        val track: Track? = intent.getSerializableExtra(INTENT_KEY) as? Track
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentPlayerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        setContentView(binding.root)
+//        setupToolBar(getResources().getString(R.string.empty_title), binding.root, binding.toolbar)
+        val track: Track? = requireArguments().getSerializable(INTENT_KEY) as? Track
         track?.let {
             setupTrack(track)
         }
@@ -117,5 +125,13 @@ class PlayerActivity : AppCompatActivityWithToolBar() {
 
     companion object {
         const val INTENT_KEY = "INTENT_KEY"
+
+        fun newInstance(trackId: String): Fragment {
+            return PlayerFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable(INTENT_KEY, trackId)
+                }
+            }
+        }
     }
 }
