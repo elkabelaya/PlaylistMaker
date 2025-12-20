@@ -21,19 +21,19 @@
         
     <Button
         android:id="@+id/search_button"
-        app:icon="@drawable/ic_main_search"
+        app:icon="@drawable/ic_root_search"
         android:text="@string/main_search"
         style="@style/main_button" />
 
     <Button
         android:id="@+id/media_button"
-        app:icon="@drawable/ic_main_media"
+        app:icon="@drawable/ic_root_media"
         android:text="@string/main_media"
         style="@style/main_button" />
 
     <Button
         android:id="@+id/settings_button"
-        app:icon="@drawable/ic_main_settings"
+        app:icon="@drawable/ic_root_settings"
         android:text="@string/main_settings"
         style="@style/main_button" />
 </LinearLayout>

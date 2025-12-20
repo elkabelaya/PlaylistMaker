@@ -12,6 +12,6 @@ class SearchNavigatorRepositoryImpl(): SearchNavigatorRepository {
         println("SearchNavigatorRepositoryImpl")
     }
     override fun getPlayerActivity(item: Track): Navigation {
-        return Navigation(R.id.action_global_playerFragment, PlayerFragment.createArgs(item))
+        return Navigation(R.id.action_search_playerFragment, PlayerFragment.createArgs(item))
     }
 }

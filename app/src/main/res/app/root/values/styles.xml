@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="bottom_navigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">@color/background</item>
+        <item name="itemIconTint">@drawable/root_navigation_colors</item>
+        <item name="itemTextColor">@drawable/root_navigation_colors</item>
+        <item name="itemTextAppearanceActive">@style/root_navigation_text</item>
+        <item name="itemTextAppearanceInactive">@style/root_navigation_text</item>
+
+    </style>
+    <style name="root_navigation_text" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textSize">@dimen/text_s</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+</resources>

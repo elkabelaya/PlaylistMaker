@@ -4,18 +4,18 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/search_navigation"
-app:startDestination="@id/search_fragment">
+android:id="@+id/media_navigation"
+app:startDestination="@id/media_fragment">
 
     <fragment
-        android:id="@+id/search_fragment"
-        android:name="com.example.playlistmaker.search.presentation.SearchFragment"
-        android:label="fragment_player"
-        tools:layout="@layout/fragment_search">
+        android:id="@+id/media_fragment"
+        android:name="com.example.playlistmaker.media.presentation.MediaFragment"
+        android:label="fragment_media"
+        tools:layout="@layout/fragment_media">
     <action
-        android:id="@+id/action_search_playerFragment"
+        android:id="@+id/action_media_playerFragment"
         app:destination="@id/player_fragment"
-        app:popUpTo="@id/search_fragment"
+        app:popUpTo="@id/media_fragment"
         style="@style/NavigationAnimation"
         app:launchSingleTop="true" />
     </fragment>
@@ -25,6 +25,4 @@ app:startDestination="@id/search_fragment">
         android:name="com.example.playlistmaker.player.presentation.PlayerFragment"
         android:label="fragment_player"
         tools:layout="@layout/fragment_player" />
-
-
 </navigation>
