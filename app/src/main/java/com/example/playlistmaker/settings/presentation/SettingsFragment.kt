@@ -6,13 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.playlistmaker.R
+import com.example.playlistmaker.common.presentation.utils.FragmentWithToolBar
 import com.example.playlistmaker.databinding.FragmentSettingsBinding
 import com.example.playlistmaker.settings.di.settingsModules
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.GlobalContext.loadKoinModules
 import org.koin.core.context.GlobalContext.unloadKoinModules
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : FragmentWithToolBar() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SettingsViewModel by viewModel()
@@ -29,8 +31,7 @@ override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, saved
 }
 
 override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        setContentView(binding.root)
-//        setupToolBar(getResources().getString(R.string.main_settings), binding.root, binding.toolbar)
+        setupToolBar(resources.getString(R.string.main_settings), false, binding.toolbar)
         setupViewModel()
         setupListeners()
     }
@@ -41,7 +42,7 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     }
 
     private fun setupViewModel() {
-        viewModel.observeDarkMode().observe(this) { mode ->
+        viewModel.observeDarkMode().observe(viewLifecycleOwner) { mode ->
             binding.nightSwitch.isChecked = mode
         }
     }

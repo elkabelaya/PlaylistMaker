@@ -1,9 +1,8 @@
 package com.example.playlistmaker.common.domain.model
 
-import java.io.Serializable
+import android.os.Bundle
 
 data class Navigation (
-    val activity: Class<*>,
-    val key: String?,
-    val data: Serializable?
+    val action: Int,
+    val args: Bundle?
 )

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NavigationAnimation">
+        <item name="enterAnim">@anim/slide_in_right</item>
+        <item name="exitAnim">@anim/hold</item>
+        <item name="popEnterAnim">@anim/hold</item>
+        <item name="popExitAnim">@anim/slide_out_right</item>
+    </style>
+</resources>

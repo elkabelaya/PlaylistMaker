@@ -9,15 +9,15 @@ class MainNavigatorInteractorImpl(
     val mainRepository: MainNavigatorRepository
 ): MainNavigatorInteractor {
     override fun navigateToSearch() {
-        repository.navigateTo(mainRepository.getSearchActivity())
+     //   repository.navigateTo(mainRepository.getSearchActivity())
     }
 
     override fun navigateToMedia() {
-        repository.navigateTo(mainRepository.getMediaActivity())
+     //   repository.navigateTo(mainRepository.getMediaActivity())
     }
 
     override fun navigateToSettings() {
-        repository.navigateTo(mainRepository.getSettingsActivity())
+      //  repository.navigateTo(mainRepository.getSettingsActivity())
     }
 
 }

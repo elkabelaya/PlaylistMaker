@@ -23,6 +23,9 @@ class SearchInteractorImpl(
     private var sendState:((SearchState) -> Unit)? = null
     private var erroredQuery: String? = null
 
+    init {
+        println( "SearchInteractorImpl")
+    }
     private var state: SearchState = SearchState.Default
        set(value) {
            field = value

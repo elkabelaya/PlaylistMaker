@@ -6,16 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.playlistmaker.R
-import com.example.playlistmaker.common.presentation.utils.AppCompatActivityWithToolBar
+import com.example.playlistmaker.common.presentation.utils.FragmentWithToolBar
 import com.example.playlistmaker.databinding.ActivityMediaBinding
-import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.media.di.mediaModules
 import com.example.playlistmaker.media.domain.model.MediaTabType
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.core.context.GlobalContext.unloadKoinModules
 import org.koin.core.context.loadKoinModules
 
-class MediaFragment : Fragment() {
+class MediaFragment : FragmentWithToolBar() {
 
     private var _binding: ActivityMediaBinding? = null
     private val binding get() = _binding!!
@@ -32,8 +31,7 @@ class MediaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        setContentView(binding.root)
-//        setupToolBar(getResources().getString(R.string.main_media), binding.root, binding.toolbar)
+        setupToolBar(getResources().getString(R.string.main_media), false, binding.toolbar)
         setupTabs()
     }
 

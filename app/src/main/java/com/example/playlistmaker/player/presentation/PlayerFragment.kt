@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Track
+import com.example.playlistmaker.common.presentation.utils.FragmentWithToolBar
 import com.example.playlistmaker.player.domain.model.PlayerState
 import com.example.playlistmaker.databinding.FragmentPlayerBinding
 import com.example.playlistmaker.player.di.playerModules
@@ -18,7 +18,7 @@ import org.koin.core.context.GlobalContext.loadKoinModules
 import org.koin.core.context.GlobalContext.unloadKoinModules
 import kotlin.getValue
 
-class PlayerFragment : Fragment() {
+class PlayerFragment : FragmentWithToolBar() {
     private var _binding: FragmentPlayerBinding? = null
     private val binding get() = _binding!!
     private val viewModel: PlayerViewModel by viewModel()
@@ -34,8 +34,8 @@ class PlayerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        setContentView(binding.root)
-//        setupToolBar(getResources().getString(R.string.empty_title), binding.root, binding.toolbar)
+        setupToolBar(resources.getString(R.string.empty_title), true, binding.toolbar)
+
         val track: Track? = requireArguments().getSerializable(INTENT_KEY) as? Track
         track?.let {
             setupTrack(track)
@@ -126,12 +126,9 @@ class PlayerFragment : Fragment() {
     companion object {
         const val INTENT_KEY = "INTENT_KEY"
 
-        fun newInstance(trackId: String): Fragment {
-            return PlayerFragment().apply {
-                arguments = Bundle().apply {
-                    putSerializable(INTENT_KEY, trackId)
-                }
+        fun createArgs(track: Track): Bundle =
+            Bundle().apply {
+                putSerializable(INTENT_KEY, track)
             }
-        }
     }
 }
