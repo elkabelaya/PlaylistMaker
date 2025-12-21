@@ -38,13 +38,8 @@ class SearchFragment : FragmentWithToolBar() {
         adapter = TracksAdapter() {
             item -> viewModel.select(item)
         }
-        historyAdapter = TracksAdapter() { item -> viewModel.select(item)
-//val navigation = Navigation1(R.id.action_global_playerFragment, PlayerFragment.INTENT_KEY, item)
-//                    findNavController().navigate(
-//            navigation.action,
-//            Bundle().apply {
-//                putSerializable(navigation.key, navigation.data)
-//            })
+        historyAdapter = TracksAdapter() {
+            item -> viewModel.select(item)
         }
     }
 
@@ -73,14 +68,6 @@ class SearchFragment : FragmentWithToolBar() {
         super.onDestroy()
         unloadKoinModules(searchModules)
     }
-
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//    }
-
-//    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-//        super.onRestoreInstanceState(savedInstanceState)
-//    }
 
     private fun setupViewModel() {
         viewModel.observeState().observe(viewLifecycleOwner) { state ->

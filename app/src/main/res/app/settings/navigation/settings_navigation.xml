@@ -13,6 +13,4 @@ app:startDestination="@id/settings_fragment">
         android:label="fragment_player"
         tools:layout="@layout/fragment_settings">
     </fragment>
-
-
 </navigation>

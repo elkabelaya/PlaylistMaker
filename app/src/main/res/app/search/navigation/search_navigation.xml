@@ -25,6 +25,4 @@ app:startDestination="@id/search_fragment">
         android:name="com.example.playlistmaker.player.presentation.PlayerFragment"
         android:label="fragment_player"
         tools:layout="@layout/fragment_player" />
-
-
 </navigation>

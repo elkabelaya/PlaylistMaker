@@ -13,6 +13,4 @@
         android:id="@id/settings_navigation"
         android:icon="@drawable/ic_root_settings"
         android:title="@string/main_settings" />
-
-
 </menu>

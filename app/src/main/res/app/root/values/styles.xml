@@ -6,7 +6,6 @@
         <item name="itemTextColor">@drawable/root_navigation_colors</item>
         <item name="itemTextAppearanceActive">@style/root_navigation_text</item>
         <item name="itemTextAppearanceInactive">@style/root_navigation_text</item>
-
     </style>
     <style name="root_navigation_text" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">@font/ys_display_regular</item>
