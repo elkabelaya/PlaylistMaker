@@ -21,11 +21,9 @@ class SearchInteractorImpl(
     private val errorRepository: SearchErrorRepository
     ) : SearchInteractor {
     private var sendState:((SearchState) -> Unit)? = null
-    private var erroredQuery: String? = null
+    private var lastQuery: String? = null
+    private var isFocused: Boolean = false
 
-    init {
-        println( "SearchInteractorImpl")
-    }
     private var state: SearchState = SearchState.Default
        set(value) {
            field = value
@@ -39,28 +37,32 @@ class SearchInteractorImpl(
 
     override fun changeQuery(query: CharSequence) {
         val trimmedQuery = query.toString().trim()
-        if (!trimmedQuery.isEmpty()) {
-            inputDebounceUseCase.debounce {
-                proceedSearch(trimmedQuery)
+        if (lastQuery != trimmedQuery) {
+            lastQuery = trimmedQuery
+            if (!trimmedQuery.isEmpty()) {
+                inputDebounceUseCase.debounce {
+                    proceedSearch(trimmedQuery)
+                }
+                state = SearchState.Enter
+            } else {
+                inputDebounceUseCase.cancel()
+                setDefaultState()
             }
-            state = SearchState.Enter
-        } else {
-            inputDebounceUseCase.cancel()
-            setDefaultState (true)
         }
     }
 
     override fun changeFocus(isFocused: Boolean) {
-        switchStateIfDefault(isFocused)
+        this.isFocused = isFocused
+        switchStateIfDefault()
     }
 
     override fun clearQuery() {
-        setDefaultState(true)
+        setDefaultState()
     }
 
     override fun select(track: Track) {
         historyUseCase.add(track)
-        switchStateIfDefault(true)
+        switchStateIfDefault()
     }
 
     override fun clearHistory() {
@@ -69,23 +71,20 @@ class SearchInteractorImpl(
     }
 
     override fun refresh() {
-        erroredQuery?.let {
+        lastQuery?.let {
             proceedSearch(it)
         }
-        erroredQuery = null
     }
 
-    private fun switchStateIfDefault(isFocused: Boolean) {
+    private fun switchStateIfDefault() {
         when (state) {
             is SearchState.Default, is SearchState.History -> {
-                if (isFocused) {
-                    setDefaultState (isFocused)
-                }
+                setDefaultState ()
             } else -> {}
         }
     }
 
-    private fun setDefaultState(isFocused: Boolean) {
+    private fun setDefaultState() {
         state = when {
             isFocused && !historyUseCase.elements.isEmpty() -> SearchState.History(historyUseCase.elements)
             else -> SearchState.Default
@@ -111,7 +110,6 @@ class SearchInteractorImpl(
                         }
 
                         is Resource.Error -> {
-                            erroredQuery = query
                             state = SearchState.Error(ErrorState.Wifi(errorRepository.getWifiText()))
                         }
                     }

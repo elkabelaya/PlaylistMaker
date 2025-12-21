@@ -8,10 +8,7 @@ import com.example.playlistmaker.player.presentation.PlayerFragment
 import com.example.playlistmaker.search.domain.repository.SearchNavigatorRepository
 
 class SearchNavigatorRepositoryImpl(): SearchNavigatorRepository {
-    init {
-        println("SearchNavigatorRepositoryImpl")
-    }
-    override fun getPlayerActivity(item: Track): Navigation {
+    override fun getPlayer(item: Track): Navigation {
         return Navigation(R.id.action_search_playerFragment, PlayerFragment.createArgs(item))
     }
 }

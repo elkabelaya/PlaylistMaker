@@ -4,5 +4,5 @@ import com.example.playlistmaker.common.domain.model.Navigation
 import com.example.playlistmaker.common.domain.model.Track
 
 interface SearchNavigatorRepository {
-    fun getPlayerActivity(item: Track): Navigation
+    fun getPlayer(item: Track): Navigation
 }
