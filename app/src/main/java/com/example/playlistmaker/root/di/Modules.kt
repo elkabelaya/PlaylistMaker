@@ -8,9 +8,4 @@ import org.koin.dsl.module
 import org.koin.android.ext.android.get
 
 val rootModule = module {
-//    scope<RootActivity> {
-//        scoped<NavController> {
-//            get<RootActivity>().findNavController(R.id.rootFragmentContainerView)
-//        }
-//    }
 }
