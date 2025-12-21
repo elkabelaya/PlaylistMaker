@@ -41,7 +41,7 @@ class PlayerInteractorImpl(
     }
 
     override fun onComplete() {
-        playerState = PlayerState.Prepared(time())
+        playerState = PlayerState.Prepared(playerDefaultsRepository.getEmptyTime())
     }
 
     override fun togglePlay() {

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="TabStyle" parent="Widget.Design.TabLayout">
+        <item name="android:background">@color/background</item>
+        <item name="android:backgroundTint">@color/background</item>
         <item name="tabTextAppearance">@style/TabTextAppearance</item>
         <item name="tabIndicatorColor">@color/tab_content</item>
     </style>
