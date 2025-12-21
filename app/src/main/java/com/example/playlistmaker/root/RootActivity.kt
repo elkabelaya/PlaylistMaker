@@ -23,7 +23,15 @@ class RootActivity : AppCompatActivity() {
         binding = ActivityRootBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setupTopInset(this, binding.root)
+        setupNavigation()
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unloadKoinModules(rootModule)
+    }
+
+    private fun setupNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.root_fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
 
@@ -39,10 +47,5 @@ class RootActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        unloadKoinModules(rootModule)
     }
 }
