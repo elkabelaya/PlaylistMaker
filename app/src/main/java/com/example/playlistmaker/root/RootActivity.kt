@@ -46,6 +46,7 @@ class RootActivity : AppCompatActivity() {
                     binding.bottomNavigation.visibility = View.GONE
                 }
             }
+            binding.divider.visibility = binding.bottomNavigation.visibility
         }
     }
 }
