@@ -17,5 +17,7 @@ val searchDomainModule = module {
     factory<InputDebounceUseCase>{ InputDebounceUseCaseImpl(get()) }
     factory<SearchInteractor>{SearchInteractorImpl(get(), get(), get(), get(), get())}
     factory<HistoryUseCase>{ HistoryUseCaseImpl(get(), 10) }
-    factory<SearchNavigatorInteractor> { SearchNavigatorInteractorImpl(get(), get()) }
+    factory<SearchNavigatorInteractor> {params ->
+        SearchNavigatorInteractorImpl(get{params}, get())
+    }
 }

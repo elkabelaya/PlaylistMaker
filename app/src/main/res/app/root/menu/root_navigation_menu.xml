@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@id/search_navigation"
+        android:icon="@drawable/ic_root_search"
+        android:title="@string/main_search"/>
+        <item
+            android:id="@+id/media_navigation"
+            android:icon="@drawable/ic_root_media"
+            android:title="@string/main_media" />
+    <item
+        android:id="@id/settings_navigation"
+        android:icon="@drawable/ic_root_settings"
+        android:title="@string/main_settings" />
+</menu>

@@ -8,6 +8,6 @@ import com.example.playlistmaker.search.domain.repository.SearchNavigatorReposit
 class SearchNavigatorInteractorImpl(val repository: NavigatorRepository,
     val searchRepository: SearchNavigatorRepository): SearchNavigatorInteractor {
     override fun navigateTo(track: Track) {
-        repository.navigateTo(searchRepository.getPlayerActivity(track))
+        repository.navigateTo(searchRepository.getPlayer(track))
     }
 }

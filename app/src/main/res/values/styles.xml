@@ -43,9 +43,10 @@
         <item name="android:layout_gravity">center_horizontal</item>
     </style>
 
-    <style name="app_toolbar">
+    <style name="app_toolbar" parent="ThemeOverlay.AppCompat.ActionBar">
         <item name="android:textColorPrimary">@color/text_toolbar</item>
         <item name="colorControlNormal">@color/text_toolbar</item>
+        <item name="tint">@color/text_toolbar</item>
     </style>
 
     <style name="app_toolbar_title" parent="TextAppearance.MaterialComponents.Headline6">

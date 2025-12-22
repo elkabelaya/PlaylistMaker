@@ -1,5 +1,8 @@
 package com.example.playlistmaker.common.di
 
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.example.playlistmaker.common.data.mapper.TracksMapperImpl
 import com.example.playlistmaker.common.data.network.ItunesApi
 import com.example.playlistmaker.common.data.network.RetrofitClient
@@ -19,6 +22,6 @@ val commonDataModule = module {
     single<TracksMapper> { TracksMapperImpl() }
     factory<LoopRepository>{ LoopRepositoryImpl() }
     single<PreferencesRepository>{ PreferencesRepositoryImpl(get(), get()) }
-    single<NavigatorRepository>{ NavigatorRepositoryImpl(get()) }
     single<ThemeRepository>{ ThemeRepositoryImpl() }
+    factory { (owner: NavHostFragment) -> owner.findNavController()}
 }

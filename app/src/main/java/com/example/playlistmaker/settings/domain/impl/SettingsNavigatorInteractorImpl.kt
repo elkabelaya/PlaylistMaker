@@ -1,11 +1,12 @@
 package com.example.playlistmaker.settings.domain.impl
 
+import com.example.playlistmaker.common.domain.repository.ExternalNavigatorRepository
 import com.example.playlistmaker.common.domain.repository.NavigatorRepository
 import com.example.playlistmaker.settings.domain.api.SettingsNavigatorInteractor
 import com.example.playlistmaker.settings.domain.repository.SettingsNavigatorRepository
 
 class SettingsNavigatorInteractorImpl(
-    val repository: NavigatorRepository,
+    val repository: ExternalNavigatorRepository,
     val settingsRepository: SettingsNavigatorRepository
 ): SettingsNavigatorInteractor {
     override fun navigateToShare(){
