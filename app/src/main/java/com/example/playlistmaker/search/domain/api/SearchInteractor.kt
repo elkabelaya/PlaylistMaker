@@ -5,10 +5,10 @@ import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.search.domain.model.SearchState
 
 interface SearchInteractor:StateFullInteractor<SearchState> {
-    fun changeQuery(query: CharSequence)
+    suspend fun changeQuery(query: CharSequence)
     fun changeFocus(isFocused: Boolean)
     fun clearQuery()
     fun select(track: Track)
     fun clearHistory()
-    fun refresh()
+    suspend fun refresh()
 }

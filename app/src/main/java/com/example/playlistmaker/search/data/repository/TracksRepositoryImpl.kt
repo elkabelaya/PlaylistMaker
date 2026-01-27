@@ -5,17 +5,19 @@ import com.example.playlistmaker.common.data.repository.TracksMapper
 import com.example.playlistmaker.common.domain.model.Resource
 import com.example.playlistmaker.common.domain.model.Tracks
 import com.example.playlistmaker.search.domain.repository.TracksRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class TracksRepositoryImpl(
     private val tracksNetworkClient: TracksNetworkClient,
     private val mapper: TracksMapper
 ) : TracksRepository {
-    override fun getTracks(query: String): Resource<Tracks> {
+    override suspend fun getTracks(query: String): Flow<Resource<Tracks>>  = flow {
         val response = tracksNetworkClient.getTracks(query)
         if (response.data is TracksDto) {
-            return Resource.Success(mapper.map(response.data))
+            emit( Resource.Success(mapper.map(response.data)))
+        } else {
+            emit(Resource.Error(response.code))
         }
-
-        return Resource.Error(response.code)
     }
 }

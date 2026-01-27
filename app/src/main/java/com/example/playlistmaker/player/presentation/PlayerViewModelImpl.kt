@@ -26,7 +26,7 @@ class PlayerViewModelImpl(val playerInteractor: PlayerInteractor) : PlayerViewMo
                         playerStateLiveData.postValue(PlayerState.Playing(playerInteractor.time()))
                     }
                 }
-            } 
+            }
         }
 
     }
