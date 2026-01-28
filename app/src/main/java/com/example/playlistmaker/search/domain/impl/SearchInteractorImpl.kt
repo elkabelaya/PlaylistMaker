@@ -12,6 +12,11 @@ import com.example.playlistmaker.search.domain.use_case.InputDebounceUseCase
 import com.example.playlistmaker.search.domain.api.SearchInteractor
 import com.example.playlistmaker.search.domain.model.SearchState
 import com.example.playlistmaker.search.domain.repository.SearchErrorRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class SearchInteractorImpl(
     private val inputDebounceUseCase: InputDebounceUseCase,
@@ -35,15 +40,18 @@ class SearchInteractorImpl(
         sendState = state
     }
 
-    override fun changeQuery(query: CharSequence) {
+    override suspend fun changeQuery(query: CharSequence) {
         val trimmedQuery = query.toString().trim()
         if (lastQuery != trimmedQuery) {
             lastQuery = trimmedQuery
             if (!trimmedQuery.isEmpty()) {
-                inputDebounceUseCase.debounce {
-                    proceedSearch(trimmedQuery)
-                }
                 state = SearchState.Enter
+                suspendCoroutine<Unit> {
+                    inputDebounceUseCase.debounce {
+                        it.resume(Unit)
+                    }
+                }
+                proceedSearch(trimmedQuery)
             } else {
                 inputDebounceUseCase.cancel()
                 setDefaultState()
@@ -70,7 +78,7 @@ class SearchInteractorImpl(
         state = SearchState.Default
     }
 
-    override fun refresh() {
+    override suspend fun refresh() {
         lastQuery?.let {
             proceedSearch(it)
         }
@@ -93,28 +101,26 @@ class SearchInteractorImpl(
     private fun isExistsHistory(): Boolean {
         return !historyUseCase.elements.isEmpty()
     }
-    private fun proceedSearch(query: String) {
+    private suspend fun proceedSearch(query: String) {
         state = SearchState.Loading
-
-        getTracksUseCase.getTracks(
-            query,
-            consumer = object : ResourceConsumer<Tracks> {
-                override fun consume(resource: Resource<Tracks>) {
+            getTracksUseCase
+                .getTracks(query)
+                .collect { resource ->
                     when (resource) {
                         is Resource.Success -> {
                             if (!resource.data.isEmpty()) {
                                 state = SearchState.Result(resource.data)
                             } else {
-                                state = SearchState.Error(ErrorState.Empty(errorRepository.getEmptyText()))
+                                state =
+                                    SearchState.Error(ErrorState.Empty(errorRepository.getEmptyText()))
                             }
                         }
 
                         is Resource.Error -> {
-                            state = SearchState.Error(ErrorState.Wifi(errorRepository.getWifiText()))
+                            state =
+                                SearchState.Error(ErrorState.Wifi(errorRepository.getWifiText()))
                         }
                     }
                 }
-            }
-        )
     }
 }

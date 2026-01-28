@@ -3,11 +3,13 @@ package com.example.playlistmaker.search.presentation
 import androidx.core.R
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.common.domain.use_case.ClickDebounceUseCase
 import com.example.playlistmaker.search.domain.api.SearchInteractor
 import com.example.playlistmaker.search.domain.api.SearchNavigatorInteractor
 import com.example.playlistmaker.search.domain.model.SearchState
+import kotlinx.coroutines.launch
 
 class SearchViewModelImpl(
     val searchInteractor: SearchInteractor,
@@ -24,7 +26,9 @@ class SearchViewModelImpl(
     }
 
     override fun changeQuery(query: CharSequence) {
-        searchInteractor.changeQuery(query)
+        viewModelScope.launch {
+            searchInteractor.changeQuery(query)
+        }
     }
 
     override fun changeFocus(isFocused: Boolean){
@@ -46,6 +50,8 @@ class SearchViewModelImpl(
     }
 
     override fun refresh(){
-        searchInteractor.refresh()
+        viewModelScope.launch {
+            searchInteractor.refresh()
+        }
     }
 }
