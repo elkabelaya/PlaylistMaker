@@ -20,11 +20,16 @@ class FavoritesViewModelImpl(
     override fun observeState(): LiveData<MediaFavoritesState> = stateLiveData
 
     init {
-        interactor.onState {
-            stateLiveData.postValue(it)
-        }
         viewModelScope.launch {
             interactor.getFracks()
+                .collect { result ->
+                    result.first?.let {
+                        stateLiveData.postValue( MediaFavoritesState.Data(it))
+                    }
+                    result.second?.let {
+                        stateLiveData.postValue( MediaFavoritesState.Error(it))
+                    }
+                }
         }
     }
     override fun select(track: Track) {
