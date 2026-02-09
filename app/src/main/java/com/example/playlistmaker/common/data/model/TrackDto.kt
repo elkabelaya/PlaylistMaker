@@ -3,6 +3,7 @@ package com.example.playlistmaker.common.data.model
 import com.google.gson.annotations.SerializedName
 
 data class TrackDto(
+    val trackId: Long,
     val trackName: String, // Название композиции, не отображаем трек в списке, если нет поля
     val artistName: String?, // Имя исполнителя
     @SerializedName("trackTimeMillis")

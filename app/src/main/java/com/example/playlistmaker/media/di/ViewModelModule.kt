@@ -8,8 +8,9 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val mediaViewModelModule = module {
-    viewModel<FavoritesViewModel> {
-        FavoritesViewModelImpl(get())
+
+    viewModel<FavoritesViewModel> { params ->
+        FavoritesViewModelImpl(get(), get{params}, get())
     }
 
     viewModel<PlaylistsViewModel> {

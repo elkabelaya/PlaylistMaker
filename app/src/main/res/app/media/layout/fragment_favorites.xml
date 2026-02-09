@@ -6,8 +6,19 @@
     android:orientation="vertical"
     tools:context=".media.presentation.FavoritesFragment">
 
+    <include android:id="@+id/progressbar"
+        layout="@layout/progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_10xl"
+        android:visibility="gone"/>
     <com.example.playlistmaker.common.presentation.error.ErrorView
         android:id="@+id/error"
         android:layout_marginTop="@dimen/padding_9xl"
         style="@style/ErrorStyle"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tracks_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/track_view"/>
 </LinearLayout>

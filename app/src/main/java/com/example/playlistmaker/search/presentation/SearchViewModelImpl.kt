@@ -15,7 +15,7 @@ class SearchViewModelImpl(
     val searchInteractor: SearchInteractor,
     val navigatorInteractor: SearchNavigatorInteractor,
     val clickDebounceUseCase: ClickDebounceUseCase
-    ): SearchViewModel() {
+): SearchViewModel() {
     private val stateLiveData= MutableLiveData<SearchState>(SearchState.Default)
     override fun observeState(): LiveData<SearchState> = stateLiveData
 

@@ -14,11 +14,12 @@ class TracksMapperImpl: TracksMapper {
     override fun map(dto: TracksDto): Tracks {
         return dto.results
             .filter {
-                !it.trackName.isNullOrEmpty()
+                it.trackId > 0 && it.trackName.isNotEmpty()
             }
             .map {
                 Track(
-                    it.trackName!!,
+                    it.trackId,
+                    it.trackName,
                     it.artistName,
                     timeMapper.map(it.trackTime),
                     it.imageUrl,
@@ -36,6 +37,7 @@ class TracksMapperImpl: TracksMapper {
         return TracksDto( tracks
             .map {
                 TrackDto(
+                    it.trackId,
                     it.trackName,
                     it.artistName,
                     timeMapper.map(it.trackTime),
