@@ -16,12 +16,18 @@ import com.example.playlistmaker.player.di.playerModules
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.GlobalContext.loadKoinModules
 import org.koin.core.context.GlobalContext.unloadKoinModules
+import org.koin.core.parameter.parametersOf
 import kotlin.getValue
 
 class PlayerFragment : FragmentWithToolBar() {
     private var _binding: FragmentPlayerBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: PlayerViewModel by viewModel()
+    private val viewModel: PlayerViewModel by viewModel{
+        parametersOf(track)
+    }
+    private val track: Track? by lazy {
+        requireArguments().getSerializable(INTENT_KEY) as? Track
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadKoinModules(playerModules)
@@ -36,9 +42,8 @@ class PlayerFragment : FragmentWithToolBar() {
         super.onViewCreated(view, savedInstanceState)
         setupToolBar(resources.getString(R.string.empty_title), true, binding.toolbar)
 
-        val track: Track? = requireArguments().getSerializable(INTENT_KEY) as? Track
         track?.let {
-            setupTrack(track)
+            setupTrack(it)
         }
         setupViewModel(track?.previewUrl)
         setupButtons()
@@ -78,6 +83,10 @@ class PlayerFragment : FragmentWithToolBar() {
                     binding.playView.setImageResource(R.drawable.ic_player_play_button)
                 }
             }
+        }
+
+        viewModel.observeFavorite().observe(this) {
+            binding.favoriteView.setImageResource(if (it == true ) R.drawable.ic_player_heart_fill else R.drawable.ic_player_heart_stroke)
         }
     }
     fun setupTrack(track: Track) {

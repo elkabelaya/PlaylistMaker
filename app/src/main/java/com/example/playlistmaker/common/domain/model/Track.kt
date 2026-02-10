@@ -3,6 +3,7 @@ package com.example.playlistmaker.common.domain.model
 import java.io.Serializable
 
 data class Track(
+    val trackId : Long,
     val trackName: String, // Название композиции, не отображаем трек в списке, если нет поля
     val artistName: String?, // Имя исполнителя
     val trackTime: String, // Продолжительность трека, mm:ss

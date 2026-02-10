@@ -7,13 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.ErrorState
+import com.example.playlistmaker.common.presentation.TracksAdapter
 import com.example.playlistmaker.common.presentation.utils.FragmentWithToolBar
 import com.example.playlistmaker.common.presentation.utils.hideKeyboardFrom
 import com.example.playlistmaker.databinding.FragmentSearchBinding
@@ -35,11 +33,11 @@ class SearchFragment : FragmentWithToolBar() {
     private val viewModel: SearchViewModel by viewModel(){parametersOf(navHost) }
 
     init {
-        adapter = TracksAdapter() {
-            item -> viewModel.select(item)
+        adapter = TracksAdapter() { item ->
+            viewModel.select(item)
         }
-        historyAdapter = TracksAdapter() {
-            item -> viewModel.select(item)
+        historyAdapter = TracksAdapter() { item ->
+            viewModel.select(item)
         }
     }
 

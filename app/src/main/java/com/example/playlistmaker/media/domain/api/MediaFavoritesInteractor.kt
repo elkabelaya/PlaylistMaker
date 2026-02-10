@@ -1,8 +1,8 @@
 package com.example.playlistmaker.media.domain.api
+import com.example.playlistmaker.common.domain.model.ErrorState
+import com.example.playlistmaker.common.domain.model.Tracks
+import kotlinx.coroutines.flow.Flow
 
-import com.example.playlistmaker.common.domain.api.StateFullInteractor
-import com.example.playlistmaker.media.domain.model.MediaFavoritesState
-
-interface MediaFavoritesInteractor: StateFullInteractor<MediaFavoritesState> {
-    fun getFracks()
+interface MediaFavoritesInteractor {
+    suspend fun getFracks(): Flow<Pair<Tracks?, ErrorState?>>
 }
