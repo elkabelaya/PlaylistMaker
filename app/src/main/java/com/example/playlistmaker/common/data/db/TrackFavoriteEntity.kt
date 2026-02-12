@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
     tableName = DbConstants.TRACK_FAVORITE_TABLE
 )
 data class TrackFavoriteEntity (
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = DbConstants.FAVORITE_TRACK_PRIMARY_KEY)
     val playlistId: Long,
     @ColumnInfo(name = DbConstants.TRACK_ID)
-    val trackId: Long = 0,
+    val trackId: Long,
 )

@@ -9,16 +9,7 @@ data class PlayListEntity (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = DbConstants.Companion.PLAYLIST_PRIMARY_KEY)
     val id: Long = 0,
-    @ColumnInfo(name = DbConstants.Companion.TRACK_ID)
-    val trackId: Long,
-    val trackName: String,
-    val artistName: String?,
-    val trackTime: String,
-    val imageUrl: String?,
-    val coverUrl: String?,
-    val collectionName: String?,
-    val year: String,
-    val primaryGenreName: String?,
-    val country: String?,
-    val previewUrl: String?
+    val name: String,
+    val description: String?,
+    val coverUrl: String?
 )

@@ -45,7 +45,7 @@ abstract class AppDatabase : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("""
                     CREATE TABLE IF NOT EXISTS `${DbConstants.TRACKS_TABLE}`
-                        (`${DbConstants.TRACK_ID}` INTEGER NOT NULL, 
+                        (`${DbConstants.TRACK_ID}` INTEGER NOT NULL PRIMARY KEY, 
                         `trackName` TEXT NOT NULL, 
                         `artistName` TEXT, 
                         `trackTime` TEXT NOT NULL, 
@@ -61,21 +61,38 @@ abstract class AppDatabase : RoomDatabase() {
                     .trimIndent())
                 database.execSQL("""
                         CREATE TABLE IF NOT EXISTS ${DbConstants.TRACK_FAVORITE_TABLE} (
-                            ${DbConstants.FAVORITE_TRACK_PRIMARY_KEY} INTEGER PRIMARY KEY,
-                            ${DbConstants.TRACK_ID} INTEGER
+                            ${DbConstants.FAVORITE_TRACK_PRIMARY_KEY} INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            ${DbConstants.TRACK_ID} INTEGER NOT NULL
                         );
                     """
                     .trimIndent())
 
                 database.execSQL("""
-                    ALTER TABLE ${DbConstants.FAVORITE_TRACKS_TABLE_DEPRECATED_1_2}
-                        DROP COLUMN IF EXISTS ${DbConstants.FAVORITE_TRACKS_PRIMARY_KEY_DEPRECATED_1_2}
-                    """
-                    .trimIndent())
-
-                database.execSQL("""
-                        INSERT INTO ${DbConstants.TRACKS_TABLE}
-                        SELECT * FROM ${DbConstants.FAVORITE_TRACKS_TABLE_DEPRECATED_1_2};
+                        INSERT INTO ${DbConstants.TRACKS_TABLE} (
+                        `${DbConstants.TRACK_ID}`,
+                        `trackName`, 
+                        `artistName`,
+                        `trackTime`,
+                        `imageUrl`,
+                        `coverUrl`,
+                        `collectionName`,
+                        `year`,
+                        `primaryGenreName`,
+                        `country`,
+                        `previewUrl`) 
+                        SELECT 
+                        `${DbConstants.FAVORITE_TRACKS_ID_DEPRECATED_1_2}`,
+                        `trackName`, 
+                        `artistName`,
+                        `trackTime`,
+                        `imageUrl`,
+                        `coverUrl`,
+                        `collectionName`,
+                        `year`,
+                        `primaryGenreName`,
+                        `country`,
+                        `previewUrl` 
+                        FROM ${DbConstants.FAVORITE_TRACKS_TABLE_DEPRECATED_1_2};
                     """
                     .trimIndent())
 
@@ -88,9 +105,24 @@ abstract class AppDatabase : RoomDatabase() {
 
                 database.execSQL("""
                         CREATE TABLE IF NOT EXISTS ${DbConstants.TRACK_PLAYLIST_TABLE} (
-                            ${DbConstants.TRACK_ID} INTEGER PRIMARY KEY,
-                            ${DbConstants.PLAYLIST_PRIMARY_KEY} INTEGER PRIMARY KEY
+                            ${DbConstants.TRACK_ID} INTEGER NOT NULL,
+                            ${DbConstants.PLAYLIST_PRIMARY_KEY} INTEGER NOT NULL,
+                            PRIMARY KEY (${DbConstants.TRACK_ID}, ${DbConstants.PLAYLIST_PRIMARY_KEY})
                         );
+                    """
+                    .trimIndent())
+
+                database.execSQL("""
+                        CREATE TABLE IF NOT EXISTS ${DbConstants.PLAYLISTS_TABLE} (
+                            ${DbConstants.PLAYLIST_PRIMARY_KEY} INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL,
+                            `name` TEXT NOT NULL, 
+                            `description` TEXT, 
+                            `coverUrl` TEXT
+                        );
+                    """
+                    .trimIndent())
+                database.execSQL("""
+                        DROP TABLE ${DbConstants.FAVORITE_TRACKS_TABLE_DEPRECATED_1_2}
                     """
                     .trimIndent())
             }

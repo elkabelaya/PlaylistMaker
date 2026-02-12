@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "ae5bf74d3a1936002a5ee488f66ef7a7",
+    "identityHash": "d3bb459c369808746294396ffc84cb85",
     "entities": [
       {
         "tableName": "tracks_table",
@@ -77,7 +77,7 @@
       },
       {
         "tableName": "playlists_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`playlist_primary_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `track_id` INTEGER NOT NULL, `trackName` TEXT NOT NULL, `artistName` TEXT, `trackTime` TEXT NOT NULL, `imageUrl` TEXT, `coverUrl` TEXT, `collectionName` TEXT, `year` TEXT NOT NULL, `primaryGenreName` TEXT, `country` TEXT, `previewUrl` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`playlist_primary_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `description` TEXT, `coverUrl` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -86,62 +86,19 @@
             "notNull": true
           },
           {
-            "fieldPath": "trackId",
-            "columnName": "track_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "trackName",
-            "columnName": "trackName",
+            "fieldPath": "name",
+            "columnName": "name",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "artistName",
-            "columnName": "artistName",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "trackTime",
-            "columnName": "trackTime",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "imageUrl",
-            "columnName": "imageUrl",
+            "fieldPath": "description",
+            "columnName": "description",
             "affinity": "TEXT"
           },
           {
             "fieldPath": "coverUrl",
             "columnName": "coverUrl",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "collectionName",
-            "columnName": "collectionName",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "year",
-            "columnName": "year",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "primaryGenreName",
-            "columnName": "primaryGenreName",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "country",
-            "columnName": "country",
-            "affinity": "TEXT"
-          },
-          {
-            "fieldPath": "previewUrl",
-            "columnName": "previewUrl",
             "affinity": "TEXT"
           }
         ],
@@ -154,7 +111,7 @@
       },
       {
         "tableName": "track_playlist_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`track_id` INTEGER NOT NULL, `playlist_primary_id` INTEGER NOT NULL, PRIMARY KEY(`track_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`track_id` INTEGER NOT NULL, `playlist_primary_id` INTEGER NOT NULL, PRIMARY KEY(`track_id`, `playlist_primary_id`))",
         "fields": [
           {
             "fieldPath": "trackId",
@@ -172,13 +129,14 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "track_id"
+            "track_id",
+            "playlist_primary_id"
           ]
         }
       },
       {
         "tableName": "track_favorite_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`favorite_track_primary_id` INTEGER NOT NULL, `track_id` INTEGER NOT NULL, PRIMARY KEY(`favorite_track_primary_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`favorite_track_primary_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `track_id` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "playlistId",
@@ -194,7 +152,7 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": false,
+          "autoGenerate": true,
           "columnNames": [
             "favorite_track_primary_id"
           ]
@@ -203,7 +161,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ae5bf74d3a1936002a5ee488f66ef7a7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd3bb459c369808746294396ffc84cb85')"
     ]
   }
 }
