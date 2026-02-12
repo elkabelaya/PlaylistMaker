@@ -12,12 +12,18 @@ app:startDestination="@id/media_fragment">
         android:name="com.example.playlistmaker.media.presentation.MediaFragment"
         android:label="fragment_media"
         tools:layout="@layout/fragment_media">
-    <action
-        android:id="@+id/action_media_playerFragment"
-        app:destination="@id/player_fragment"
-        app:popUpTo="@id/media_fragment"
-        style="@style/NavigationAnimation"
-        app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_media_playerFragment"
+            app:destination="@id/player_fragment"
+            app:popUpTo="@id/media_fragment"
+            style="@style/NavigationAnimation"
+            app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_media_newplaylistFragment"
+            app:destination="@id/newplaylist_fragment"
+            app:popUpTo="@id/media_fragment"
+            style="@style/NavigationAnimation"
+            app:launchSingleTop="true" />
     </fragment>
 
     <fragment
@@ -25,4 +31,10 @@ app:startDestination="@id/media_fragment">
         android:name="com.example.playlistmaker.player.presentation.PlayerFragment"
         android:label="fragment_player"
         tools:layout="@layout/fragment_player" />
+
+    <fragment
+        android:id="@+id/newplaylist_fragment"
+        android:name="com.example.playlistmaker.newplaylist.presentation.NewplaylistFragment"
+        android:label="fragment_newplaylist"
+        tools:layout="@layout/fragment_newplaylist"/>
 </navigation>

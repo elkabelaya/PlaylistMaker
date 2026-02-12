@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="newplaylist_dash">30dp</dimen>
+    <dimen name="newplaylist_dash_height">1dp</dimen>
+</resources>

@@ -4,6 +4,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.playlistmaker.common.data.db.AppDatabase
+import com.example.playlistmaker.common.data.db.AppDatabase.Companion.HANDLE_MIGRATION_1_2
 import com.example.playlistmaker.common.data.db.DbConstants
 import com.example.playlistmaker.common.data.db.dao.FavoriteTracksDao
 import com.example.playlistmaker.common.data.mapper.TracksDbMapperImpl
@@ -32,6 +33,7 @@ val commonDataModule = module {
     single<AppDatabase> {
         Room
             .databaseBuilder(get(), AppDatabase::class.java, DbConstants.DB_FILE_NAME)
+            .addMigrations(AppDatabase.HANDLE_MIGRATION_1_2)
             .build()
     }
     single<TracksDbMapper> { TracksDbMapperImpl() }

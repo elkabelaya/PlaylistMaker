@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.androidx.room)
 }
 
 android {
@@ -16,6 +17,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -44,6 +46,10 @@ android {
             file("src/main/res/app").listFiles(),
             file("src/main/res/app/components").listFiles()
         ))
+    }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
 }
 
