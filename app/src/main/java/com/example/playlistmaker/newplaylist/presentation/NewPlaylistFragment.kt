@@ -16,73 +16,73 @@ import org.koin.core.parameter.parametersOf
 
 class NewPlaylistFragment : Fragment() {
 
-    private var _binding: NewplaylistBinding? = null
-    private val binding get() = _binding!!
-    private val adapter: TracksAdapter
-    private val navHost by lazy { this.findNavController() }
-    private val viewModel: NewPlaylistViewModel by viewModel(){parametersOf(navHost) }
-
-    init {
-        adapter = TracksAdapter() { item ->
-            viewModel.select(item)
-        }
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupViewModel()
-        setupList()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun setupViewModel() {
-        viewModel.observeState().observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is MediaFavoritesState.Loading -> {
-                    binding.error.isVisible = false
-                    binding.tracksList.isVisible = false
-                    binding.progressbar.root.isVisible = true
-                }
-                is MediaFavoritesState.Error -> {
-                    binding.error.isVisible = true
-                    binding.tracksList.isVisible = false
-                    binding.progressbar.root.isVisible = false
-                    binding.error.setState(state.errorState)
-
-                }
-                is MediaFavoritesState.Data -> {
-                    adapter.tracks = state.tracks
-                    adapter.notifyDataSetChanged()
-                    binding.error.isVisible = false
-                    binding.tracksList.isVisible = true
-                    binding.progressbar.root.isVisible = false
-                }
-            }
-        }
-    }
-
-    private fun setupList() {
-        binding.tracksList.layoutManager = LinearLayoutManager(requireContext())
-        binding.tracksList.adapter = adapter
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            NewPlaylistFragment()
-    }
+//    private var _binding: NewplaylistBinding? = null
+//    private val binding get() = _binding!!
+//    private val adapter: TracksAdapter
+//    private val navHost by lazy { this.findNavController() }
+//    private val viewModel: NewPlaylistViewModel by viewModel(){parametersOf(navHost) }
+//
+//    init {
+//        adapter = TracksAdapter() { item ->
+//            viewModel.select(item)
+//        }
+//    }
+//
+//    override fun onCreateView(
+//        inflater: LayoutInflater,
+//        container: ViewGroup?,
+//        savedInstanceState: Bundle?
+//    ): View {
+//        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+//        return binding.root
+//    }
+//
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        setupViewModel()
+//        setupList()
+//    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
+//
+//    private fun setupViewModel() {
+//        viewModel.observeState().observe(viewLifecycleOwner) { state ->
+//            when (state) {
+//                is MediaFavoritesState.Loading -> {
+//                    binding.error.isVisible = false
+//                    binding.tracksList.isVisible = false
+//                    binding.progressbar.root.isVisible = true
+//                }
+//                is MediaFavoritesState.Error -> {
+//                    binding.error.isVisible = true
+//                    binding.tracksList.isVisible = false
+//                    binding.progressbar.root.isVisible = false
+//                    binding.error.setState(state.errorState)
+//
+//                }
+//                is MediaFavoritesState.Data -> {
+//                    adapter.tracks = state.tracks
+//                    adapter.notifyDataSetChanged()
+//                    binding.error.isVisible = false
+//                    binding.tracksList.isVisible = true
+//                    binding.progressbar.root.isVisible = false
+//                }
+//            }
+//        }
+//    }
+//
+//    private fun setupList() {
+//        binding.tracksList.layoutManager = LinearLayoutManager(requireContext())
+//        binding.tracksList.adapter = adapter
+//    }
+//
+//    companion object {
+//        @JvmStatic
+//        fun newInstance() =
+//            NewPlaylistFragment()
+//    }
 
 }

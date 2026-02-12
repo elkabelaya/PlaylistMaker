@@ -19,31 +19,48 @@ import com.example.playlistmaker.common.data.db.dao.PlayListsDao
         TrackPlaylistEntity::class,
         TrackFavoriteEntity::class
     ],
-    autoMigrations = [
-        AutoMigration(
-            from = 1,
-            to = 2,
-            spec = AppDatabase.AutoMigration12::class
-        )
-    ]
+//    autoMigrations = [
+//        AutoMigration(
+//            from = 1,
+//            to = 2,
+//            spec = AppDatabase.AutoMigration12::class
+//        )
+//    ]
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun favoriteTracksDao(): FavoriteTracksDao
     abstract fun playlistsDao(): PlayListsDao
 
+
+    @DeleteColumn("${DbConstants.TRACKS_TABLE}",
+            "${DbConstants.FAVORITE_TRACK_PRIMARY_KEY}")
     @RenameTable("${DbConstants.FAVORITE_TRACKS_TABLE_DEPRECATED_1_2}",
         "${DbConstants.TRACKS_TABLE}")
-    @DeleteColumn("${DbConstants.TRACKS_TABLE}",
-        "${DbConstants.FAVORITE_TRACK_PRIMARY_KEY}")
-    class  AutoMigration12 : AutoMigrationSpec {}
+    class  AutoMigration12 : AutoMigrationSpec
 
     companion object {
 
         val HANDLE_MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("""
-                        CREATE TABLE IF NOT EXISTS ${DbConstants.FAVORITE_TRACK_TABLE} (
+                    CREATE TABLE IF NOT EXISTS `${DbConstants.TRACKS_TABLE}`
+                        (`${DbConstants.TRACK_ID}` INTEGER NOT NULL, 
+                        `trackName` TEXT NOT NULL, 
+                        `artistName` TEXT, 
+                        `trackTime` TEXT NOT NULL, 
+                        `imageUrl` TEXT, 
+                        `coverUrl` TEXT, 
+                        `collectionName` TEXT, 
+                        `year` TEXT NOT NULL, 
+                        `primaryGenreName` TEXT, 
+                        `country` TEXT, 
+                        `previewUrl` TEXT
+                        );
+                        """
+                    .trimIndent())
+                database.execSQL("""
+                        CREATE TABLE IF NOT EXISTS ${DbConstants.TRACK_FAVORITE_TABLE} (
                             ${DbConstants.FAVORITE_TRACK_PRIMARY_KEY} INTEGER PRIMARY KEY,
                             ${DbConstants.TRACK_ID} INTEGER
                         );
@@ -51,8 +68,20 @@ abstract class AppDatabase : RoomDatabase() {
                     .trimIndent())
 
                 database.execSQL("""
-                        INSERT INTO ${DbConstants.FAVORITE_TRACK_TABLE} (${DbConstants.TRACK_ID})
-                        SELECT ${DbConstants.TRACK_ID} FROM ${DbConstants.TRACKS_TABLE};
+                    ALTER TABLE ${DbConstants.FAVORITE_TRACKS_TABLE_DEPRECATED_1_2}
+                        DROP COLUMN IF EXISTS ${DbConstants.FAVORITE_TRACKS_PRIMARY_KEY_DEPRECATED_1_2}
+                    """
+                    .trimIndent())
+
+                database.execSQL("""
+                        INSERT INTO ${DbConstants.TRACKS_TABLE}
+                        SELECT * FROM ${DbConstants.FAVORITE_TRACKS_TABLE_DEPRECATED_1_2};
+                    """
+                    .trimIndent())
+
+                database.execSQL("""
+                        INSERT INTO ${DbConstants.TRACK_FAVORITE_TABLE} (${DbConstants.TRACK_ID})
+                        SELECT ${DbConstants.FAVORITE_TRACKS_ID_DEPRECATED_1_2} FROM ${DbConstants.FAVORITE_TRACKS_TABLE_DEPRECATED_1_2};
                     """
                     .trimIndent())
 

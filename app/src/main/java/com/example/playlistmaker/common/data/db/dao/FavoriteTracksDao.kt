@@ -11,7 +11,7 @@ import com.example.playlistmaker.common.data.db.TrackFavoriteEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface FavoriteTracksDao {
+interface FavoriteTracksDao: TracksDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(track: TrackFavoriteEntity)
 
