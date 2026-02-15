@@ -11,7 +11,5 @@ import com.example.playlistmaker.search.presentation.repository.SearchNavigatorR
 import org.koin.dsl.module
 
 val newplaylistPresentationModule = module {
-    factory<MediaFavoritesErrorRepository>{ MediaFavoritesErrorRepositoryImpl(get()) }
-    factory<MediaPlaylistsErrorRepository>{ MediaPlaylistsErrorsRepositoryImpl(get()) }
-    factory<MediaNavigatorRepository>{ MediaNavigatorRepositoryImpl() }
+
 }

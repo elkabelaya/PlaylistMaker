@@ -139,7 +139,7 @@
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`favorite_track_primary_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `track_id` INTEGER NOT NULL)",
         "fields": [
           {
-            "fieldPath": "playlistId",
+            "fieldPath": "favoriteId",
             "columnName": "favorite_track_primary_id",
             "affinity": "INTEGER",
             "notNull": true

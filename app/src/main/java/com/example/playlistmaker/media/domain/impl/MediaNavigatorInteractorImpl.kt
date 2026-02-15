@@ -13,4 +13,7 @@ class MediaNavigatorInteractorImpl(val repository: NavigatorRepository,
     override fun navigateTo(track: Track) {
         repository.navigateTo(mediaRepository.getPlayer(track))
     }
+    override fun navigateToNewPlaylist() {
+        repository.navigateTo(mediaRepository.getNewPlayLst())
+    }
 }

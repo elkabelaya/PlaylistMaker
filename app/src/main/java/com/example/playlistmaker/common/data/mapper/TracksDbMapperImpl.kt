@@ -1,6 +1,7 @@
 package com.example.playlistmaker.common.data.mapper
 
 import com.example.playlistmaker.common.data.db.TrackEntity
+import com.example.playlistmaker.common.data.db.TrackFavoriteEntity
 import com.example.playlistmaker.common.data.repository.TracksDbMapper
 import com.example.playlistmaker.common.domain.model.Track
 
@@ -19,6 +20,10 @@ class TracksDbMapperImpl: TracksDbMapper {
             country = track.country,
             previewUrl = track.previewUrl
         )
+    }
+
+    override fun mapFavorite(track: Track): TrackFavoriteEntity {
+        return TrackFavoriteEntity(trackId = track.trackId)
     }
 
     override fun map(entity: TrackEntity): Track {

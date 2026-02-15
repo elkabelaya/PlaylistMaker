@@ -13,28 +13,26 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface FavoriteTracksDao: TracksDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(track: TrackFavoriteEntity)
+    suspend fun insertFavorite(trackFavorite: TrackFavoriteEntity)
 
-    @Delete
-    suspend fun delete(track: TrackFavoriteEntity)
-
-//    @Query("SELECT T.* " +
-//            "FROM ${DbConstants.FAVORITE_TRACK_TABLE} F " +
-//            "LEFT JOIN ${DbConstants.TRACKS_TABLE} T " +
-//            "ON F.${DbConstants.TRACK_ID} = T.${DbConstants.TRACK_ID} " +
-//            "ORDER BY T.${DbConstants.FAVORITE_TRACK_PRIMARY_KEY} DESC")
-    @Query("SELECT * " +
-            "FROM ${DbConstants.TRACKS_TABLE}")
-    fun getTracks(): Flow<List<TrackEntity>>
-
-
-//    @Query("SELECT T.*  " +
-//            "FROM ${DbConstants.FAVORITE_TRACK_TABLE} F " +
-//            "LEFT JOIN ${DbConstants.TRACKS_TABLE} T " +
-//            "ON F.${DbConstants.TRACK_ID} = T.${DbConstants.TRACK_ID} " +
-//            "WHERE F.${DbConstants.TRACK_ID} = :trackId")
-    @Query("SELECT * " +
-            "FROM ${DbConstants.TRACKS_TABLE} " +
+    @Query("DELETE " +
+            "FROM ${DbConstants.TRACK_FAVORITE_TABLE}  " +
             "WHERE ${DbConstants.TRACK_ID} = :trackId")
-    suspend fun getTrack(trackId: Long): List<TrackEntity>
+    suspend fun deleteFavorite(trackId: Long)
+
+    @Query("SELECT T.* " +
+            "FROM ${DbConstants.TRACK_FAVORITE_TABLE} F " +
+            "LEFT JOIN ${DbConstants.TRACKS_TABLE} T " +
+            "ON F.${DbConstants.TRACK_ID} = T.${DbConstants.TRACK_ID} " +
+            "ORDER BY F.${DbConstants.FAVORITE_TRACK_PRIMARY_KEY} DESC")
+    fun getFavoriteTracks(): Flow<List<TrackEntity>>
+
+
+    @Query("SELECT T.*  " +
+            "FROM ${DbConstants.TRACK_FAVORITE_TABLE} F " +
+            "LEFT JOIN ${DbConstants.TRACKS_TABLE} T " +
+            "ON F.${DbConstants.TRACK_ID} = T.${DbConstants.TRACK_ID} " +
+            "WHERE F.${DbConstants.TRACK_ID} = :trackId " +
+            "LIMIT 1")
+    suspend fun getFavoriteTrack(trackId: Long): List<TrackEntity>
 }

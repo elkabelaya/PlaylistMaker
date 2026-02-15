@@ -12,28 +12,22 @@ import kotlinx.coroutines.launch
 
 class NewPlaylistViewModelImpl(
     val interactor: MediaFavoritesInteractor,
-    val navigatorInteractor: MediaNavigatorInteractor,
     val clickDebounceUseCase: ClickDebounceUseCase
 ): NewPlaylistViewModel() {
     private val stateLiveData = MutableLiveData<MediaFavoritesState>(MediaFavoritesState.Loading)
     override fun observeState(): LiveData<MediaFavoritesState> = stateLiveData
 
     init {
-        viewModelScope.launch {
-            interactor.getFracks()
-                .collect { result ->
-                    result.first?.let {
-                        stateLiveData.postValue( MediaFavoritesState.Data(it))
-                    }
-                    result.second?.let {
-                        stateLiveData.postValue( MediaFavoritesState.Error(it))
-                    }
-                }
-        }
-    }
-    override fun select(track: Track) {
-        if (clickDebounceUseCase.canClickDebounced()) {
-            navigatorInteractor.navigateTo(track)
-        }
+//        viewModelScope.launch {
+//            interactor.getFracks()
+//                .collect { result ->
+//                    result.first?.let {
+//                        stateLiveData.postValue( MediaFavoritesState.Data(it))
+//                    }
+//                    result.second?.let {
+//                        stateLiveData.postValue( MediaFavoritesState.Error(it))
+//                    }
+//                }
+//        }
     }
 }

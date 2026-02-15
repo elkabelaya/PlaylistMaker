@@ -8,8 +8,3 @@ import com.example.playlistmaker.media.domain.repository.MediaNavigatorRepositor
 import com.example.playlistmaker.player.presentation.PlayerFragment
 import com.example.playlistmaker.search.domain.repository.SearchNavigatorRepository
 
-class MediaNavigatorRepositoryImpl(): MediaNavigatorRepository {
-    override fun getPlayer(item: Track): Navigation {
-        return Navigation(R.id.action_media_playerFragment, PlayerFragment.createArgs(item))
-    }
-}

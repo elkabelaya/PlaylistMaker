@@ -5,5 +5,4 @@ import com.example.playlistmaker.media.domain.repository.MediaPlaylistsRepositor
 import org.koin.dsl.module
 
 val newplaylistDataModule = module {
-    single<MediaPlaylistsRepository>{ MediaPlaylistsRepositoryImpl() }
 }

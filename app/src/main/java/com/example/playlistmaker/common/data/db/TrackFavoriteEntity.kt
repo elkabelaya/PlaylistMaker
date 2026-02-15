@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
 data class TrackFavoriteEntity (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = DbConstants.FAVORITE_TRACK_PRIMARY_KEY)
-    val playlistId: Long,
+    val favoriteId: Long = 0,
     @ColumnInfo(name = DbConstants.TRACK_ID)
     val trackId: Long,
 )

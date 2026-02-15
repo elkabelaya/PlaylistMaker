@@ -11,9 +11,5 @@ import com.example.playlistmaker.search.domain.impl.SearchNavigatorInteractorImp
 import org.koin.dsl.module
 
 val newplaylistDomainModule = module {
-    factory<MediaFavoritesInteractor> { MediaFavoritesInteractorImpl(get(), get()) }
-    factory<MediaPlaylistsInteractor> { MediaPlaylistsInteractorImpl(get(), get()) }
-    factory<MediaNavigatorInteractor> { params ->
-        MediaNavigatorInteractorImpl(get { params }, get())
-    }
+
 }

@@ -13,16 +13,19 @@ import kotlin.collections.map
 class FavoriteTracksRepositoryImpl(
     val dao: FavoriteTracksDao,
     val mapper: TracksDbMapper): FavoriteTracksRepository {
+
     override suspend fun add(track: Track) {
         dao.insert(mapper.map(track))
+        dao.insertFavorite(mapper.mapFavorite(track))
     }
 
     override suspend fun delete(trackId: Long) {
-        //dao.delete(trackId)
+        dao.deleteFavorite(trackId)
+        dao.deleteIfZombie(trackId)
     }
 
     override suspend fun get(): Flow<Tracks> = flow {
-        dao.getTracks()
+        dao.getFavoriteTracks()
             .collect {
                 val tracks = it.map {
                     mapper.map(it)
@@ -32,7 +35,7 @@ class FavoriteTracksRepositoryImpl(
         }
 
     override suspend fun find(trackid: Long): Track? {
-       val tracks = dao.getTrack(trackid)
+       val tracks = dao.getFavoriteTrack(trackid)
        if (tracks.count() > 0) {
             return mapper.map(tracks.first())
        } else {

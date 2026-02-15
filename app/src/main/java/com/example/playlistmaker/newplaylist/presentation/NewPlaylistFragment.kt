@@ -8,19 +8,20 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.databinding.FragmentFavoritesBinding
 import com.example.playlistmaker.media.domain.model.MediaFavoritesState
 import com.example.playlistmaker.common.presentation.TracksAdapter
+import com.example.playlistmaker.common.presentation.utils.FragmentWithToolBar
+import com.example.playlistmaker.databinding.FragmentNewplaylistBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class NewPlaylistFragment : Fragment() {
+class NewPlaylistFragment : FragmentWithToolBar() {
 
-//    private var _binding: NewplaylistBinding? = null
-//    private val binding get() = _binding!!
-//    private val adapter: TracksAdapter
-//    private val navHost by lazy { this.findNavController() }
-//    private val viewModel: NewPlaylistViewModel by viewModel(){parametersOf(navHost) }
+    private var _binding: FragmentNewplaylistBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: NewPlaylistViewModel by viewModel()
 //
 //    init {
 //        adapter = TracksAdapter() { item ->
@@ -84,5 +85,10 @@ class NewPlaylistFragment : Fragment() {
 //        fun newInstance() =
 //            NewPlaylistFragment()
 //    }
+
+    companion object {
+
+        fun createArgs(): Bundle = Bundle()
+    }
 
 }

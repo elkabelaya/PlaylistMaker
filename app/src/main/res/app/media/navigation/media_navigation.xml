@@ -34,7 +34,7 @@ app:startDestination="@id/media_fragment">
 
     <fragment
         android:id="@+id/newplaylist_fragment"
-        android:name="com.example.playlistmaker.newplaylist.presentation.NewplaylistFragment"
+        android:name="com.example.playlistmaker.newplaylist.presentation.NewPlaylistFragment"
         android:label="fragment_newplaylist"
         tools:layout="@layout/fragment_newplaylist"/>
 </navigation>

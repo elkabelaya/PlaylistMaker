@@ -6,17 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.playlistmaker.common.presentation.error.ErrorView
 import com.example.playlistmaker.databinding.FragmentFavoritesBinding
 import com.example.playlistmaker.databinding.FragmentPlaylistsBinding
 import com.example.playlistmaker.media.domain.model.MediaPlaylistsState
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import kotlin.getValue
 
 class PlaylistsFragment : Fragment() {
     private var _binding: FragmentPlaylistsBinding? = null
     private val binding get() = _binding!!
-    val viewModel: PlaylistsViewModel by viewModel()
+    private val navHost by lazy { this.findNavController() }
+    private val viewModel: PlaylistsViewModel by viewModel(){parametersOf(navHost) }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

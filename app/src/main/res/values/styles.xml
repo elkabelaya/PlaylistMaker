@@ -62,4 +62,13 @@
         <item name="android:trackTint">@color/switch_track_colors</item>
         <item name="android:switchMinWidth">@dimen/switch_size</item>
     </style>
+
+    <style name="app_text_field">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginTop">@dimen/padding_xl</item>
+        <item name="android:paddingEnd">@dimen/padding_s</item>
+        <item name="android:thumbTint">@color/switch_thumb_colors</item>
+        <item name="android:trackTint">@color/switch_track_colors</item>
+        <item name="android:switchMinWidth">@dimen/switch_size</item>
+    </style>
 </resources>

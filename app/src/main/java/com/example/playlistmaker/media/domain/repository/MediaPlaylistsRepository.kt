@@ -1,10 +1,11 @@
 package com.example.playlistmaker.media.domain.repository
 
-import com.example.playlistmaker.media.domain.model.Playlist
-import com.example.playlistmaker.media.domain.model.Playlists
+import com.example.playlistmaker.common.domain.model.Playlist
+import com.example.playlistmaker.common.domain.model.Playlists
+import kotlinx.coroutines.flow.Flow
 
 interface MediaPlaylistsRepository {
-    fun getPlaylists(): Playlists
+    fun getPlaylists(): Flow<Playlists>
     fun add(playlist: Playlist)
     fun remove(playlist: Playlist)
 }

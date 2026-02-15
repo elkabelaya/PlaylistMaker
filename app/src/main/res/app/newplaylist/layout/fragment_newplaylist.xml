@@ -3,16 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical"
     tools:context=".newplaylist.presentation.NewPlaylistFragment">
 
     <ImageView
         android:id="@+id/addPicture"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/padding_xl"
         android:layout_marginTop="@dimen/padding_2xl"
+        android:adjustViewBounds="true"
         android:background="@drawable/bg_newplaylist_add_photo"
-        android:scaleType="centerCrop"
+        android:scaleType="center"
         android:src="@drawable/ic_newplaylist_add_photo" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/padding_m"
+        android:layout_marginTop="@dimen/padding_5xl"
+        >
+    <com.google.android.material.textfield.TextInputEditText
+
+        style="@style/TextEdit"
+        android:hint="@string/newplaylist_name"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

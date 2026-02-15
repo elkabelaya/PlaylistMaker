@@ -13,7 +13,7 @@ val mediaViewModelModule = module {
         FavoritesViewModelImpl(get(), get{params}, get())
     }
 
-    viewModel<PlaylistsViewModel> {
-        PlaylistsViewModelImpl(get())
+    viewModel<PlaylistsViewModel> { params ->
+        PlaylistsViewModelImpl(get(), get{params})
     }
 }

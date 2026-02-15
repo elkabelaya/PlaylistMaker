@@ -15,6 +15,11 @@ interface TracksDao {
 
     @Query("DELETE " +
             "FROM ${DbConstants.TRACKS_TABLE} " +
-            "WHERE ${DbConstants.TRACK_ID} = :trackId")
-    suspend fun deleteZomby(trackId: Long)
+            "WHERE ${DbConstants.TRACK_ID} = :trackId " +
+            "AND :trackId NOT IN (SELECT F.${DbConstants.TRACK_ID} " +
+            "FROM ${DbConstants.TRACK_FAVORITE_TABLE} F) " +
+            "AND :trackId NOT IN (SELECT P.${DbConstants.TRACK_ID} " +
+            "FROM ${DbConstants.TRACK_PLAYLIST_TABLE} P)"
+    )
+    suspend fun deleteIfZombie(trackId: Long)
 }

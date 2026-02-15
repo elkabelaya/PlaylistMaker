@@ -5,4 +5,5 @@ import com.example.playlistmaker.common.domain.model.Track
 
 interface MediaNavigatorRepository {
     fun getPlayer(item: Track): Navigation
+    fun getNewPlayLst(): Navigation
 }
