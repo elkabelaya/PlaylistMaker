@@ -16,14 +16,7 @@ import com.example.playlistmaker.common.data.db.dao.PlaylistsDao
         PlaylistEntity::class,
         TrackPlaylistEntity::class,
         TrackFavoriteEntity::class
-    ],
-//    autoMigrations = [
-//        AutoMigration(
-//            from = 1,
-//            to = 2,
-//            spec = AppDatabase.AutoMigration12::class
-//        )
-//    ]
+    ]
 )
 abstract class AppDatabase : RoomDatabase() {
 

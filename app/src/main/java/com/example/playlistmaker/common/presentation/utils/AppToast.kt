@@ -1,6 +1,5 @@
 package com.example.playlistmaker.common.presentation.utils
 
-// Utils.kt
 import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater

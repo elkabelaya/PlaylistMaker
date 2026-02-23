@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toUri
 import androidx.core.view.isVisible
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.presentation.utils.FragmentWithToolBar
 import com.example.playlistmaker.common.presentation.utils.onTextChanged
@@ -18,6 +20,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.GlobalContext.loadKoinModules
 import org.koin.core.context.GlobalContext.unloadKoinModules
+
 
 class NewPlaylistFragment : FragmentWithToolBar() {
 
@@ -109,8 +112,11 @@ class NewPlaylistFragment : FragmentWithToolBar() {
             } else {
                 binding.imageView.isVisible = true
                 binding.addPicture.isVisible = false
-                binding.imageView.setImageURI(null)
-                binding.imageView.setImageURI(state.imageUrl.toUri())
+                Glide.with(binding.imageView)
+                    .load(state.imageUrl)
+                    .placeholder(R.drawable.bg_placeholder)
+                    .transform(CenterCrop(), RoundedCorners(binding.imageView.resources.getDimensionPixelSize(R.dimen.radius_xs)))
+                    .into(binding.imageView)
             }
             binding.createButton.isEnabled = state.isSaveEnabled
         }

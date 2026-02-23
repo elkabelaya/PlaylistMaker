@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Playlist
@@ -25,9 +26,9 @@ class PlayerPlaylistViewHolder(private val binding: PlayerPlaylistsCardViewBindi
         Glide.with( binding.image)
             .load(model.coverUrl)
             .placeholder(R.drawable.bg_placeholder)
-            .centerCrop()
-            .transform(RoundedCorners( binding.image.resources.getDimensionPixelSize(R.dimen.radius_xxxs)))
+            .transform(CenterCrop(),RoundedCorners( binding.image.resources.getDimensionPixelSize(R.dimen.radius_xxxs)))
             .into( binding.image)
+
 
         itemView.setOnClickListener {
             onClickItem(model)
