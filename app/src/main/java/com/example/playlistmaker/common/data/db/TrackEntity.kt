@@ -20,3 +20,5 @@ data class TrackEntity (
     val country: String?,
     val previewUrl: String?
 )
+
+typealias TrackEntities = List<TrackEntity>

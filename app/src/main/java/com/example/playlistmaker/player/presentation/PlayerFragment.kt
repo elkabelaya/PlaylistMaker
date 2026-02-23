@@ -4,30 +4,44 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.common.presentation.utils.FragmentWithToolBar
-import com.example.playlistmaker.player.domain.model.PlayerState
+import com.example.playlistmaker.common.presentation.utils.showAppToast
 import com.example.playlistmaker.databinding.FragmentPlayerBinding
 import com.example.playlistmaker.player.di.playerModules
+import com.example.playlistmaker.player.domain.model.PlayerState
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.GlobalContext.loadKoinModules
 import org.koin.core.context.GlobalContext.unloadKoinModules
 import org.koin.core.parameter.parametersOf
-import kotlin.getValue
 
 class PlayerFragment : FragmentWithToolBar() {
     private var _binding: FragmentPlayerBinding? = null
     private val binding get() = _binding!!
+    private val adapter: PlayerPlaylistsAdapter
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     private val viewModel: PlayerViewModel by viewModel{
         parametersOf(track)
     }
     private val track: Track? by lazy {
         requireArguments().getSerializable(INTENT_KEY) as? Track
     }
+
+    init {
+        adapter = PlayerPlaylistsAdapter() { item ->
+            viewModel.select(item)
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadKoinModules(playerModules)
@@ -45,8 +59,11 @@ class PlayerFragment : FragmentWithToolBar() {
         track?.let {
             setupTrack(it)
         }
-        setupViewModel(track?.previewUrl)
+
+        setupViewModel()
         setupButtons()
+        setupList()
+        setupBottomSheet()
     }
 
     override fun onPause() {
@@ -60,9 +77,8 @@ class PlayerFragment : FragmentWithToolBar() {
         unloadKoinModules(playerModules)
     }
 
-    fun setupViewModel(url: String?) {
-        viewModel.setup(url)
-        viewModel.observeState().observe(this) {
+    fun setupViewModel() {
+        viewModel.observeState().observe(viewLifecycleOwner) {
             when (it){
                 is PlayerState.Default -> {
                     binding.playView.isEnabled = false
@@ -85,8 +101,20 @@ class PlayerFragment : FragmentWithToolBar() {
             }
         }
 
-        viewModel.observeFavorite().observe(this) {
+        viewModel.observeFavorite().observe(viewLifecycleOwner) {
             binding.favoriteView.setImageResource(if (it == true ) R.drawable.ic_player_heart_fill else R.drawable.ic_player_heart_stroke)
+        }
+
+        viewModel.observePlaylists().observe(viewLifecycleOwner) {
+            adapter.playlists = it
+            adapter.notifyDataSetChanged()
+        }
+
+        viewModel.observeToast().observe(viewLifecycleOwner) {
+            it?.let {
+                hideBottomSheet()
+                showAppToast(requireContext(), it)
+            }
         }
     }
     fun setupTrack(track: Track) {
@@ -107,10 +135,6 @@ class PlayerFragment : FragmentWithToolBar() {
     }
 
     fun setupButtons() {
-        binding.addView.setOnClickListener {
-            //do nothing by now
-        }
-
         binding.playView.isEnabled = false
         binding.playView.setOnClickListener {
             viewModel.togglePlay()
@@ -119,6 +143,58 @@ class PlayerFragment : FragmentWithToolBar() {
         binding.favoriteView.setOnClickListener {
             viewModel.toggleFavorite()
         }
+
+        binding.addView.setOnClickListener {
+            openBottomSheet()
+        }
+
+    }
+
+    private fun setupList() {
+        binding.playlists.layoutManager = LinearLayoutManager(requireContext())
+        binding.playlists.adapter = adapter
+    }
+    fun setupBottomSheet() {
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
+        hideBottomSheet()
+
+
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        binding.overlay.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.overlay.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                binding.overlay.alpha = 1 - slideOffset
+            }
+        })
+
+        binding.createButton.setOnClickListener {
+            viewModel.createPlaylist()
+        }
+
+        binding.bottomSheetHandle.button.setOnClickListener {
+            hideBottomSheet()
+        }
+
+        binding.overlay.setOnClickListener {
+            hideBottomSheet()
+        }
+    }
+
+    private fun hideBottomSheet() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
+    private fun openBottomSheet() {
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     fun setTextOrHide(labelView: TextView?, view: TextView, value: String?) {

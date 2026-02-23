@@ -1,15 +1,11 @@
 package com.example.playlistmaker.newplaylist.di
 
-import com.example.playlistmaker.media.domain.api.MediaFavoritesInteractor
-import com.example.playlistmaker.media.domain.api.MediaNavigatorInteractor
-import com.example.playlistmaker.media.domain.api.MediaPlaylistsInteractor
-import com.example.playlistmaker.media.domain.impl.MediaFavoritesInteractorImpl
-import com.example.playlistmaker.media.domain.impl.MediaNavigatorInteractorImpl
-import com.example.playlistmaker.media.domain.impl.MediaPlaylistsInteractorImpl
-import com.example.playlistmaker.search.domain.api.SearchNavigatorInteractor
-import com.example.playlistmaker.search.domain.impl.SearchNavigatorInteractorImpl
+import com.example.playlistmaker.common.domain.repository.LocalStorage
+import com.example.playlistmaker.newplaylist.domain.api.NewPlayListInteractor
+import com.example.playlistmaker.newplaylist.domain.impl.NewPlayListInteractorImpl
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val newplaylistDomainModule = module {
-
+    factory<NewPlayListInteractor> { NewPlayListInteractorImpl(get(), get(named(LocalStorage.PLAYLIST_COVERS_FOLDER))) }
 }

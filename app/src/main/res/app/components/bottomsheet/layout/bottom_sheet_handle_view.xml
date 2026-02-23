@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<View
+    android:id="@+id/button"
+    android:layout_width="50dp"
+    android:layout_height="4dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="@dimen/padding_xs"
+    android:layout_marginBottom="@dimen/padding_s"
+    android:background="@color/text_secondary"/>
+</layout>

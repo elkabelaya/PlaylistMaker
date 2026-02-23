@@ -5,10 +5,10 @@
         android:id="@id/search_navigation"
         android:icon="@drawable/ic_root_search"
         android:title="@string/main_search"/>
-        <item
-            android:id="@+id/media_navigation"
-            android:icon="@drawable/ic_root_media"
-            android:title="@string/main_media" />
+    <item
+        android:id="@+id/media_navigation"
+        android:icon="@drawable/ic_root_media"
+        android:title="@string/main_media" />
     <item
         android:id="@id/settings_navigation"
         android:icon="@drawable/ic_root_settings"

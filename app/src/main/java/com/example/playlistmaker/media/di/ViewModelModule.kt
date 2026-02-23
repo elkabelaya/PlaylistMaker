@@ -1,19 +1,19 @@
 package com.example.playlistmaker.media.di
 
-import com.example.playlistmaker.media.presentation.FavoritesViewModel
-import com.example.playlistmaker.media.presentation.FavoritesViewModelImpl
-import com.example.playlistmaker.media.presentation.PlaylistsViewModel
-import com.example.playlistmaker.media.presentation.PlaylistsViewModelImpl
+import com.example.playlistmaker.media.presentation.favorites.MediaFavoritesViewModel
+import com.example.playlistmaker.media.presentation.favorites.MediaFavoritesViewModelImpl
+import com.example.playlistmaker.media.presentation.playlists.MediaPlaylistsViewModel
+import com.example.playlistmaker.media.presentation.playlists.MediaPlaylistsViewModelImpl
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val mediaViewModelModule = module {
 
-    viewModel<FavoritesViewModel> { params ->
-        FavoritesViewModelImpl(get(), get{params}, get())
+    viewModel<MediaFavoritesViewModel> {
+        MediaFavoritesViewModelImpl(get(), get(), get())
     }
 
-    viewModel<PlaylistsViewModel> { params ->
-        PlaylistsViewModelImpl(get(), get{params})
+    viewModel<MediaPlaylistsViewModel> {
+        MediaPlaylistsViewModelImpl(get(), get())
     }
 }

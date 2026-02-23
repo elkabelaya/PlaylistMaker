@@ -1,7 +1,5 @@
 package com.example.playlistmaker.common.data.db
 
-import androidx.room.AutoMigration
-import androidx.room.ColumnInfo
 import androidx.room.Database
 import androidx.room.DeleteColumn
 import androidx.room.RenameTable
@@ -10,12 +8,12 @@ import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.playlistmaker.common.data.db.dao.FavoriteTracksDao
-import com.example.playlistmaker.common.data.db.dao.PlayListsDao
+import com.example.playlistmaker.common.data.db.dao.PlaylistsDao
 
 
 @Database(version = 2,
     entities = [TrackEntity::class,
-        PlayListEntity::class,
+        PlaylistEntity::class,
         TrackPlaylistEntity::class,
         TrackFavoriteEntity::class
     ],
@@ -30,7 +28,7 @@ import com.example.playlistmaker.common.data.db.dao.PlayListsDao
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun favoriteTracksDao(): FavoriteTracksDao
-    abstract fun playlistsDao(): PlayListsDao
+    abstract fun playlistsDao(): PlaylistsDao
 
 
     @DeleteColumn("${DbConstants.TRACKS_TABLE}",

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:id="@+id/toast_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/padding_xs">
+
+
+    <TextView
+        android:id="@+id/toast_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_inverted"
+        android:textSize="@dimen/text_xm"
+        android:fontFamily="@font/ys_display_regular"
+        android:gravity="center_vertical"
+        android:textAlignment="center"
+        android:background="@drawable/bg_app_toast"
+        android:padding="@dimen/padding_m"
+        tool:text="@tools:sample/lorem"
+        />
+</LinearLayout>
+

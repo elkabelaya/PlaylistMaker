@@ -1,11 +1,11 @@
 package com.example.playlistmaker.common.data.db.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.playlistmaker.common.data.db.DbConstants
+import com.example.playlistmaker.common.data.db.TrackEntities
 import com.example.playlistmaker.common.data.db.TrackEntity
 import com.example.playlistmaker.common.data.db.TrackFavoriteEntity
 import kotlinx.coroutines.flow.Flow
@@ -25,7 +25,7 @@ interface FavoriteTracksDao: TracksDao {
             "LEFT JOIN ${DbConstants.TRACKS_TABLE} T " +
             "ON F.${DbConstants.TRACK_ID} = T.${DbConstants.TRACK_ID} " +
             "ORDER BY F.${DbConstants.FAVORITE_TRACK_PRIMARY_KEY} DESC")
-    fun getFavoriteTracks(): Flow<List<TrackEntity>>
+    fun getFavoriteTracks(): Flow<TrackEntities>
 
 
     @Query("SELECT T.*  " +

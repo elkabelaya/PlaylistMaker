@@ -4,3 +4,4 @@ import com.example.playlistmaker.common.domain.model.Navigation
 interface NavigatorRepository {
     fun navigateTo(navigation: Navigation)
 }
+

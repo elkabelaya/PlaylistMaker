@@ -6,7 +6,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/media_navigation"
 app:startDestination="@id/media_fragment">
-
+    <include app:graph="@navigation/player_navigation"/>
     <fragment
         android:id="@+id/media_fragment"
         android:name="com.example.playlistmaker.media.presentation.MediaFragment"
@@ -14,7 +14,7 @@ app:startDestination="@id/media_fragment">
         tools:layout="@layout/fragment_media">
         <action
             android:id="@+id/action_media_playerFragment"
-            app:destination="@id/player_fragment"
+            app:destination="@id/player_navigation"
             app:popUpTo="@id/media_fragment"
             style="@style/NavigationAnimation"
             app:launchSingleTop="true" />
@@ -25,12 +25,6 @@ app:startDestination="@id/media_fragment">
             style="@style/NavigationAnimation"
             app:launchSingleTop="true" />
     </fragment>
-
-    <fragment
-        android:id="@+id/player_fragment"
-        android:name="com.example.playlistmaker.player.presentation.PlayerFragment"
-        android:label="fragment_player"
-        tools:layout="@layout/fragment_player" />
 
     <fragment
         android:id="@+id/newplaylist_fragment"

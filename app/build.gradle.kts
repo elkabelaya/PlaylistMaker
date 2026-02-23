@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.androidx.media3.common.ktx)
     implementation(libs.appcompat)
+    implementation(libs.androidx.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

@@ -1,26 +1,32 @@
 package com.example.playlistmaker.common.di
 
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.room.Room
 import com.example.playlistmaker.common.data.db.AppDatabase
-import com.example.playlistmaker.common.data.db.AppDatabase.Companion.HANDLE_MIGRATION_1_2
 import com.example.playlistmaker.common.data.db.DbConstants
 import com.example.playlistmaker.common.data.db.dao.FavoriteTracksDao
+import com.example.playlistmaker.common.data.db.dao.PlaylistsDao
+import com.example.playlistmaker.common.data.mapper.PlaylistsDbMapperImpl
 import com.example.playlistmaker.common.data.mapper.TracksDbMapperImpl
 import com.example.playlistmaker.common.data.mapper.TracksMapperImpl
 import com.example.playlistmaker.common.data.network.ItunesApi
 import com.example.playlistmaker.common.data.network.RetrofitClient
 import com.example.playlistmaker.common.data.repository.CoroutinesLoopRepositoryImpl
 import com.example.playlistmaker.common.data.repository.FavoriteTracksRepositoryImpl
+import com.example.playlistmaker.common.data.repository.LocalStorageRepositoryImpl
+import com.example.playlistmaker.common.data.repository.PlaylistsDbMapper
+import com.example.playlistmaker.common.data.repository.PlaylistsRepositoryImpl
 import com.example.playlistmaker.common.data.repository.PreferencesRepositoryImpl
 import com.example.playlistmaker.common.data.repository.ThemeRepositoryImpl
 import com.example.playlistmaker.common.data.repository.TracksDbMapper
 import com.example.playlistmaker.common.data.repository.TracksMapper
 import com.example.playlistmaker.common.domain.repository.FavoriteTracksRepository
+import com.example.playlistmaker.common.domain.repository.LocalStorage
+import com.example.playlistmaker.common.domain.repository.LocalStorageRepository
 import com.example.playlistmaker.common.domain.repository.LoopRepository
+import com.example.playlistmaker.common.domain.repository.PlaylistsRepository
 import com.example.playlistmaker.common.domain.repository.PreferencesRepository
 import com.example.playlistmaker.common.domain.repository.ThemeRepository
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val commonDataModule = module {
@@ -29,7 +35,6 @@ val commonDataModule = module {
     factory<LoopRepository>{ CoroutinesLoopRepositoryImpl() }
     single<PreferencesRepository>{ PreferencesRepositoryImpl(get(), get()) }
     single<ThemeRepository>{ ThemeRepositoryImpl() }
-    factory { (owner: NavHostFragment) -> owner.findNavController()}
     single<AppDatabase> {
         Room
             .databaseBuilder(get(), AppDatabase::class.java, DbConstants.DB_FILE_NAME)
@@ -42,4 +47,13 @@ val commonDataModule = module {
         dataBase.favoriteTracksDao()
     }
     single<FavoriteTracksRepository> { FavoriteTracksRepositoryImpl(get(), get()) }
+    single<PlaylistsDbMapper> { PlaylistsDbMapperImpl(get()) }
+    single<PlaylistsDao>{
+        val dataBase: AppDatabase = get()
+        dataBase.playlistsDao()
+    }
+    single<PlaylistsRepository>{ PlaylistsRepositoryImpl(get(), get(), get()) }
+    factory<LocalStorageRepository>(named(LocalStorage.PLAYLIST_COVERS_FOLDER)) {
+        LocalStorageRepositoryImpl(get(), LocalStorage.PLAYLIST_COVERS_FOLDER.folder)
+    }
 }
