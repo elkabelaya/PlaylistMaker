@@ -4,8 +4,9 @@ import com.example.playlistmaker.common.domain.repository.NavigatorRepository
 import com.example.playlistmaker.player.domain.repository.PlayerNavigatorRepository
 import com.example.playlistmaker.player.domain.api.PlayerNavigatorInteractor
 
-class PlayerNavigatorInteractorImpl(val repository: NavigatorRepository,
-                                    val playerRepository: PlayerNavigatorRepository
+class PlayerNavigatorInteractorImpl(
+    private val repository: NavigatorRepository,
+    private val playerRepository: PlayerNavigatorRepository
 ): PlayerNavigatorInteractor {
 
     override fun navigateToNewPlaylist() {

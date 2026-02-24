@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.common.domain.model.Playlists
 import com.example.playlistmaker.common.domain.model.Track
+import com.example.playlistmaker.common.presentation.utils.SingleLiveData
 import com.example.playlistmaker.player.domain.api.PlayerFavoriteInteractor
 import com.example.playlistmaker.player.domain.api.PlayerInteractor
 import com.example.playlistmaker.player.domain.api.PlayerNavigatorInteractor
@@ -33,8 +34,8 @@ class PlayerViewModelImpl(
     private val playlistsLiveData: MutableLiveData<Playlists> = MutableLiveData(emptyList())
     override fun observePlaylists(): LiveData<Playlists> = playlistsLiveData
 
-    private val toastLiveData: MutableLiveData<String?> = MutableLiveData(null)
-    override fun observeToast(): LiveData<String?> = toastLiveData
+    private val toastLiveData: SingleLiveData<String?> = SingleLiveData(null)
+    override fun observeToast(): SingleLiveData<String?> = toastLiveData
 
     private var timerJob: Job? = null
 

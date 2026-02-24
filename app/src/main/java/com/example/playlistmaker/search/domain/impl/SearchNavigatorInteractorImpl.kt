@@ -5,7 +5,7 @@ import com.example.playlistmaker.common.domain.repository.NavigatorRepository
 import com.example.playlistmaker.search.domain.api.SearchNavigatorInteractor
 import com.example.playlistmaker.search.domain.repository.SearchNavigatorRepository
 
-class SearchNavigatorInteractorImpl(val repository: NavigatorRepository,
+class SearchNavigatorInteractorImpl(private val repository: NavigatorRepository,
     val searchRepository: SearchNavigatorRepository): SearchNavigatorInteractor {
     override fun navigateTo(track: Track) {
         repository.navigateTo(searchRepository.getPlayer(track))

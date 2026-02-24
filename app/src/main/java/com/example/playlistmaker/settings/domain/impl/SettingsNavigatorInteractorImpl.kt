@@ -6,8 +6,8 @@ import com.example.playlistmaker.settings.domain.api.SettingsNavigatorInteractor
 import com.example.playlistmaker.settings.domain.repository.SettingsNavigatorRepository
 
 class SettingsNavigatorInteractorImpl(
-    val repository: ExternalNavigatorRepository,
-    val settingsRepository: SettingsNavigatorRepository
+    private val repository: ExternalNavigatorRepository,
+    private val settingsRepository: SettingsNavigatorRepository
 ): SettingsNavigatorInteractor {
     override fun navigateToShare(){
         repository.shareLink(settingsRepository.getShareUrl())

@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class MediaPlaylistsInteractorImpl(
-    val repository: PlaylistsRepository,
-    val errorRepository: MediaPlaylistsErrorRepository
+    private val repository: PlaylistsRepository,
+    private val errorRepository: MediaPlaylistsErrorRepository
 ): MediaPlaylistsInteractor {
 
     override fun getPlayLists(): Flow<Pair<Playlists?, ErrorState?>> = flow {

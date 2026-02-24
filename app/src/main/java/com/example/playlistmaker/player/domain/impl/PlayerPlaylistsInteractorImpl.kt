@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class PlayerPlaylistsInteractorImpl(
-    val repository: PlaylistsRepository,
-    val defaultsRepositoty: PlayerDefaultsRepository): PlayerPlaylistsInteractor {
+    private val repository: PlaylistsRepository,
+    private val defaultsRepositoty: PlayerDefaultsRepository): PlayerPlaylistsInteractor {
     override suspend fun get(): Flow<Playlists> = flow {
         repository.get().collect {
             emit(it)
