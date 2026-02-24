@@ -4,12 +4,10 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = DbConstants.FAVORITE_TRACKS_TABLE)
+@Entity(tableName = DbConstants.TRACKS_TABLE)
 data class TrackEntity (
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = DbConstants.FAVORITE_TRACK_PRIMARY_KEY)
-    val id: Long = 0,
-    @ColumnInfo(name = DbConstants.FAVORITE_TRACK_ID)
+    @ColumnInfo(name = DbConstants.TRACK_ID)
     val trackId: Long,
     val trackName: String,
     val artistName: String?,
@@ -22,3 +20,5 @@ data class TrackEntity (
     val country: String?,
     val previewUrl: String?
 )
+
+typealias TrackEntities = List<TrackEntity>

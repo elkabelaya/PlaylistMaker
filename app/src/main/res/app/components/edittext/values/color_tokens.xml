@@ -1,0 +1,3 @@
+<resources>
+    <color name="edittext_border_color">@color/yp_text_gray</color>
+</resources>

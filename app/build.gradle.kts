@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.devtools.ksp)
+    alias(libs.plugins.androidx.room)
 }
 
 android {
@@ -16,6 +17,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -45,6 +47,10 @@ android {
             file("src/main/res/app/components").listFiles()
         ))
     }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
 }
 
 dependencies {
@@ -59,6 +65,7 @@ dependencies {
     implementation(libs.google.material)
     implementation(libs.androidx.media3.common.ktx)
     implementation(libs.appcompat)
+    implementation(libs.androidx.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

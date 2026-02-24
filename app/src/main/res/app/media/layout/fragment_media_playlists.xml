@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:orientation="vertical"
+    android:background="@color/background"
+    tools:context=".media.presentation.playlists.MediaPlaylistsFragment">
+    <Button android:id="@+id/create_button"
+        style="@style/action_button"
+        android:text="@string/media_playlist_create"
+        android:layout_marginTop="@dimen/padding_xl"/>
+    <com.example.playlistmaker.common.presentation.error.ErrorView
+        android:id="@+id/error"
+        android:layout_marginTop="@dimen/padding_7xl"
+        style="@style/ErrorStyle"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/playlists"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:itemCount="2"
+        tools:listitem="@layout/media_playlist_card_view"/>
+    </LinearLayout>

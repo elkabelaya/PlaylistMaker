@@ -1,10 +1,9 @@
 package com.example.playlistmaker.media.domain.api
 
-import com.example.playlistmaker.common.domain.api.StateFullInteractor
-import com.example.playlistmaker.media.domain.model.MediaPlaylistsState
-import com.example.playlistmaker.media.domain.model.Playlist
+import com.example.playlistmaker.common.domain.model.ErrorState
+import com.example.playlistmaker.common.domain.model.Playlists
+import kotlinx.coroutines.flow.Flow
 
-interface MediaPlaylistsInteractor: StateFullInteractor<MediaPlaylistsState> {
-    fun getPlayLists()
-    fun add(playlist: Playlist)
+interface MediaPlaylistsInteractor {
+    fun getPlayLists(): Flow<Pair<Playlists?, ErrorState?>>
 }

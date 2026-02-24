@@ -4,8 +4,6 @@ import android.content.Context
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.ComponentActivity
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -16,11 +14,11 @@ fun hideKeyboardFrom(context: Context, view: View) {
     imm.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun setupTopInset(activity: ComponentActivity, view: View) {
-    activity.enableEdgeToEdge()
+fun setupVerticalInsets(view: View) {
     ViewCompat.setOnApplyWindowInsetsListener(view) { view, insets ->
         val statusBar = insets.getInsets(WindowInsetsCompat.Type.statusBars())
-        view.updatePadding(top = statusBar.top)
+        val navigationBar = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+        view.updatePadding(top = statusBar.top, bottom = navigationBar.bottom)
         insets
     }
 }

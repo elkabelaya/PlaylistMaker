@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class MediaFavoritesInteractorImpl(
-    val repository: FavoriteTracksRepository,
-    val errorRepository: MediaFavoritesErrorRepository
+    private val repository: FavoriteTracksRepository,
+    private val errorRepository: MediaFavoritesErrorRepository
 ): MediaFavoritesInteractor {
 
     override suspend fun getFracks(): Flow<Pair<Tracks?, ErrorState?>> = flow {

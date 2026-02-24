@@ -12,6 +12,8 @@
     <color name="yp_text_gray">#AEAFB4</color>
     <color name="yp_light_gray">#E6E8EB</color>
 
+    <color name="yp_background">#1A1B2280</color>
+
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="default_switch">#00D6C3</color>

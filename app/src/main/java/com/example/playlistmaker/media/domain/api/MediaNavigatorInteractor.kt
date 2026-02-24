@@ -4,4 +4,5 @@ import com.example.playlistmaker.common.domain.model.Track
 
 interface MediaNavigatorInteractor {
     fun navigateTo(track: Track)
+    fun navigateToNewPlaylist()
 }

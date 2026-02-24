@@ -1,8 +1,6 @@
 package com.example.playlistmaker.search.presentation
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +12,13 @@ import com.example.playlistmaker.common.domain.model.ErrorState
 import com.example.playlistmaker.common.presentation.TracksAdapter
 import com.example.playlistmaker.common.presentation.utils.FragmentWithToolBar
 import com.example.playlistmaker.common.presentation.utils.hideKeyboardFrom
+import com.example.playlistmaker.common.presentation.utils.onTextChanged
 import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.search.di.searchModules
 import com.example.playlistmaker.search.domain.model.SearchState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.GlobalContext.unloadKoinModules
 import org.koin.core.context.loadKoinModules
-import org.koin.core.parameter.parametersOf
-import kotlin.getValue
 
 class SearchFragment : FragmentWithToolBar() {
     private var _binding: FragmentSearchBinding? = null
@@ -29,8 +26,7 @@ class SearchFragment : FragmentWithToolBar() {
     private val adapter: TracksAdapter
     private val historyAdapter: TracksAdapter
 
-    private val navHost by lazy { this.findNavController() }
-    private val viewModel: SearchViewModel by viewModel(){parametersOf(navHost) }
+    private val viewModel: SearchViewModel by viewModel()
 
     init {
         adapter = TracksAdapter() { item ->
@@ -121,15 +117,9 @@ class SearchFragment : FragmentWithToolBar() {
         }
     }
     private fun setupSearchBar() {
-        binding.searchbar.editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                viewModel.changeQuery(s)
-            }
-
-            override fun afterTextChanged(s: Editable) {}
-        })
+        binding.searchbar.editText.onTextChanged { query ->
+            viewModel.changeQuery(query)
+        }
 
         binding.searchbar.editText.setOnFocusChangeListener { view, hasFocus ->
             viewModel.changeFocus(hasFocus)

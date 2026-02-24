@@ -4,7 +4,7 @@ import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.common.domain.repository.PreferencesRepository
 import com.example.playlistmaker.search.domain.use_case.HistoryUseCase
 
-class HistoryUseCaseImpl(val repository: PreferencesRepository, val maxCount: Int):
+class HistoryUseCaseImpl(private val repository: PreferencesRepository, val maxCount: Int):
     HistoryUseCase {
     override var elements = mutableListOf<Track>()
         private set

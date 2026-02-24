@@ -21,6 +21,7 @@ appcompatVersion = "1.7.1"
 coroutinesVersion = "1.10.2"
 ksp = "2.3.4"
 roomVersion = "2.8.4"
+ui = "1.10.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -51,8 +52,10 @@ coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-andro
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
 room-compiler = {group = "androidx.room", name = "room-compiler", version.ref = "roomVersion"}
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+androidx-room = { id = "androidx.room", version.ref = "roomVersion" }
