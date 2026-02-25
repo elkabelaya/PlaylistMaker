@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "d3bb459c369808746294396ffc84cb85",
+    "identityHash": "e94440a8f2ddb171226eb485830079d3",
     "entities": [
       {
         "tableName": "tracks_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`track_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `trackName` TEXT NOT NULL, `artistName` TEXT, `trackTime` TEXT NOT NULL, `imageUrl` TEXT, `coverUrl` TEXT, `collectionName` TEXT, `year` TEXT NOT NULL, `primaryGenreName` TEXT, `country` TEXT, `previewUrl` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`track_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `trackName` TEXT NOT NULL, `artistName` TEXT, `track_time` TEXT NOT NULL, `imageUrl` TEXT, `coverUrl` TEXT, `collectionName` TEXT, `year` TEXT NOT NULL, `primaryGenreName` TEXT, `country` TEXT, `previewUrl` TEXT)",
         "fields": [
           {
             "fieldPath": "trackId",
@@ -27,7 +27,7 @@
           },
           {
             "fieldPath": "trackTime",
-            "columnName": "trackTime",
+            "columnName": "track_time",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -161,7 +161,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd3bb459c369808746294396ffc84cb85')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e94440a8f2ddb171226eb485830079d3')"
     ]
   }
 }

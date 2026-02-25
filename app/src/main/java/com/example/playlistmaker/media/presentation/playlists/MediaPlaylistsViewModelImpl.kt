@@ -32,7 +32,7 @@ class MediaPlaylistsViewModelImpl(
     }
 
     override fun select(playlist: Playlist) {
-        //do nothing by now
+        navigatorInteractor.navigateTo(playlist)
     }
 
     override fun create(){

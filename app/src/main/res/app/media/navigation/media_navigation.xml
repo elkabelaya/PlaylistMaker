@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/media_navigation"
 app:startDestination="@id/media_fragment">
     <include app:graph="@navigation/player_navigation"/>
+    <include app:graph="@navigation/playlist_navigation"/>
+    <include app:graph="@navigation/editplaylist_navigation"/>
     <fragment
         android:id="@+id/media_fragment"
         android:name="com.example.playlistmaker.media.presentation.MediaFragment"
@@ -20,15 +20,15 @@ app:startDestination="@id/media_fragment">
             app:launchSingleTop="true" />
         <action
             android:id="@+id/action_media_newplaylistFragment"
-            app:destination="@id/newplaylist_fragment"
+            app:destination="@id/editplaylist_navigation"
+            app:popUpTo="@id/media_fragment"
+            style="@style/NavigationAnimation"
+            app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_media_playlistFragment"
+            app:destination="@id/playlist_navigation"
             app:popUpTo="@id/media_fragment"
             style="@style/NavigationAnimation"
             app:launchSingleTop="true" />
     </fragment>
-
-    <fragment
-        android:id="@+id/newplaylist_fragment"
-        android:name="com.example.playlistmaker.newplaylist.presentation.NewPlaylistFragment"
-        android:label="fragment_newplaylist"
-        tools:layout="@layout/fragment_newplaylist"/>
 </navigation>
