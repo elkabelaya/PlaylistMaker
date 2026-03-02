@@ -38,7 +38,16 @@ import org.koin.core.parameter.parametersOf
 class PlaylistFragment : FragmentWithToolBar() {
     private var _binding: FragmentPlaylistBinding? = null
     private val binding get() = _binding!!
-    private val adapter: TracksAdapter
+    private val adapter: TracksAdapter = TracksAdapter(
+        { item ->
+            viewModel.select(item)
+        },
+        { item ->
+            onConfirmDeleteTrack() {
+                viewModel.delete(item)
+            }
+        }
+    )
     private lateinit var tracksBottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var menuBottomSheetBehavior: BottomSheetBehavior<View>
     private val viewModel: PlaylistViewModel by viewModel{
@@ -49,20 +58,6 @@ class PlaylistFragment : FragmentWithToolBar() {
     }
 
     private var emptyLayoutListener: ViewTreeObserver.OnGlobalLayoutListener? = null
-
-    init {
-        adapter = TracksAdapter(
-            { item ->
-                viewModel.select(item)
-            },
-            { item ->
-                onConfirmDeleteTrack() {
-                    viewModel.delete(item)
-                }
-            }
-        )
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
