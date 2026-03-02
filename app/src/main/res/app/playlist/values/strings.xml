@@ -1,0 +1,11 @@
+<resources>
+    <string name="playlist_remove_track">Хотите удалить трек?</string>
+    <string name="playlist_menu_share">Поделиться</string>
+    <string name="playlist_menu_edit">Редактировать информацию</string>
+    <string name="playlist_remove">Удалить плейлист</string>
+    <string name="playlist_remove_confirm">Хотите удалить плейлист «%s»?</string>
+    <string name="playlist_remove_negative">НЕТ</string>
+    <string name="playlist_remove_positive">ДА</string>
+    <string name="playlist_no_share_title">В этом плейлисте нет списка треков, которыми можно поделиться</string>
+    <string name="playlist_share_error_positive">Понятно</string>
+</resources>

@@ -53,6 +53,8 @@ class MediaPlaylistsFragment : Fragment() {
                 is MediaPlaylistsState.Error -> {
                     binding.error.setState(state.errorState)
                     binding.error.isVisible = true
+                    adapter.playlists = emptyList()
+                    adapter.notifyDataSetChanged()
                 }
                 is MediaPlaylistsState.Data -> {
                     binding.error.isVisible = false

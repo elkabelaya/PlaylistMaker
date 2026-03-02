@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity.INPUT_METHOD_SERVICE
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.updatePadding
 
 fun hideKeyboardFrom(context: Context, view: View) {
@@ -29,4 +30,6 @@ fun dpToPx(dp: Float, context: Context): Int {
         dp,
         context.resources.displayMetrics).toInt()
 }
+
+
 
