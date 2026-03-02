@@ -170,9 +170,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </LinearLayout>
-    <include
-        android:id="@+id/overlay"
-        layout="@layout/bottom_sheet_overlay"/>
+    <View android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/yp_background"
+        android:visibility="gone"/>
     <LinearLayout
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"

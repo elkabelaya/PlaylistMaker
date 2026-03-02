@@ -29,12 +29,12 @@ class SearchFragment : FragmentWithToolBar() {
     private val viewModel: SearchViewModel by viewModel()
 
     init {
-        adapter = TracksAdapter( { item ->
+        adapter = TracksAdapter() { item ->
             viewModel.select(item)
-        })
-        historyAdapter = TracksAdapter( { item ->
+        }
+        historyAdapter = TracksAdapter() { item ->
             viewModel.select(item)
-        })
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

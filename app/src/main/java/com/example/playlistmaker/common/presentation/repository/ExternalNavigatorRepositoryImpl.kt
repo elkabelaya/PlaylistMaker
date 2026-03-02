@@ -10,11 +10,11 @@ class ExternalNavigatorRepositoryImpl(
     private val context: Context
 ): ExternalNavigatorRepository {
 
-    override fun share(data: String) {
+    override fun shareLink(link: String) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.setType("text/html")
         intent.putExtra(
-            Intent.EXTRA_TEXT,data
+            Intent.EXTRA_TEXT,link
         )
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)

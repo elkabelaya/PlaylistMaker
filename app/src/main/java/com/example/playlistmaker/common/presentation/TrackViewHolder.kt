@@ -20,7 +20,7 @@ class TrackViewHolder(private val binding: TrackViewBinding) : RecyclerView.View
         }
     }
 
-    fun bind(model: Track, onClickItem: (Track) -> Unit, onLongClickItem: ((Track) -> Unit)?) {
+    fun bind(model: Track, onClickItem: (Track) -> Unit) {
         binding.titleView.text = model.trackName.trim()
         binding.artistView.text = model.artistName?.trim()
         binding.timeView.text = model.trackTime
@@ -36,14 +36,6 @@ class TrackViewHolder(private val binding: TrackViewBinding) : RecyclerView.View
 
         itemView.setOnClickListener {
             onClickItem(model)
-        }
-
-        onLongClickItem?.let {
-            itemView.isLongClickable = true
-            itemView.setOnLongClickListener {
-                it(model)
-                true
-            }
         }
     }
 }

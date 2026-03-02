@@ -13,7 +13,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.common.presentation.utils.FragmentWithToolBar
-import com.example.playlistmaker.common.presentation.utils.setup
 import com.example.playlistmaker.common.presentation.utils.showAppToast
 import com.example.playlistmaker.databinding.FragmentPlayerBinding
 import com.example.playlistmaker.player.di.playerModules
@@ -28,7 +27,7 @@ class PlayerFragment : FragmentWithToolBar() {
     private var _binding: FragmentPlayerBinding? = null
     private val binding get() = _binding!!
     private val adapter: PlayerPlaylistsAdapter
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
     private val viewModel: PlayerViewModel by viewModel{
         parametersOf(track)
     }
@@ -157,10 +156,36 @@ class PlayerFragment : FragmentWithToolBar() {
     }
     fun setupBottomSheet() {
         bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
-        setup(bottomSheetBehavior,  binding.bottomSheetHandle.button, binding.overlay.overlay)
+        hideBottomSheet()
+
+
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        binding.overlay.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.overlay.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                binding.overlay.alpha = 1 - slideOffset
+            }
+        })
 
         binding.createButton.setOnClickListener {
             viewModel.createPlaylist()
+        }
+
+        binding.bottomSheetHandle.button.setOnClickListener {
+            hideBottomSheet()
+        }
+
+        binding.overlay.setOnClickListener {
+            hideBottomSheet()
         }
     }
 

@@ -1,14 +1,11 @@
 package com.example.playlistmaker.common.data.repository
 
-import com.example.playlistmaker.common.data.db.PlaylistEntity
 import com.example.playlistmaker.common.data.db.dao.PlaylistsDao
 import com.example.playlistmaker.common.domain.model.Playlist
 import com.example.playlistmaker.common.domain.model.Playlists
 import com.example.playlistmaker.common.domain.model.Track
-import com.example.playlistmaker.common.domain.model.Tracks
 import com.example.playlistmaker.common.domain.repository.PlaylistsRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 
 class PlaylistsRepositoryImpl(
@@ -16,27 +13,25 @@ class PlaylistsRepositoryImpl(
     val mapper: PlaylistsDbMapper,
     val trackDbMapper: TracksDbMapper
 ): PlaylistsRepository {
-    override suspend fun create(): Long {
-        return dao.insertPlaylist(PlaylistEntity(name = ""))
+    override suspend fun insert(playlist: Playlist): Long {
+        return dao.insertPlaylist(mapper.map(playlist))
     }
 
     override suspend fun update(playlist: Playlist) {
-        val entity = dao.getPlaylist(playlist.id).first()
+        val entity = dao.getPlaylist(playlist.id)
         dao.updatePlaylist(mapper.fill(entity, playlist))
     }
 
     override suspend fun delete(playlistId: Long) {
         dao.deletePlaylist(playlistId)
-        dao.deleteTracks(playlistId)
         dao.deleteZombies()
     }
 
     override suspend fun get(): Flow<Playlists> = flow {
-        dao.getPlaylistCounts()
+        dao.getPlaylists()
             .collect {
-                val playlists = it.mapNotNull {
+                val playlists = it.map {
                     mapper.map(it)
-
                 }
                 emit(playlists)
             }
@@ -50,30 +45,6 @@ class PlaylistsRepositoryImpl(
             dao.insert(mapper.map(track, inPlaylist))
             return true
         }
-    }
-
-    override suspend fun remove(track: Track, inPlaylist: Playlist) {
-        dao.delete(track.trackId, inPlaylist.id)
-        dao.deleteZombies()
-    }
-
-    override suspend fun getTracks(playlist: Playlist): Flow<Tracks> = flow {
-        dao.getTracks(playlist.id)
-            .collect {
-                val tracks = it.map {
-                    trackDbMapper.map(it)
-                }
-                emit(tracks)
-            }
-    }
-
-    override suspend fun getPlaylistUpdates(playlist: Playlist): Flow<Playlist> = flow {
-        dao.getPlaylistCount(playlist.id)
-            .collect {
-                it?.let {
-                    emit(mapper.map(it))
-                }
-            }
     }
 
 }
