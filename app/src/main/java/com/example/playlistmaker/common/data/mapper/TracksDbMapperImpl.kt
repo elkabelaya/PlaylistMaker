@@ -6,13 +6,12 @@ import com.example.playlistmaker.common.data.repository.TracksDbMapper
 import com.example.playlistmaker.common.domain.model.Track
 
 class TracksDbMapperImpl: TracksDbMapper {
-    val timeMapper = TimeMapper()
     override fun map(track: Track): TrackEntity {
         return TrackEntity(
             trackId = track.trackId,
             trackName = track.trackName,
             artistName = track.artistName,
-            trackTime = timeMapper.map(track.trackTime),
+            trackTime = track.trackTime,
             imageUrl = track.imageUrl,
             coverUrl = track.coverUrl,
             collectionName = track.collectionName,
@@ -32,7 +31,7 @@ class TracksDbMapperImpl: TracksDbMapper {
             entity.trackId,
             entity.trackName,
             entity.artistName,
-            timeMapper.map(entity.trackTime),
+            entity.trackTime,
             entity.imageUrl,
             entity.coverUrl,
             entity.collectionName,

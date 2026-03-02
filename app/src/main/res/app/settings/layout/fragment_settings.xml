@@ -22,7 +22,7 @@
 
     <Button
         android:id="@+id/share_button"
-        app:icon="@drawable/ic_share"
+        app:icon="@drawable/ic_settings_share"
         android:text="@string/settings_share"
         style="@style/settings_button" />
 

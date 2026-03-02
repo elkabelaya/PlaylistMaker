@@ -20,9 +20,9 @@ class MediaFavoritesFragment : Fragment() {
     private val viewModel: MediaFavoritesViewModel by viewModel()
 
     init {
-        adapter = TracksAdapter({ item ->
+        adapter = TracksAdapter() { item ->
             viewModel.select(item)
-        })
+        }
     }
 
     override fun onCreateView(
