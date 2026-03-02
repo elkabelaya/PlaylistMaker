@@ -22,7 +22,8 @@ data class PlaylistCount (
     val name: String,
     val description: String?,
     val coverUrl: String?,
-    val tracksCount: Int
+    val tracksCount: Int,
+    val milliseconds: Int? = null
 )
 
 typealias PlaylistCounts = List<PlaylistCount>

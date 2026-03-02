@@ -11,7 +11,8 @@ data class TrackEntity (
     val trackId: Long,
     val trackName: String,
     val artistName: String?,
-    val trackTime: String,
+    @ColumnInfo(name = DbConstants.TRACK_TIME)
+    val trackTime: Long,
     val imageUrl: String?,
     val coverUrl: String?,
     val collectionName: String?,

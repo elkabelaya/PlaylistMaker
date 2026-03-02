@@ -38,7 +38,10 @@ val commonDataModule = module {
     single<AppDatabase> {
         Room
             .databaseBuilder(get(), AppDatabase::class.java, DbConstants.DB_FILE_NAME)
-            .addMigrations(AppDatabase.HANDLE_MIGRATION_1_2)
+            .addMigrations(
+                AppDatabase.HANDLE_MIGRATION_1_2,
+                AppDatabase.HANDLE_MIGRATION_2_3
+            )
             .build()
     }
     single<TracksDbMapper> { TracksDbMapperImpl() }
@@ -53,7 +56,7 @@ val commonDataModule = module {
         dataBase.playlistsDao()
     }
     single<PlaylistsRepository>{ PlaylistsRepositoryImpl(get(), get(), get()) }
-    factory<LocalStorageRepository>(named(LocalStorage.PLAYLIST_COVERS_FOLDER)) {
+    factory<LocalStorageRepository>(named(CommonDiNames.PLAYLIST_COVERS_FOLDER_NAME)) {
         LocalStorageRepositoryImpl(get(), LocalStorage.PLAYLIST_COVERS_FOLDER.folder)
     }
 }

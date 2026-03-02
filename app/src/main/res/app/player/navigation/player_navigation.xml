@@ -4,7 +4,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/player_navigation"
 app:startDestination="@id/player_fragment">
-
+    <include app:graph="@navigation/editplaylist_navigation"/>
     <fragment
         android:id="@+id/player_fragment"
         android:name="com.example.playlistmaker.player.presentation.PlayerFragment"
@@ -12,15 +12,9 @@ app:startDestination="@id/player_fragment">
         tools:layout="@layout/fragment_player">
         <action
             android:id="@+id/action_player_newplaylistFragment"
-            app:destination="@id/newplaylist_fragment"
+            app:destination="@id/editplaylist_navigation"
             app:popUpTo="@id/player_fragment"
             style="@style/NavigationAnimation"
             app:launchSingleTop="true" />
     </fragment>
-
-    <fragment
-        android:id="@+id/newplaylist_fragment"
-        android:name="com.example.playlistmaker.newplaylist.presentation.NewPlaylistFragment"
-        android:label="fragment_newplaylist"
-        tools:layout="@layout/fragment_newplaylist"/>
 </navigation>
