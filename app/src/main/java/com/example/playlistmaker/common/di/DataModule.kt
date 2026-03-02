@@ -5,6 +5,8 @@ import com.example.playlistmaker.common.data.db.AppDatabase
 import com.example.playlistmaker.common.data.db.DbConstants
 import com.example.playlistmaker.common.data.db.dao.FavoriteTracksDao
 import com.example.playlistmaker.common.data.db.dao.PlaylistsDao
+import com.example.playlistmaker.common.data.db.dao.migrations.HANDLE_MIGRATION_1_2
+import com.example.playlistmaker.common.data.db.dao.migrations.HANDLE_MIGRATION_2_3
 import com.example.playlistmaker.common.data.mapper.PlaylistsDbMapperImpl
 import com.example.playlistmaker.common.data.mapper.TracksDbMapperImpl
 import com.example.playlistmaker.common.data.mapper.TracksMapperImpl
