@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/playlist_navigation"
+app:startDestination="@id/playlist_fragment">
+    <include app:graph="@navigation/editplaylist_navigation"/>
+    <include app:graph="@navigation/player_navigation"/>
+    <fragment
+        android:id="@+id/playlist_fragment"
+        android:name="com.example.playlistmaker.playlist.presentation.PlaylistFragment"
+        android:label="fragment_playlist"
+        tools:layout="@layout/fragment_playlist">
+        <action
+            android:id="@+id/action_playlist_editPlaylistFragment"
+            app:destination="@id/editplaylist_navigation"
+            app:popUpTo="@id/playlist_fragment"
+            style="@style/NavigationAnimation"
+            app:launchSingleTop="true" />
+        <action
+            android:id="@+id/action_playlist_playerFragment"
+            app:destination="@id/player_navigation"
+            app:popUpTo="@id/playlist_fragment"
+            style="@style/NavigationAnimation"
+            app:launchSingleTop="true" />
+
+    </fragment>
+</navigation>

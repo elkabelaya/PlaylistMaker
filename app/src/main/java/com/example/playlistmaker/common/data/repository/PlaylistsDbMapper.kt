@@ -8,6 +8,7 @@ import com.example.playlistmaker.common.domain.model.Track
 
 interface PlaylistsDbMapper {
     fun map(playlist: Playlist): PlaylistEntity
+    fun map(entity: PlaylistEntity): Playlist
     fun map(entity: PlaylistCount): Playlist
     fun fill(entity: PlaylistEntity, playlist: Playlist): PlaylistEntity
     fun map(track: Track, playlist: Playlist): TrackPlaylistEntity

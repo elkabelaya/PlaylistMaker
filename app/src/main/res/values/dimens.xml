@@ -30,6 +30,7 @@
     <dimen name="text_m">16sp</dimen>
     <dimen name="text_l">19sp</dimen>
     <dimen name="text_xl">22sp</dimen>
+    <dimen name="text_xxl">24sp</dimen>
 
     <dimen name="icon_s">12dp</dimen>
     <dimen name="icon_m">24dp</dimen>
