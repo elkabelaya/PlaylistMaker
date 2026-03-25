@@ -84,20 +84,20 @@ class PlayerFragment : FragmentWithToolBar() {
                 is PlayerState.Default -> {
                     binding.playView.isEnabled = false
                     binding.timeView.text = it.time
-                    binding.playView.setImageResource(R.drawable.ic_player_play_button)
+                    binding.playView.setState(PlaybackButtonView.State.PLAY)
                 }
                 is PlayerState.Prepared -> {
                     binding.playView.isEnabled = true
                     binding.timeView.text = it.time
-                    binding.playView.setImageResource(R.drawable.ic_player_play_button)
+                    binding.playView.setState(PlaybackButtonView.State.PLAY)
                 }
                 is PlayerState.Playing -> {
                     binding.timeView.text = it.time
-                    binding.playView.setImageResource(R.drawable.ic_player_pause_button)
+                    binding.playView.setState(PlaybackButtonView.State.PAUSE)
                 }
                 is PlayerState.Paused -> {
                     binding.timeView.text = it.time
-                    binding.playView.setImageResource(R.drawable.ic_player_play_button)
+                    binding.playView.setState(PlaybackButtonView.State.PLAY)
                 }
             }
         }
@@ -137,7 +137,7 @@ class PlayerFragment : FragmentWithToolBar() {
 
     fun setupButtons() {
         binding.playView.isEnabled = false
-        binding.playView.setOnClickListener {
+        binding.playView.onStateChanged = { state ->
             viewModel.togglePlay()
         }
 
