@@ -4,10 +4,13 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.graphics.Rect
 import android.graphics.RectF
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.compose.ui.geometry.Size
 import androidx.core.graphics.drawable.toBitmap
 import com.example.playlistmaker.R
 
@@ -25,26 +28,29 @@ class PlaybackButtonView @JvmOverloads constructor(
     var state: State = State.PLAY
         private set
 
-    private var playBitmap: Bitmap? = null
-    private var pauseBitmap: Bitmap? = null
+    private var playBitmap: Drawable? = null
+    private var pauseBitmap: Drawable? = null
 
-    private var boundsRect = RectF()
+    private var boundsRect = Rect()
 
     var onStateChanged: ((newState: State) -> Unit)? = null
 
     init {
-        context.theme.obtainStyledAttributes(
-            attrs,
-            R.styleable.PlaybackButtonView,
-            0, 0
-        ).apply {
-            try {
-                playBitmap = getDrawable(R.styleable.PlaybackButtonView_playImage)?.toBitmap()
-                pauseBitmap = getDrawable(R.styleable.PlaybackButtonView_pauseImage)?.toBitmap()
+        try {
+            val attrs = context.theme.obtainStyledAttributes(
+                attrs,
+                R.styleable.PlaybackButtonView,
+                0, 0
+            ).apply {
 
-            } finally {
-                recycle()
+                    playBitmap = getDrawable(R.styleable.PlaybackButtonView_playImage)
+                    pauseBitmap = getDrawable(R.styleable.PlaybackButtonView_pauseImage)
+
+
             }
+            attrs.recycle()
+        } catch(e: Exception) {
+            //
         }
 
         isClickable = true
@@ -64,17 +70,17 @@ class PlaybackButtonView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        val bitmap = when (state) {
+        val drawable = when (state) {
             State.PLAY -> playBitmap
             State.PAUSE -> pauseBitmap
         } ?: return
-
-        canvas.drawBitmap(bitmap, null, boundsRect, null)
+        drawable.setBounds(0, 0, boundsRect.width(), boundsRect.height());
+        drawable.draw(canvas)
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        boundsRect.set(0f, 0f, w.toFloat(), h.toFloat())
+        boundsRect.set(0, 0, w, h)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
