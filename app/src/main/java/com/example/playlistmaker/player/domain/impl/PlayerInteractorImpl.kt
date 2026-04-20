@@ -1,5 +1,6 @@
 package com.example.playlistmaker.player.domain.impl
 
+import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.player.domain.repository.PlayerRepository
 import com.example.playlistmaker.player.domain.api.PlayerInteractor
 import com.example.playlistmaker.player.domain.model.PlayerState
@@ -21,8 +22,18 @@ class PlayerInteractorImpl(
         }
     private var dateFormatter = SimpleDateFormat("mm:ss", Locale.getDefault())
 
-    override fun setup(url: String) {
-        playerRepository.setupPlayer(url, {onPrepared()}, {onComplete()})
+    override fun setup(track: Track) {
+        playerRepository.set(track)
+        playerRepository.setupPlayer(
+            {onPrepared()},
+            {onComplete()},
+            {isPlaying ->
+                if (isPlaying) {
+                    playerState = PlayerState.Playing(time())
+                } else {
+                    playerState = PlayerState.Paused(time())
+                }
+            })
     }
 
     override fun onState(state: (PlayerState) -> Unit) {
@@ -56,17 +67,23 @@ class PlayerInteractorImpl(
         }
     }
 
-    override fun pause() {
+    override fun onPause() {
+        playerRepository.onFragmentPause()
+    }
+
+    override fun onResume() {
+        playerRepository.onFragmentResume()
+    }
+
+    private fun pause() {
         playerRepository.pause()
-        playerState = PlayerState.Paused(time())
     }
 
-    fun play() {
+    private fun play() {
         playerRepository.play()
-        playerState = PlayerState.Playing(time())
     }
 
-    override fun release() {
+    override fun destroy() {
         playerRepository.destroy()
     }
 }

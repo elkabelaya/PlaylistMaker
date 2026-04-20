@@ -7,6 +7,7 @@ import com.example.playlistmaker.common.domain.model.Playlists
 import com.example.playlistmaker.common.presentation.StateFullViewModel
 import com.example.playlistmaker.common.presentation.utils.SingleLiveData
 import com.example.playlistmaker.player.domain.model.PlayerState
+
 abstract class PlayerViewModel: StateFullViewModel<PlayerState>, ViewModel() {
     abstract fun observeFavorite(): LiveData<Boolean>
     abstract fun observePlaylists(): LiveData<Playlists>
@@ -14,7 +15,7 @@ abstract class PlayerViewModel: StateFullViewModel<PlayerState>, ViewModel() {
     abstract fun togglePlay()
     abstract fun toggleFavorite()
     abstract fun onPause()
-    abstract fun onDestroy()
+    abstract fun onResume()
     abstract fun createPlaylist()
     abstract fun select(playlist: Playlist)
 }

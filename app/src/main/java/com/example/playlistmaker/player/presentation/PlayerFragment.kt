@@ -1,6 +1,7 @@
 package com.example.playlistmaker.player.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,9 +73,13 @@ class PlayerFragment : FragmentWithToolBar() {
         viewModel.onPause()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.onResume()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.onDestroy()
         unloadKoinModules(playerModules)
     }
 

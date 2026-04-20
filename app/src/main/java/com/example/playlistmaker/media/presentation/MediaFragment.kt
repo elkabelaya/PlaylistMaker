@@ -35,9 +35,13 @@ class MediaFragment : FragmentWithToolBar() {
         setupTabs()
     }
 
+    override fun onDestroyView() {
+        tabMediator.detach()
+        super.onDestroyView()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        tabMediator.detach()
         unloadKoinModules(mediaModules)
     }
     private fun setupTabs() {
