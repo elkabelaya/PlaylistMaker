@@ -15,6 +15,7 @@ import com.example.playlistmaker.common.data.network.RetrofitClient
 import com.example.playlistmaker.common.data.repository.CoroutinesLoopRepositoryImpl
 import com.example.playlistmaker.common.data.repository.FavoriteTracksRepositoryImpl
 import com.example.playlistmaker.common.data.repository.LocalStorageRepositoryImpl
+import com.example.playlistmaker.common.data.repository.PermissionsRepositoryImpl
 import com.example.playlistmaker.common.data.repository.PlaylistsDbMapper
 import com.example.playlistmaker.common.data.repository.PlaylistsRepositoryImpl
 import com.example.playlistmaker.common.data.repository.PreferencesRepositoryImpl
@@ -25,6 +26,7 @@ import com.example.playlistmaker.common.domain.repository.FavoriteTracksReposito
 import com.example.playlistmaker.common.domain.repository.LocalStorage
 import com.example.playlistmaker.common.domain.repository.LocalStorageRepository
 import com.example.playlistmaker.common.domain.repository.LoopRepository
+import com.example.playlistmaker.common.domain.repository.PermissionsRepository
 import com.example.playlistmaker.common.domain.repository.PlaylistsRepository
 import com.example.playlistmaker.common.domain.repository.PreferencesRepository
 import com.example.playlistmaker.common.domain.repository.ThemeRepository
@@ -61,4 +63,5 @@ val commonDataModule = module {
     factory<LocalStorageRepository>(named(CommonDiNames.PLAYLIST_COVERS_FOLDER_NAME)) {
         LocalStorageRepositoryImpl(get(), LocalStorage.PLAYLIST_COVERS_FOLDER.folder)
     }
+    single<PermissionsRepository>{ PermissionsRepositoryImpl() }
 }

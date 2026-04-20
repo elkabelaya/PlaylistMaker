@@ -1,5 +1,6 @@
 package com.example.playlistmaker.player.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -40,7 +41,9 @@ class PlayerViewModelImpl(
     private var timerJob: Job? = null
 
     init {
-        playerInteractor.setup(track?.previewUrl ?: "")
+        track?.let {
+            playerInteractor.setup(it)
+        }
         playerInteractor.onState{ state ->
             timerJob?.cancel()
             playerStateLiveData.postValue(state)
@@ -90,11 +93,15 @@ class PlayerViewModelImpl(
     }
 
     override fun onPause() {
-        playerInteractor.pause()
+        playerInteractor.onPause()
     }
 
-    override fun onDestroy() {
-        playerInteractor.release()
+    override fun onResume() {
+        playerInteractor.onResume()
+    }
+
+    override fun onCleared() {
+        playerInteractor.destroy()
     }
 
     private fun updateFavorite() {

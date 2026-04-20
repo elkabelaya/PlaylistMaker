@@ -9,4 +9,6 @@
     <string name="player_playlist_create">Новый плейлист</string>
     <string name="player_playlist_added">Добавлено в плейлист %s</string>
     <string name="player_playlist_not_added">Трек уже добавлен в плейлист %s</string>
+    <string name="player_play">Плей</string>
+    <string name="player_pause">Пауза</string>
 </resources>
