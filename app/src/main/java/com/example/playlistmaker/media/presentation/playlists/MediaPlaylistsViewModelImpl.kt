@@ -8,24 +8,26 @@ import com.example.playlistmaker.media.domain.api.MediaNavigatorInteractor
 import com.example.playlistmaker.media.domain.api.MediaPlaylistsInteractor
 import com.example.playlistmaker.media.domain.model.MediaPlaylistsState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MediaPlaylistsViewModelImpl(
     val interactor: MediaPlaylistsInteractor,
     val navigatorInteractor: MediaNavigatorInteractor,
 ): MediaPlaylistsViewModel() {
-    private var stateLiveData = MutableLiveData<MediaPlaylistsState>(MediaPlaylistsState.Loading)
-    override fun observeState(): LiveData<MediaPlaylistsState> = stateLiveData
-
+    private val _state = MutableStateFlow<MediaPlaylistsState>(MediaPlaylistsState.Loading)
+    override var state: StateFlow<MediaPlaylistsState> = _state.asStateFlow()
     init {
         viewModelScope.launch(Dispatchers.IO) {
             interactor.getPlayLists()
                 .collect { result ->
                     result.first?.let {
-                        stateLiveData.postValue(MediaPlaylistsState.Data(it))
+                        _state.value = MediaPlaylistsState.Data(it)
                     }
                     result.second?.let {
-                        stateLiveData.postValue( MediaPlaylistsState.Error(it))
+                        _state.value = MediaPlaylistsState.Error(it)
                     }
                 }
         }

@@ -18,6 +18,7 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,13 +41,14 @@ import com.example.playlistmaker.databinding.FragmentMediaBinding
 import com.example.playlistmaker.media.di.mediaModules
 import com.example.playlistmaker.media.domain.model.MediaTabType
 import com.example.playlistmaker.media.presentation.favorites.ComposeMediaFavorites
+import com.example.playlistmaker.media.presentation.playlists.ComposeMediaPlaylists
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.GlobalContext.unloadKoinModules
 import org.koin.core.context.loadKoinModules
 
 class MediaFragment : Fragment() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadKoinModules(mediaModules)
@@ -68,7 +70,6 @@ class MediaFragment : Fragment() {
 @Composable
 fun ComposeMedia() {
     val tabTitles = listOf(R.string.media_tab_favorites, R.string.media_tab_playlists)
-    var selectedIndex by remember { mutableStateOf(0) }
     val pagerState = rememberPagerState(pageCount = { 2 })
     val scope = rememberCoroutineScope()
 
@@ -82,11 +83,11 @@ fun ComposeMedia() {
                 .padding(innerPadding)
         ) {
             TabRow(
-                selectedTabIndex = selectedIndex,
+                selectedTabIndex = pagerState.currentPage,
                 divider = {},
                 indicator = { tabPositions ->
                     TabRowDefaults.Indicator(
-                        Modifier.tabIndicatorOffset(tabPositions[selectedIndex])
+                        Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage])
                             .padding(horizontal = Dimens.paddingM)
                             .height(2.dp),
                         color = colorResource(id = R.color.tab_content)
@@ -102,18 +103,16 @@ fun ComposeMedia() {
                             fontSize = Dimens.textXM,
                             color = colorResource(R.color.tab_content)
                         ) },
-                        selected = selectedIndex == index,
+                        selected = pagerState.currentPage == index,
                         onClick = {
                             scope.launch {
                                 pagerState.animateScrollToPage(index)
                             }
-                            selectedIndex = index
                         }
                     )
                 }
             }
-
-
+            
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier
@@ -121,7 +120,7 @@ fun ComposeMedia() {
             ) { page ->
                 when (page) {
                     0 -> ComposeMediaFavorites()
-                    1 -> Text("2")
+                    1 -> ComposeMediaPlaylists()
                 }
             }
         }

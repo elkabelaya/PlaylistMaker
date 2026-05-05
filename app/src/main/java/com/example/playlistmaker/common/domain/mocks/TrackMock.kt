@@ -1,4 +1,4 @@
-package com.example.playlistmaker.common.presentation.components.searchbar
+package com.example.playlistmaker.common.domain.mocks
 
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import com.example.playlistmaker.common.domain.model.Track

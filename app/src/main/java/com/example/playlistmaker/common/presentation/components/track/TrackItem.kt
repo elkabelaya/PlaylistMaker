@@ -51,6 +51,8 @@ fun TrackItem(track: Track, onClick: (Track) -> Unit) {
                    .crossfade(true)
                    .build(),
                placeholder = painterResource(R.drawable.bg_placeholder),
+               error = painterResource(R.drawable.bg_placeholder),
+               fallback = painterResource(R.drawable.bg_placeholder),
                contentDescription = null,
                contentScale = ContentScale.Crop,
                modifier = Modifier
