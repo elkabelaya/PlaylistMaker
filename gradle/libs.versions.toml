@@ -25,6 +25,8 @@ activityCompose = "1.12.3"
 composeBom = "2024.09.00"
 navigationCompose = "2.9.7"
 coil = "3.4.0"
+material3 = "1.4.0"
+ui = "1.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -69,6 +71,8 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil"}
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil"}
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

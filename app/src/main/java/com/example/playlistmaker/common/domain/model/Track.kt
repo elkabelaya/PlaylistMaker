@@ -14,7 +14,9 @@ data class Track(
     val primaryGenreName: String?, // Жанр трека
     val country: String?, // Страна исполнителя
     val previewUrl: String? // Ссылка на отрывок трека
-) : Serializable
+) : Serializable {
+    companion object
+}
 
 typealias Tracks = List<Track>
 

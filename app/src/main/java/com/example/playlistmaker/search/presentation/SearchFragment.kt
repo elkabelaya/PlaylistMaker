@@ -1,163 +1,171 @@
 package com.example.playlistmaker.search.presentation
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
+import androidx.fragment.app.Fragment
 import com.example.playlistmaker.R
-import com.example.playlistmaker.common.domain.model.ErrorState
-import com.example.playlistmaker.common.presentation.TracksAdapter
-import com.example.playlistmaker.common.presentation.utils.FragmentWithToolBar
-import com.example.playlistmaker.common.presentation.utils.hideKeyboardFrom
-import com.example.playlistmaker.common.presentation.utils.onTextChanged
-import com.example.playlistmaker.databinding.FragmentSearchBinding
+import com.example.playlistmaker.common.domain.model.Track
+import com.example.playlistmaker.common.presentation.Dimens
+import com.example.playlistmaker.common.presentation.appFontFamily
+import com.example.playlistmaker.common.presentation.components.ComposeErrorView
+import com.example.playlistmaker.common.presentation.components.TopAppBar
+import com.example.playlistmaker.common.presentation.components.buttons.ActionButton
+import com.example.playlistmaker.common.presentation.components.searchbar.SearchBar
+import com.example.playlistmaker.common.presentation.components.track.TrackItemList
 import com.example.playlistmaker.search.di.searchModules
 import com.example.playlistmaker.search.domain.model.SearchState
+import com.example.playlistmaker.search.presentation.preview.ComposeSearchPreviewProvider
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.context.GlobalContext.unloadKoinModules
 import org.koin.core.context.loadKoinModules
 
-class SearchFragment : FragmentWithToolBar() {
-    private var _binding: FragmentSearchBinding? = null
-    private val binding get() = _binding!!
-    private val adapter: TracksAdapter
-    private val historyAdapter: TracksAdapter
-
+class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by viewModel()
-
-    init {
-        adapter = TracksAdapter( { item ->
-            viewModel.select(item)
-        })
-        historyAdapter = TracksAdapter( { item ->
-            viewModel.select(item)
-        })
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadKoinModules(searchModules)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupToolBar(getResources().getString(R.string.main_search), false, binding.toolbar)
-
-        setupViewModel()
-        setupSearchBar()
-        setupList()
-        setupErrorStub()
-        setupHistoryGroup()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = ComposeView(requireContext()).apply {
+        setContent { ComposeSearch(viewModel) }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         unloadKoinModules(searchModules)
     }
+}
 
-    private fun setupViewModel() {
-        viewModel.observeState().observe(viewLifecycleOwner) { state ->
+@Composable
+fun ComposeSearch(viewModel: SearchViewModel) {
+    val state by viewModel.state.collectAsState()
+    Scaffold(
+        containerColor = colorResource(R.color.background),
+        topBar = { TopAppBar(
+            stringResource(R.string.main_search)
+            )
+        }
+    ) { innerPadding ->
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding)
+        ) {
+
+            SearchBar(
+                query = viewModel.query.value,
+                onQueryChanged =  {viewModel.changeQuery(it)},
+                onFocusChanged = {viewModel.changeFocus(it)},
+                showClearButton = when (state) {
+                    is SearchState.History,
+                    is SearchState.Default ->  false
+                    else ->  true
+                },
+                onClearClicked = {viewModel.clearQuery()}
+            )
+
             when (state) {
                 is SearchState.Default -> {
-                    binding.searchbar.resetButton.isVisible = false
-                    binding.historyGroup.isVisible = false
-                    binding.progressbar.root.isVisible = false
-                    binding.tracksList.isVisible = false
-                   hideError()
+                    //showNothing
                 }
-                is SearchState.History -> {
-                    binding.historyList.layoutManager?.scrollToPosition(0)
-                    historyAdapter.tracks = state.tracks
-                    historyAdapter.notifyDataSetChanged()
-                    binding.searchbar.resetButton.isVisible = false
-                    binding.historyGroup.isVisible = true
-                    binding.progressbar.root.isVisible = false
-                    binding.tracksList.isVisible = false
-                    hideError()
+                is SearchState.History ->{
+                    HistoryContent((state as SearchState.History).tracks,
+                        { track ->
+                            viewModel.select(track)
+                        }, {
+                            viewModel.clearHistory()
+                        }
+                    )
                 }
-                is SearchState.Enter -> {
-                    binding.searchbar.resetButton.isVisible = true
-                    binding.historyGroup.isVisible = false
-                    binding.progressbar.root.isVisible = false
-                    binding.tracksList.isVisible = false
-                    hideError()
+                is SearchState.Enter   -> {
+                    //showNothing
                 }
-                is SearchState.Loading -> {
-                    binding.searchbar.resetButton.isVisible = true
-                    binding.historyGroup.isVisible = false
-                    binding.progressbar.root.isVisible = true
-                    binding.tracksList.isVisible = false
-                    hideError()
+                is SearchState.Loading ->  {
+                    LoadingContent()
                 }
-                is SearchState.Result -> {
-                    binding.tracksList.layoutManager?.scrollToPosition(0)
-                    adapter.tracks = state.tracks
-                    adapter.notifyDataSetChanged()
-                    binding.searchbar.resetButton.isVisible = true
-                    binding.historyGroup.isVisible = false
-                    binding.progressbar.root.isVisible = false
-                    binding.tracksList.isVisible = true
-                    hideError()
+                is SearchState.Result  -> {
+                    TrackItemList((state as SearchState.Result).tracks){ track: Track ->
+                        viewModel.select(track)
+                    }
                 }
-                is SearchState.Error -> {
-                    binding.searchbar.resetButton.isVisible = true
-                    binding.historyGroup.isVisible = false
-                    binding.progressbar.root.isVisible = false
-                    showError(state.errorState)
+                is SearchState.Error   -> {
+                    ComposeErrorView((state as SearchState.Error).errorState)
                 }
             }
         }
     }
-    private fun setupSearchBar() {
-        binding.searchbar.editText.onTextChanged { query ->
-            viewModel.changeQuery(query)
-        }
+}
 
-        binding.searchbar.editText.setOnFocusChangeListener { view, hasFocus ->
-            viewModel.changeFocus(hasFocus)
-        }
-
-        binding.searchbar.resetButton.setOnClickListener {
-            viewModel.clearQuery()
-            binding.searchbar.editText.setText("")
-            hideKeyboardFrom(requireContext(), binding.searchbar.editText)
-        }
-    }
-    private fun setupList() {
-        binding.tracksList.layoutManager = LinearLayoutManager(requireContext())
-        binding.tracksList.adapter = adapter
-    }
-
-    private fun setupErrorStub() {
-        binding.refreshButton.setOnClickListener {
-            viewModel.refresh()
-        }
-    }
-    private fun setupHistoryGroup() {
-        binding.historyList.layoutManager = LinearLayoutManager(requireContext())
-        binding.historyList.adapter = historyAdapter
-
-        binding.clearButton.setOnClickListener {
-            viewModel.clearHistory()
-        }
-    }
-
-    private fun showError(state: ErrorState) {
-        binding.error.setState(state)
-        binding.error.isVisible = true
-        binding.refreshButton.isVisible = state is ErrorState.Wifi
-    }
-
-    private fun hideError() {
-        binding.error.isVisible = false
-        binding.refreshButton.isVisible = false
+@Composable
+fun HistoryContent(tracks: List<Track>, select:(Track) -> Unit, onClick: ()-> Unit) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        Text(
+            text = stringResource(R.string.search_history),
+            //style = MaterialTheme.typography.subtitle1,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = Dimens.paddingS, top = Dimens.padding7XL)
+                ,
+            textAlign = TextAlign.Center,
+            fontFamily = appFontFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = Dimens.textL,
+            color = colorResource(id = R.color.text_title)
+        )
+        TrackItemList(tracks, select)
+        ActionButton(
+            text = stringResource(R.string.search_history_clear),
+            onClick = onClick
+        )
     }
 }
+
+@Composable
+fun LoadingContent() {
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        CircularProgressIndicator(modifier = Modifier
+            .padding(top = Dimens.padding10XL)
+            .align(alignment = Alignment.TopCenter),
+            color = colorResource(R.color.yp_blue)
+
+        )
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL)
+@Composable
+fun ComposeSearchPreview(
+    @PreviewParameter(ComposeSearchPreviewProvider::class) model: SearchViewModel
+) {
+    ComposeSearch(model)
+}
+

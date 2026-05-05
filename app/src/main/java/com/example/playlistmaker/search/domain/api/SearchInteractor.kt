@@ -5,7 +5,7 @@ import com.example.playlistmaker.common.domain.model.Track
 import com.example.playlistmaker.search.domain.model.SearchState
 
 interface SearchInteractor:StateFullInteractor<SearchState> {
-    suspend fun changeQuery(query: CharSequence)
+    suspend fun changeQuery(query: String)
     fun changeFocus(isFocused: Boolean)
     fun clearQuery()
     fun select(track: Track)
