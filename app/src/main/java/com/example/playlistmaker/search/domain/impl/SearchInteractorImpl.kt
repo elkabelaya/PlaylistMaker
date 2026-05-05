@@ -40,7 +40,7 @@ class SearchInteractorImpl(
         sendState = state
     }
 
-    override suspend fun changeQuery(query: CharSequence) {
+    override suspend fun changeQuery(query: String) {
         val trimmedQuery = query.toString().trim()
         if (lastQuery != trimmedQuery) {
             lastQuery = trimmedQuery

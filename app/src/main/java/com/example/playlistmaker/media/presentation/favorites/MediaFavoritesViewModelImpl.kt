@@ -9,6 +9,9 @@ import com.example.playlistmaker.media.domain.api.MediaFavoritesInteractor
 import com.example.playlistmaker.media.domain.api.MediaNavigatorInteractor
 import com.example.playlistmaker.media.domain.model.MediaFavoritesState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MediaFavoritesViewModelImpl(
@@ -16,18 +19,17 @@ class MediaFavoritesViewModelImpl(
     val navigatorInteractor: MediaNavigatorInteractor,
     val clickDebounceUseCase: ClickDebounceUseCase
 ): MediaFavoritesViewModel() {
-    private val stateLiveData = MutableLiveData<MediaFavoritesState>(MediaFavoritesState.Loading)
-    override fun observeState(): LiveData<MediaFavoritesState> = stateLiveData
-
+    private val _state = MutableStateFlow<MediaFavoritesState>(MediaFavoritesState.Loading)
+    override var state: StateFlow<MediaFavoritesState> = _state.asStateFlow()
     init {
         viewModelScope.launch(Dispatchers.IO) {
             interactor.getFracks()
                 .collect { result ->
                     result.first?.let {
-                        stateLiveData.postValue( MediaFavoritesState.Data(it))
+                        _state.value =  MediaFavoritesState.Data(it)
                     }
                     result.second?.let {
-                        stateLiveData.postValue( MediaFavoritesState.Error(it))
+                        _state.value = MediaFavoritesState.Error(it)
                     }
                 }
         }
