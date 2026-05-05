@@ -16,7 +16,7 @@ glide = "4.14.2"
 retrofit = "3.0.0"
 materialVersion = "1.12.0"
 media3CommonKtx = "1.8.0"
-koin = "3.3.0"
+koin = "4.0.2"
 appcompatVersion = "1.7.1"
 coroutinesVersion = "1.10.2"
 ksp = "2.3.4"
@@ -24,6 +24,7 @@ roomVersion = "2.8.4"
 activityCompose = "1.12.3"
 composeBom = "2024.09.00"
 navigationCompose = "2.9.7"
+
 coil = "3.4.0"
 material3 = "1.4.0"
 ui = "1.11.0"
@@ -68,6 +69,8 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil"}
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil"}
